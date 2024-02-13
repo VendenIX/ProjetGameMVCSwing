@@ -1,4 +1,5 @@
 package projetgamemvcswing;
+import historique.Memento;
 import projetgamemvcswing.geometry.*;
 /**
  *
@@ -60,6 +61,22 @@ public class ProjetGameMVCSwing {
         Cercle cercle5 = new Cercle(1, 1, 1);
         Rectangle rect4 = new Rectangle(5, 5, 2, 2);
         System.out.println("Pas d'intersection entre un cercle et un rectangle (attendu: false) : " + cercle5.intersecteAvec(rect4));
+        System.out.println("\n");
+        System.out.println("\n");
+        
+        cercle = new Cercle(0, 0, 5);
+        System.out.println("État initial du cercle: " + cercle);
+
+        // Translater le cercle deux fois
+        cercle.translater(10, 0);
+        System.out.println("Après la première translation: " + cercle);
+        cercle.translater(10, 0);
+        System.out.println("Après la deuxième translation: " + cercle);
+
+        // Restaurer l'état précédent (avant la dernière translation)
+        Memento etatPrecedent = cercle.getHistorique().get(cercle.getHistorique().size() - 2);
+        cercle.restaurerEtat(etatPrecedent);
+        System.out.println("Après restauration à l'état précédent: " + cercle);
     }
     
 }
