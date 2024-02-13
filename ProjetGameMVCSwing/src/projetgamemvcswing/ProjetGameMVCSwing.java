@@ -31,7 +31,35 @@ public class ProjetGameMVCSwing {
         // Affichage après translation
         System.out.println("État du cercle après translation: centre (" + cercle.getX() + "," + cercle.getY() + ") et rayon " + cercle.getRayon());
         System.out.println("État du rectangle après translation: coin supérieur gauche (" + rectangle.getX() + "," + rectangle.getY() + "), largeur " + rectangle.getLargeur() + ", hauteur " + rectangle.getHauteur());
+        
+        // TEST DU PACKAGE GEOMETRY DES COLLISIONS :
+        
+        // Test 1: Intersection entre deux cercles
+        Cercle cercle1 = new Cercle(0, 0, 5);
+        Cercle cercle2 = new Cercle(3, 4, 5);
+        System.out.println("Intersection entre deux cercles (attendu: true) : " + cercle1.intersecteAvec(cercle2));
 
+        // Test 2: Pas d'intersection entre deux cercles
+        Cercle cercle3 = new Cercle(10, 10, 2);
+        System.out.println("Pas d'intersection entre deux cercles (attendu: false) : " + cercle1.intersecteAvec(cercle3));
+
+        // Test 3: Intersection entre deux rectangles
+        Rectangle rect1 = new Rectangle(0, 0, 10, 10);
+        Rectangle rect2 = new Rectangle(5, 5, 10, 10);
+        System.out.println("Intersection entre deux rectangles (attendu: true) : " + rect1.intersecteAvec(rect2));
+
+        // Test 4: Pas d'intersection entre deux rectangles
+        Rectangle rect3 = new Rectangle(20, 20, 10, 10);
+        System.out.println("Pas d'intersection entre deux rectangles (attendu: false) : " + rect1.intersecteAvec(rect3));
+
+        // Test 5: Intersection entre un cercle et un rectangle
+        Cercle cercle4 = new Cercle(15, 15, 5);
+        System.out.println("Intersection entre un cercle et un rectangle (attendu: true) : " + cercle4.intersecteAvec(rect2));
+
+        // Test 6: Pas d'intersection entre un cercle et un rectangle
+        Cercle cercle5 = new Cercle(1, 1, 1);
+        Rectangle rect4 = new Rectangle(5, 5, 2, 2);
+        System.out.println("Pas d'intersection entre un cercle et un rectangle (attendu: false) : " + cercle5.intersecteAvec(rect4));
     }
     
 }

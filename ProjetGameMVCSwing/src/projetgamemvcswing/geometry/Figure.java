@@ -9,5 +9,7 @@ public interface Figure {
     
     // Méthode pour inverser la dernière opération (non implémentée ici, à gérer au niveau de l'application)
     void inverser();
+    
+    boolean intersecteAvec(Figure autre);
 
 }

@@ -39,4 +39,40 @@ public class Rectangle implements Figure {
     public void inverser() {
         // Implémentation dépendante de la gestion des états antérieurs
     }
+    
+    @Override
+    public boolean intersecteAvec(Figure autre) {
+        if (autre instanceof Rectangle) {
+            Rectangle autreRectangle = (Rectangle) autre;
+            // Vérifie si l'un des rectangles est à gauche de l'autre
+            boolean aGauche = this.x + this.largeur < autreRectangle.x;
+            // Vérifie si l'un des rectangles est à droite de l'autre
+            boolean aDroite = this.x > autreRectangle.x + autreRectangle.largeur;
+            // Vérifie si l'un des rectangles est au-dessus de l'autre
+            boolean auDessus = this.y + this.hauteur < autreRectangle.y;
+            // Vérifie si l'un des rectangles est en dessous de l'autre
+            boolean enDessous = this.y > autreRectangle.y + autreRectangle.hauteur;
+
+            // S'il n'y a aucune de ces conditions vraies, alors il y a intersection
+            return !(aGauche || aDroite || auDessus || enDessous);
+            
+        } else if (autre instanceof Cercle) {
+            Cercle cercle = (Cercle) autre;
+            // Trouver le point le plus proche du cercle sur le rectangle
+            double pointProcheX = Math.max(this.x, Math.min(cercle.getX(), this.x + this.largeur));
+            double pointProcheY = Math.max(this.y, Math.min(cercle.getY(), this.y + this.hauteur));
+
+            // Calculer la distance du point le plus proche au centre du cercle
+            double distanceX = cercle.getX() - pointProcheX;
+            double distanceY = cercle.getY() - pointProcheY;
+
+            // Calculer la distance au carré pour éviter la racine carrée
+            double distanceAuCarre = (distanceX * distanceX) + (distanceY * distanceY);
+
+            // Vérifier si la distance est inférieure ou égale au carré du rayon du cercle
+            return distanceAuCarre <= (cercle.getRayon() * cercle.getRayon());
+        }
+        return false;
+    }
+
 }

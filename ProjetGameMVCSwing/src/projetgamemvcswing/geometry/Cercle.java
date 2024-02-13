@@ -36,4 +36,31 @@ public class Cercle implements Figure {
     public void inverser() {
         // Implémentation dépendante de la gestion des états antérieurs ?
     }
+    
+    @Override
+    public boolean intersecteAvec(Figure autre) {
+        if (autre instanceof Cercle) {
+            Cercle autreCercle = (Cercle) autre;
+            double distanceCentres = Math.sqrt(Math.pow(this.x - autreCercle.x, 2) + Math.pow(this.y - autreCercle.y, 2));
+            return distanceCentres <= (this.rayon + autreCercle.rayon);
+        } else if (autre instanceof Rectangle) {
+            Rectangle rect = (Rectangle) autre;
+            // Trouver le point le plus proche du cercle sur le rectangle
+            double pointProcheX = Math.max(rect.getX(), Math.min(this.x, rect.getX() + rect.getLargeur()));
+            double pointProcheY = Math.max(rect.getY(), Math.min(this.y, rect.getY() + rect.getHauteur()));
+
+            // Calculer la distance du point le plus proche au centre du cercle
+            double distanceX = this.x - pointProcheX;
+            double distanceY = this.y - pointProcheY;
+
+            // Calculer la distance au carré pour éviter la racine carrée (plus efficace)
+            double distanceAuCarre = (distanceX * distanceX) + (distanceY * distanceY);
+
+            // Vérifier si la distance est inférieure ou égale au carré du rayon du cercle
+            return distanceAuCarre <= (this.rayon * this.rayon);
+        }
+        return false;
+    }
+
+
 }
