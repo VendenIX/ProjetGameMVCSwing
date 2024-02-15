@@ -4,13 +4,25 @@ import historique.Memento;
 import java.util.*;
 
 /**
- * Représente un rectangle dans un espace bidimensionnel.
+ * Classe représentant un rectangle dans un espace bidimensionnel. 
+ * Elle fournit des fonctionnalités pour manipuler le rectangle, y compris le déplacer 
+ * et vérifier les intersections avec d'autres figures géométriques.
  */
 public class Rectangle implements Figure {
     private double x, y; // Coordonnées du coin supérieur gauche
     private double largeur, hauteur; // Dimensions du rectangle
+    
+    //Historique des états du rectangle pour permettre la sauvegarde et la restauration d'état.
     private final List<Memento> historique = new ArrayList<>();
     
+    /**
+     * Constructeur pour initialiser un nouveau rectangle avec ses dimensions et position.
+     * 
+     * @param x La coordonnée x du coin supérieur gauche du rectangle.
+     * @param y La coordonnée y du coin supérieur gauche du rectangle.
+     * @param largeur La largeur du rectangle.
+     * @param hauteur La hauteur du rectangle.
+     */
     public Rectangle(double x, double y, double largeur, double hauteur) {
         this.x = x;
         this.y = y;
@@ -24,6 +36,11 @@ public class Rectangle implements Figure {
         return "Rectangle{coinSupérieurGauche=(" + x + ", " + y + "), largeur=" + largeur + ", hauteur=" + hauteur + "}";
     }
     
+    /**
+     * Accède à l'historique des états du rectangle.
+     * 
+     * @return La liste des mementos représentant l'historique du rectangle.
+     */
     public List<Memento> getHistorique() {
         return historique;
     }
@@ -38,17 +55,31 @@ public class Rectangle implements Figure {
     public double getHauteur() { return hauteur; }
     public void setHauteur(double hauteur) { this.hauteur = hauteur; }
     
+    /**
+     * Sauvegarde l'état actuel du rectangle dans l'historique.
+     */
     public void sauvegarderEtat() {
         historique.add(creerMemento());
     }
 
+    /**
+     * Translate le rectangle par les distances spécifiées sur les axes x et y.
+     * 
+     * @param dx La distance de translation sur l'axe des x.
+     * @param dy La distance de translation sur l'axe des y.
+     */
     @Override
     public void translater(double dx, double dy) {
         x += dx;
         y += dy;
         sauvegarderEtat();
     }
-
+    
+    /**
+     * Restaure l'état du rectangle à partir d'un memento.
+     * 
+     * @param memento Le memento à partir duquel restaurer l'état du rectangle.
+     */
     @Override
     public void restaurerEtat(Memento memento) {
         this.x = memento.getX();
@@ -100,7 +131,12 @@ public class Rectangle implements Figure {
         }
         return false;
     }
-
+    
+    /**
+     * Crée un memento contenant l'état actuel du rectangle.
+     * 
+     * @return Le memento de l'état actuel.
+     */
     @Override
     public Memento creerMemento() {
         return new Memento(x, y, largeur, hauteur);
