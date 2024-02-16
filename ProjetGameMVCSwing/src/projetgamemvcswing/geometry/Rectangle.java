@@ -1,6 +1,6 @@
 package projetgamemvcswing.geometry;
 
-import historique.Memento;
+import projetgamemvcswing.historique.Memento;
 import java.util.*;
 
 /**

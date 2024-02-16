@@ -1,6 +1,6 @@
 package projetgamemvcswing.geometry;
 
-import historique.Memento;
+import projetgamemvcswing.historique.Memento;
 
 /**
  * Interface définissant les opérations de base d'une figure géométrique.

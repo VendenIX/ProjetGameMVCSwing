@@ -3,6 +3,7 @@ package historique;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import projetgamemvcswing.historique.Memento;
 
 public class MementoTest {
 

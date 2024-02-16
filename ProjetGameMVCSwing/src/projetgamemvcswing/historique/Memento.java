@@ -1,4 +1,4 @@
-package historique;
+package projetgamemvcswing.historique;
 
 /**
  * Classe Memento utilisée pour sauvegarder l'état d'une figure géométrique.

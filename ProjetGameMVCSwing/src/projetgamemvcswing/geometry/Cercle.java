@@ -1,7 +1,7 @@
 package projetgamemvcswing.geometry;
-
-import historique.Memento;
 import java.util.*;
+import projetgamemvcswing.historique.Memento;
+
 
 /**
  * Représente un cercle dans un espace bidimensionnel. Cette classe permet de créer un cercle,
@@ -128,6 +128,5 @@ public class Cercle implements Figure {
         this.y = memento.getY();
         this.rayon = memento.getProprietes()[0];
     }
-
 
 }

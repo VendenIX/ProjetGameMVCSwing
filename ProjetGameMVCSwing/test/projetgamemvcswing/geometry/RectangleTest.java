@@ -1,6 +1,6 @@
 package projetgamemvcswing.geometry;
 
-import historique.Memento;
+import projetgamemvcswing.historique.Memento;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
