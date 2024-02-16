@@ -1,6 +1,6 @@
 package projetgamemvcswing;
 
-import InterfaceGraphique.menuChoix;
+import projetgamemvcswing.vue.InterfaceGraphique.menuChoix;
 
 
 public class ProjetGameMVCSwing{

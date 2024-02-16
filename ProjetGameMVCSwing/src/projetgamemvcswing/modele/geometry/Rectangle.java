@@ -1,6 +1,7 @@
-package projetgamemvcswing.geometry;
+package projetgamemvcswing.modele.geometry;
 
-import projetgamemvcswing.historique.Memento;
+import projetgamemvcswing.modele.geometry.Cercle;
+import projetgamemvcswing.modele.historique.Memento;
 import java.util.*;
 
 /**
