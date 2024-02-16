@@ -1,12 +1,16 @@
 package projetgamemvcswing;
+import InterfaceGraphique.fenetreDessin;
+import InterfaceGraphique.fenetreJeu;
+import InterfaceGraphique.menuChoix;
 import historique.Memento;
 import projetgamemvcswing.geometry.*;
+
 /**
  *
  * @author romain
  */
-public class ProjetGameMVCSwing {
-
+public class ProjetGameMVCSwing{
+    
     /**
      * @param args the command line arguments
      */
@@ -77,6 +81,10 @@ public class ProjetGameMVCSwing {
         Memento etatPrecedent = cercle.getHistorique().get(cercle.getHistorique().size() - 2);
         cercle.restaurerEtat(etatPrecedent);
         System.out.println("Après restauration à l'état précédent: " + cercle);
+        
+        new menuChoix();
+        //new fenetreDessin();
+        //new fenetreJeu();
     }
     
 }
