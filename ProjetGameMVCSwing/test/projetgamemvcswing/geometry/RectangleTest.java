@@ -1,6 +1,7 @@
 package projetgamemvcswing.geometry;
 
 import projetgamemvcswing.modele.geometry.Cercle;
+import projetgamemvcswing.modele.geometry.Point;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -81,7 +82,8 @@ public class RectangleTest {
 
     @Test
     public void testIntersecteAvecCercle() {
-        Cercle cercle = new Cercle(5, 5, 5);
+        Point centre = new Point(5,5);
+        Cercle cercle = new Cercle(centre, 5);
         assertTrue(rectangle.intersecteAvec(cercle));
     }
 }

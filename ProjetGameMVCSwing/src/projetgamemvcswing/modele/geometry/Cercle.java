@@ -8,13 +8,12 @@ import projetgamemvcswing.modele.historique.Memento;
  * de le manipuler et d'interagir avec d'autres figures géométriques. Elle implémente l'interface Figure.
  */
 public class Cercle implements Figure {
-    private double x, y; // Coordonnées du centre du cercle
+    private Point centre; // Centre du cercle
     private double rayon; // Rayon du cercle
     
     //Historique des états du cercle pour permettre la sauvegarde et la restauration d'état.
     private final List<Memento> historique = new ArrayList<>(); //l'historique est final car on ne va pas modifier une valeur dans l'historique
 
-    
     /**
      * Constructeur pour créer un cercle avec des coordonnées spécifiques et un rayon.
      * 
@@ -22,9 +21,8 @@ public class Cercle implements Figure {
      * @param y Coordonnée y du centre du cercle.
      * @param rayon Rayon du cercle.
      */
-    public Cercle(double x, double y, double rayon) {
-        this.x = x;
-        this.y = y;
+    public Cercle(Point centre, double rayon) {
+        this.centre = centre;
         this.rayon = rayon;
         sauvegarderEtat(); // Sauvegarde l'état initial
     }
@@ -36,7 +34,7 @@ public class Cercle implements Figure {
      */
     @Override
     public String toString() {
-        return "Cercle{centre=(" + x + ", " + y + "), rayon=" + rayon + "}";
+        return "Cercle{centre=" +this.centre.toString()+", rayon=" + rayon + "}";
     }
     
     /**
@@ -49,10 +47,10 @@ public class Cercle implements Figure {
     }
 
     // Getters et setters
-    public double getX() { return x; }
-    public void setX(double x) { this.x = x; }
-    public double getY() { return y; }
-    public void setY(double y) { this.y = y; }
+    public double getX() { return this.centre.getX(); }
+    public void setX(double x) { this.centre.setX(x); }
+    public double getY() { return this.centre.getY(); }
+    public void setY(double y) { this.centre.setY(y); }
     public double getRayon() { return rayon; }
     public void setRayon(double rayon) { this.rayon = rayon; }
     
@@ -64,8 +62,8 @@ public class Cercle implements Figure {
      */
     @Override
     public void translater(double dx, double dy) {
-        x += dx;
-        y += dy;
+        this.setX(this.centre.getX()+dx);
+        this.setY(this.centre.getY()+dy);
         sauvegarderEtat();
     }
     
@@ -86,17 +84,17 @@ public class Cercle implements Figure {
     public boolean intersecteAvec(Figure autre) {
         if (autre instanceof Cercle) {
             Cercle autreCercle = (Cercle) autre;
-            double distanceCentres = Math.sqrt(Math.pow(this.x - autreCercle.x, 2) + Math.pow(this.y - autreCercle.y, 2));
+            double distanceCentres = Math.sqrt(Math.pow(this.getX() - autreCercle.getX(), 2) + Math.pow(this.getY() - autreCercle.getY(), 2));
             return distanceCentres <= (this.rayon + autreCercle.rayon);
         } else if (autre instanceof Rectangle) {
             Rectangle rect = (Rectangle) autre;
             // Trouver le point le plus proche du cercle sur le rectangle
-            double pointProcheX = Math.max(rect.getX(), Math.min(this.x, rect.getX() + rect.getLargeur()));
-            double pointProcheY = Math.max(rect.getY(), Math.min(this.y, rect.getY() + rect.getHauteur()));
+            double pointProcheX = Math.max(rect.getX(), Math.min(this.getX(), rect.getX() + rect.getLargeur()));
+            double pointProcheY = Math.max(rect.getY(), Math.min(this.getY(), rect.getY() + rect.getHauteur()));
 
             // Calculer la distance du point le plus proche au centre du cercle
-            double distanceX = this.x - pointProcheX;
-            double distanceY = this.y - pointProcheY;
+            double distanceX = this.getX() - pointProcheX;
+            double distanceY = this.getY() - pointProcheY;
 
             // Calculer la distance au carré pour éviter la racine carrée (plus efficace)
             double distanceAuCarre = (distanceX * distanceX) + (distanceY * distanceY);
@@ -114,7 +112,7 @@ public class Cercle implements Figure {
      */
     @Override
     public Memento creerMemento() {
-        return new Memento(x, y, rayon);
+        return new Memento(this.getX(), this.getY(), rayon);
     }
     
     /**
@@ -124,8 +122,8 @@ public class Cercle implements Figure {
      */
     @Override
     public void restaurerEtat(Memento memento) {
-        this.x = memento.getX();
-        this.y = memento.getY();
+        this.setX(memento.getX());
+        this.setY(memento.getY());
         this.rayon = memento.getProprietes()[0];
     }
 

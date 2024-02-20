@@ -1,6 +1,7 @@
 package projetgamemvcswing.geometry;
 
 import projetgamemvcswing.modele.geometry.Cercle;
+import projetgamemvcswing.modele.geometry.Point;
 import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,10 +11,12 @@ import projetgamemvcswing.modele.historique.Memento;
 public class CercleTest {
     
     private Cercle cercle;
+    private Point centre;
     
     @Before
     public void setUp() {
-        cercle = new Cercle(0, 0, 5);
+        centre = new Point(0,0);
+        cercle = new Cercle(centre, 5);
     }
 
     @Test
@@ -63,10 +66,12 @@ public class CercleTest {
 
     @Test
     public void testIntersecteAvec() {
-        Cercle autreCercle = new Cercle(5, 0, 5);
+        Point autreCentre = new Point(5,0);
+        Cercle autreCercle = new Cercle(autreCentre, 5);
         assertTrue("Les cercles devraient s'intersecter", cercle.intersecteAvec(autreCercle));
-
-        Cercle cercleEloigne = new Cercle(20, 20, 2);
+        
+        Point centreEloigne = new Point(20,20);
+        Cercle cercleEloigne = new Cercle(centreEloigne, 2);
         assertFalse("Les cercles ne devraient pas s'intersecter", cercle.intersecteAvec(cercleEloigne));
     }
 
