@@ -1,9 +1,11 @@
 package projetgamemvcswing.geometry;
 
-import projetgamemvcswing.historique.Memento;
+import projetgamemvcswing.modele.geometry.Cercle;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import projetgamemvcswing.modele.geometry.Rectangle;
+import projetgamemvcswing.modele.historique.Memento;
 
 public class RectangleTest {
     

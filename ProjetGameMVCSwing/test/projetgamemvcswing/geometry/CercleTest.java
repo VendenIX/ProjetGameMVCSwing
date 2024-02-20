@@ -1,10 +1,11 @@
 package projetgamemvcswing.geometry;
 
-import projetgamemvcswing.historique.Memento;
+import projetgamemvcswing.modele.geometry.Cercle;
 import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import projetgamemvcswing.modele.historique.Memento;
 
 public class CercleTest {
     
