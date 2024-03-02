@@ -16,17 +16,24 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ *
+ * @author Islem
+ */
+
 public class menuChoix extends JFrame {
     
     private Image backgroundImage;
     
     public menuChoix() {
-        // Configurez le JFrame principal
+        // Configuration de le JFrame principal
         setTitle("Dessin et Jeux de Formes");
         setSize(600, 450);
         setLocationRelativeTo(null);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // icon application
+        setIconImage(new ImageIcon("images/app_image.png").getImage());
 
         // Charger l'image du fond
         backgroundImage = new ImageIcon("images/colorful_oil.jpg").getImage();
@@ -85,21 +92,12 @@ public class menuChoix extends JFrame {
         JLabel dessinButtonTitre = new JLabel("Mode Dessin");
         dessinButtonTitre.setFont(new Font("Lucida Calligraphy", Font.BOLD, 18));
         
-        JLabel jeuButtonTitre = new JLabel("Mode Jeu");
+        JLabel jeuButtonTitre = new JLabel(" Mode Jeu");
         jeuButtonTitre.setFont(new Font("Lucida Calligraphy", Font.BOLD, 18));
         
         // Ajout ActionListener pour gérer les clics sur les boutons
-        dessinButton.addActionListener((ActionEvent e) -> {
-            fenetreDessin fDessin = new fenetreDessin();
-            fDessin.setVisible(true);
-            dispose();
-        });
-
-        jeuButton.addActionListener((ActionEvent e) -> {
-            fenetreJeu fJeu = new fenetreJeu();
-            fJeu.setVisible(true);
-            dispose();
-        });
+        dessinButton.addActionListener((ActionEvent e) -> onDessinButtonClick());
+        jeuButton.addActionListener((ActionEvent e) -> onJeuButtonClick());
 
         // Ajout des boutons à au conteneur boutons après le conteneur principal
         buttonDessinVerticalBox.add(dessinButton);
@@ -186,4 +184,17 @@ public class menuChoix extends JFrame {
     
     }
     
+    // Methode qui ouvre la fenetre Dessin
+    private void onDessinButtonClick() {
+        fenetreDessin fDessin = new fenetreDessin();
+        fDessin.setVisible(true);
+        dispose();
+    }
+
+    // Methode qui ouvre la fenetre Jeu
+    private void onJeuButtonClick() {
+        fenetreJeu fJeu = new fenetreJeu();
+        fJeu.setVisible(true);
+        dispose();
+    }
 }
