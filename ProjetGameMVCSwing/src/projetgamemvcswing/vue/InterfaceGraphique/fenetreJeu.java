@@ -11,9 +11,9 @@ import javax.swing.JPanel;
  *
  * @author Islem
  */
-public class fenetreJeu extends JFrame {
+public class FenetreJeu extends JFrame {
     
-    public fenetreJeu() {
+    public FenetreJeu() {
         // Configuration de JFrame Dessin
         setTitle("Jeu");
         setSize(1000, 700);
@@ -30,14 +30,14 @@ public class fenetreJeu extends JFrame {
         getContentPane().add(panel);
         
         // Créer une instance de MenuBarJeu
-        menuBarJeu menuBarJeu = new menuBarJeu(this);
+        MenuBarJeu menuBarJeu = new MenuBarJeu(this);
 
         // Ajouter le menuBarJeu
         setJMenuBar(new JMenuBar());
         getJMenuBar().add(menuBarJeu);
 
         // Créer une instance de BarreOutilsJeu
-        barreOutilsJeu barJeu = new barreOutilsJeu(this);
+        BarreOutilsJeu barJeu = new BarreOutilsJeu(this);
 
         // Ajouter la barre d'outils personnalisée
         add(barJeu, BorderLayout.WEST);

@@ -9,9 +9,9 @@ import java.awt.*;
  */
 
 
-public class fenetreContact extends JFrame {
+public class FenetreContact extends JFrame {
 
-    public fenetreContact() {
+    public FenetreContact() {
         setTitle("Contact");
         setSize(400, 200);
         setLocationRelativeTo(null);

@@ -9,7 +9,7 @@ import javax.swing.border.Border;
  *
  * @author Islem
  */
-public class barreOutilsJeu extends JToolBar {
+public class BarreOutilsJeu extends JToolBar {
     
     private final JFrame currentFrame;
     
@@ -17,7 +17,7 @@ public class barreOutilsJeu extends JToolBar {
     private final JButton rectangleButton;
     private final JButton dessinModeButton;
     
-    public barreOutilsJeu(JFrame frame) {
+    public BarreOutilsJeu(JFrame frame) {
         
         currentFrame = frame;
         
@@ -84,7 +84,7 @@ public class barreOutilsJeu extends JToolBar {
     
     // ActionListener methode qui ouvre le Jframe de mode Jeu
     private void onDessinModeButtonClick() {
-        fenetreDessin fDessin = new fenetreDessin();
+        FenetreDessin fDessin = new FenetreDessin();
         fDessin.setVisible(true);
         
         if (currentFrame != null) {

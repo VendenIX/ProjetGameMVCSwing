@@ -7,9 +7,9 @@ import java.awt.*;
  *
  * @author Islem
  */
-public class fenetreInformation extends JFrame {
+public class FenetreInformation extends JFrame {
 
-    public fenetreInformation() {
+    public FenetreInformation() {
         setTitle("À propos de l'application");
         setSize(400, 200);
         setLocationRelativeTo(null);

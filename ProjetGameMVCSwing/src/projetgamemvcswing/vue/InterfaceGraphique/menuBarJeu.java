@@ -11,10 +11,10 @@ import javax.swing.JOptionPane;
  *
  * @author Islem
  */
-public class menuBarJeu extends JMenuBar {
+public class MenuBarJeu extends JMenuBar {
     private final JFrame currentFrame;
     
-    public menuBarJeu(JFrame frame) {
+    public MenuBarJeu(JFrame frame) {
         
         currentFrame = frame;
                 
@@ -87,19 +87,19 @@ public class menuBarJeu extends JMenuBar {
     
     // Methode qui ouvre la fenetre Information
     private void handleInformationAction() {
-        fenetreInformation fInformation = new fenetreInformation();
+        FenetreInformation fInformation = new FenetreInformation();
         fInformation.setVisible(true);
     }
     
     // Methode qui ouvre la fenetre Contact
     private void handleContactAction() {
-        fenetreContact fcontact = new fenetreContact();
+        FenetreContact fcontact = new FenetreContact();
         fcontact.setVisible(true);
     }
     
     // Methode qui change le mode de dessin vers jeu
     private void handleDessinAction() {
-        fenetreDessin fDessin = new fenetreDessin();
+        FenetreDessin fDessin = new FenetreDessin();
         fDessin.setVisible(true);
         
         if (currentFrame != null) {

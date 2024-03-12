@@ -21,11 +21,11 @@ import javax.swing.JPanel;
  * @author Islem
  */
 
-public class menuChoix extends JFrame {
+public class MenuChoix extends JFrame {
     
     private Image backgroundImage;
     
-    public menuChoix() {
+    public MenuChoix() {
         // Configuration de le JFrame principal
         setTitle("Dessin et Jeux de Formes");
         setSize(600, 450);
@@ -186,14 +186,14 @@ public class menuChoix extends JFrame {
     
     // Methode qui ouvre la fenetre Dessin
     private void onDessinButtonClick() {
-        fenetreDessin fDessin = new fenetreDessin();
+        FenetreDessin fDessin = new FenetreDessin();
         fDessin.setVisible(true);
         dispose();
     }
 
     // Methode qui ouvre la fenetre Jeu
     private void onJeuButtonClick() {
-        fenetreJeu fJeu = new fenetreJeu();
+        FenetreJeu fJeu = new FenetreJeu();
         fJeu.setVisible(true);
         dispose();
     }

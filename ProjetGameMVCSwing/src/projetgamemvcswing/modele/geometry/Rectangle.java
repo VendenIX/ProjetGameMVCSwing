@@ -71,8 +71,8 @@ public class Rectangle implements Figure {
      */
     @Override
     public void translater(double dx, double dy) {
-        x += dx;
-        y += dy;
+        this.x += dx;
+        this.y += dy;
         sauvegarderEtat();
     }
     
@@ -141,6 +141,20 @@ public class Rectangle implements Figure {
     @Override
     public Memento creerMemento() {
         return new Memento(x, y, largeur, hauteur);
+    }
+    
+    /**
+    * Vérifie si le rectangle contient le point spécifié par les coordonnées (x, y).
+    *
+    * @param x La coordonnée x du point.
+    * @param y La coordonnée y du point.
+    * @return True si le rectangle contient le point, false sinon.
+    */
+    @Override
+    public boolean contient(double x, double y) {
+        // Vérifier si le point (x, y) est à l'intérieur des limites du rectangle
+        return x >= this.x && x <= this.x + this.largeur &&
+               y >= this.y && y <= this.y + this.hauteur;
     }
 
 }

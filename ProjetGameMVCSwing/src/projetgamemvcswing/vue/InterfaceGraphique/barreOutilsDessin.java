@@ -6,11 +6,12 @@ import java.awt.event.ActionEvent;
 import javax.swing.border.Border;
 
 /**
- *
+ * La classe barreOutilsDessin représente une barre d'outils pour les dessins.
+ * Elle étend JToolBar et fournit des boutons pour différentes actions.
+ * 
  * @author Islem
  */
-
-public class barreOutilsDessin extends JToolBar {
+public class BarreOutilsDessin extends JToolBar {
     
     private final JFrame currentFrame;
     
@@ -24,8 +25,14 @@ public class barreOutilsDessin extends JToolBar {
     private final JButton paintBucketButton;
     private final JButton jeuModeButton;
 
-    public barreOutilsDessin(JFrame frame) {
-        
+    /**
+     * Constructeur de la classe barreOutilsDessin.
+     * 
+     * @param frame La JFrame associée à la barre d'outils.
+     * @param interfacedessin L'InterfaceDessin associée à la barre d'outils.
+     */
+    public BarreOutilsDessin(JFrame frame, InterfaceDessin interfacedessin) {
+                
         currentFrame = frame;
         
         // Définir l'orientation comme verticale
@@ -33,12 +40,38 @@ public class barreOutilsDessin extends JToolBar {
 
         // Créer des boutons avec des icônes personnalisées
         circleButton = createToolbarButton("images/circle.png", "Dessin Cercle");
+        
+        circleButton.addActionListener((ActionEvent e) -> {
+            interfacedessin.setcurrentDrawState("Cercle");
+        });
+        
         rectangleButton = createToolbarButton("images/rectangle.png", "Dessin Rectangle");
+        
+        rectangleButton.addActionListener((ActionEvent e) -> {
+            interfacedessin.setcurrentDrawState("Rectangle");
+        });
+        
         moveButton = createToolbarButton("images/move-selection.png", "Déplacement de Formes");
+        
+        moveButton.addActionListener((ActionEvent e) -> {
+            interfacedessin.setcurrentDrawState("Déplacer");
+        });
+        
         undoButton = createToolbarButton("images/undo.png", "Annuler");
         redoButton = createToolbarButton("images/redo.png", "Refaire");
         deleteButton = createToolbarButton("images/delete.png", "Supprimer");
+        
+        deleteButton.addActionListener((ActionEvent e) -> {
+            interfacedessin.setcurrentDrawState("Supprimer");
+        });
+        
+        
         pencilButton = createToolbarButton("images/pencil.png", "Crayon");
+        
+        pencilButton.addActionListener((ActionEvent e) -> {
+            interfacedessin.setcurrentDrawState("Crayon");
+        });
+        
         paintBucketButton = createToolbarButton("images/paint-bucket.png", "Coloration");
         jeuModeButton = createToolbarButton("images/cont_change.png", "Mode Jeu");
         
@@ -53,7 +86,7 @@ public class barreOutilsDessin extends JToolBar {
         add(paintBucketButton);
         
         
-        // Ajouter une separation
+        // Ajouter une séparation
         addSeparator();
         add(Box.createHorizontalStrut(10));
         
@@ -71,6 +104,13 @@ public class barreOutilsDessin extends JToolBar {
     }
     
 
+    /**
+     * Crée un bouton de la barre d'outils avec une icône et une description.
+     * 
+     * @param iconPath Le chemin de l'icône du bouton.
+     * @param description La description du bouton pour l'infobulle.
+     * @return Le bouton créé.
+     */
     private JButton createToolbarButton(String iconPath, String description) {
         // Créer une ImageIcon à partir du chemin de fichier spécifié
         ImageIcon originalIcon = new ImageIcon(iconPath);
@@ -101,9 +141,11 @@ public class barreOutilsDessin extends JToolBar {
         return button;
     }
     
-    // ActionListener methode qui ouvre le Jframe de mode Jeu
+    /**
+     * Méthode ActionListener qui ouvre le JFrame de mode Jeu.
+     */
     private void onJeuModeButtonClick() {
-        fenetreJeu fJeu = new fenetreJeu();
+        FenetreJeu fJeu = new FenetreJeu();
         fJeu.setVisible(true);
         
         if (currentFrame != null) {
