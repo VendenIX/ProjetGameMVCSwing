@@ -21,7 +21,7 @@ public class BarreOutilsDessin extends JToolBar {
     private final JButton undoButton;
     private final JButton redoButton;
     private final JButton deleteButton;
-    private final JButton pencilButton;
+    private final JButton lineButton;
     private final JButton paintBucketButton;
     private final JButton jeuModeButton;
 
@@ -51,6 +51,12 @@ public class BarreOutilsDessin extends JToolBar {
             interfacedessin.setcurrentDrawState("Rectangle");
         });
         
+        lineButton = createToolbarButton("images/line.png", "Ligne");
+        
+        lineButton.addActionListener((ActionEvent e) -> {
+            interfacedessin.setcurrentDrawState("Ligne");
+        });
+        
         moveButton = createToolbarButton("images/move-selection.png", "Déplacement de Formes");
         
         moveButton.addActionListener((ActionEvent e) -> {
@@ -64,25 +70,23 @@ public class BarreOutilsDessin extends JToolBar {
         deleteButton.addActionListener((ActionEvent e) -> {
             interfacedessin.setcurrentDrawState("Supprimer");
         });
+            
+        paintBucketButton = createToolbarButton("images/paint-bucket.png", "Coloration");
         
-        
-        pencilButton = createToolbarButton("images/pencil.png", "Crayon");
-        
-        pencilButton.addActionListener((ActionEvent e) -> {
-            interfacedessin.setcurrentDrawState("Crayon");
+        paintBucketButton.addActionListener((ActionEvent e) -> {
+            interfacedessin.setcurrentDrawState("Coloration");
         });
         
-        paintBucketButton = createToolbarButton("images/paint-bucket.png", "Coloration");
         jeuModeButton = createToolbarButton("images/cont_change.png", "Mode Jeu");
         
         // Ajouter des boutons avec des icônes personnalisées
         add(circleButton);
         add(rectangleButton);
+        add(lineButton);
         add(moveButton);
         add(undoButton);
         add(redoButton);
         add(deleteButton);
-        add(pencilButton);
         add(paintBucketButton);
         
         

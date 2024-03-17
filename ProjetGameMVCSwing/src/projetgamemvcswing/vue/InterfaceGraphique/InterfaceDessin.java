@@ -7,16 +7,18 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
-import projetgamemvcswing.modele.geometry.Cercle;
-import projetgamemvcswing.modele.geometry.Figure;
 import projetgamemvcswing.modele.geometry.Point;
+import projetgamemvcswing.modele.geometry.Figure;
+import projetgamemvcswing.modele.geometry.Cercle;
 import projetgamemvcswing.modele.geometry.Rectangle;
+import projetgamemvcswing.modele.geometry.Ligne;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+
 
 
 /**
@@ -86,6 +88,11 @@ public class InterfaceDessin extends JPanel {
             
             figureEnCoursDeDessin = new Rectangle(x, y, 0, 0);
             
+        } else if ("Ligne".equals(currentDrawState)){
+            
+            System.out.println("Ligne");
+            figureEnCoursDeDessin = new Ligne(new Point(x, y),new Point(0, 0));
+            
         } else if ("Supprimer".equals(currentDrawState)) {
             
             for (Figure f : figures) {
@@ -101,9 +108,14 @@ public class InterfaceDessin extends JPanel {
                 }
             }
             
-        } else if ("Crayon".equals(currentDrawState)){
-            // A ajouter
         } else if ("Déplacer".equals(currentDrawState)){
+            for (Figure f : figures) {
+                if (f.contient(x, y)) {
+                    figureEnCoursDeTranslation = f;
+                    return;
+                }
+            }
+        } else if ("Coloration".equals(currentDrawState)){
             for (Figure f : figures) {
                 if (f.contient(x, y)) {
                     figureEnCoursDeTranslation = f;
@@ -131,7 +143,7 @@ public class InterfaceDessin extends JPanel {
             figureEnCoursDeTranslation = null;
             
             repaint();
-    }
+        }
         
     }
 
@@ -150,14 +162,21 @@ public class InterfaceDessin extends JPanel {
             
 
             if (figureEnCoursDeDessin instanceof Cercle) {
+                
                 double rayon = ((Cercle) figureEnCoursDeDessin).distance(mouseX, mouseY);
                 ((Cercle) figureEnCoursDeDessin).setRayon(rayon);
+                
             } else if (figureEnCoursDeDessin instanceof Rectangle) {
+                
                 double width = Math.abs(mouseX - ((Rectangle) figureEnCoursDeDessin).getX());
                 double height = Math.abs(mouseY - ((Rectangle) figureEnCoursDeDessin).getY());
 
                 ((Rectangle) figureEnCoursDeDessin).setLargeur(width);
                 ((Rectangle) figureEnCoursDeDessin).setHauteur(height);
+                
+            } else if (figureEnCoursDeDessin instanceof Ligne) {
+                ((Ligne) figureEnCoursDeDessin).setXFin(mouseX);
+                ((Ligne) figureEnCoursDeDessin).setYFin(mouseY);
             }
 
             repaint();
@@ -180,6 +199,10 @@ public class InterfaceDessin extends JPanel {
                 
                 ((Rectangle) figureEnCoursDeTranslation).translater(dx, dy);
                 
+            } else if (figureEnCoursDeTranslation instanceof Ligne) {
+                
+                ((Ligne) figureEnCoursDeTranslation).translater(dx, dy);
+                
             }
             repaint();
         }
@@ -196,23 +219,39 @@ public class InterfaceDessin extends JPanel {
         super.paint(g);
 
         for (Figure forme : figures) {
+            
             if (forme instanceof Cercle) {
                 Cercle cercle = (Cercle) forme;
                 drawCircle(g, cercle.getX(), cercle.getY(), cercle.getRayon());
+                
             } else if (forme instanceof Rectangle) {
+                
                 Rectangle rectangle = (Rectangle) forme;
                 drawRectangle(g, rectangle.getX(), rectangle.getY(), rectangle.getLargeur(), rectangle.getHauteur());
+                
+            } else if (forme instanceof Ligne) {
+                
+                Ligne ligneEnCours = (Ligne) forme;
+                drawLine(g,ligneEnCours.getXDebut(), ligneEnCours.getYDebut(), ligneEnCours.getXFin(), ligneEnCours.getYFin());
             }
         }
 
         if (figureEnCoursDeDessin != null) {
             if (figureEnCoursDeDessin instanceof Cercle) {
+                
                 Cercle cercleEnCours = (Cercle) figureEnCoursDeDessin;
                 drawCircle(g, cercleEnCours.getX(), cercleEnCours.getY(), cercleEnCours.getRayon());
+                
             } else if (figureEnCoursDeDessin instanceof Rectangle) {
+                
                 Rectangle rectangleEnCours = (Rectangle) figureEnCoursDeDessin;
                 drawRectangle(g, rectangleEnCours.getX(), rectangleEnCours.getY(),
                         rectangleEnCours.getLargeur(), rectangleEnCours.getHauteur());
+                
+            } else if (figureEnCoursDeDessin instanceof Ligne) {
+                
+                Ligne ligneEnCours = (Ligne) figureEnCoursDeDessin;
+                drawLine(g,ligneEnCours.getXDebut(), ligneEnCours.getYDebut(), ligneEnCours.getXFin(), ligneEnCours.getYFin());
             }
         }
     }
@@ -253,6 +292,26 @@ public class InterfaceDessin extends JPanel {
         int heightInt = (int) Math.round(height);
 
         g.drawRect(xInt, yInt, widthInt, heightInt);
+    }
+    
+    /**
+    * Dessine une ligne avec deux coordonnées debut et fin
+    * 
+    * @param g Le contexte graphique dans lequel dessiner la ligne.
+    * @param x1 La coordonnée x du point de départ de la ligne (en double).
+    * @param y1 La coordonnée y du point de départ de la ligne (en double).
+    * @param x2 La coordonnée x du point d'arrivée de la ligne (en double).
+    * @param y2 La coordonnée y du point d'arrivée de la ligne (en double).
+    */
+    public void drawLine(Graphics g, double x1, double y1, double x2, double y2) {
+        // Convertir les coordonnées en double en coordonnées entières en arrondissant
+        int x1Int = (int) Math.round(x1);
+        int y1Int = (int) Math.round(y1);
+        int x2Int = (int) Math.round(x2);
+        int y2Int = (int) Math.round(y2);
+
+        // Dessiner la ligne avec les coordonnées entières calculées
+        g.drawLine(x1Int, y1Int, x2Int, y2Int);
     }
 
     /**

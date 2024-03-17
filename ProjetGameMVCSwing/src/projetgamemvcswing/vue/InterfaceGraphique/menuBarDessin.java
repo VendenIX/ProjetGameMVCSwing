@@ -73,8 +73,13 @@ public class MenuBarDessin extends JMenuBar {
             interfacedessin.setcurrentDrawState("Déplacer");
         });
         
-        JMenuItem pencilItem = new JMenuItem("Crayon");
-        JMenuItem paintItem = new JMenuItem("peindre");
+        JMenuItem lineItem = new JMenuItem("Ligne");
+        JMenuItem paintItem = new JMenuItem("Coloration");
+        
+        paintItem.addActionListener((ActionEvent e) -> {
+            interfacedessin.setcurrentDrawState("Coloration");
+        });
+        
         JMenuItem undoItem = new JMenuItem("Annuler");
         JMenuItem redoItem = new JMenuItem("Refaire");
         JMenuItem deleteItem = new JMenuItem("Supprimer");
@@ -86,7 +91,7 @@ public class MenuBarDessin extends JMenuBar {
         menuOutils.add(circleItem);
         menuOutils.add(rectangleItem);
         menuOutils.add(moveItem);
-        menuOutils.add(pencilItem);
+        menuOutils.add(lineItem);
         menuOutils.add(paintItem);
         menuOutils.add(undoItem);
         menuOutils.add(redoItem);
