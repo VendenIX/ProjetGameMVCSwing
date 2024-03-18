@@ -24,6 +24,7 @@ public class BarreOutilsDessin extends JToolBar {
     private final JButton lineButton;
     private final JButton paintBucketButton;
     private final JButton jeuModeButton;
+    
 
     /**
      * Constructeur de la classe barreOutilsDessin.
@@ -74,7 +75,18 @@ public class BarreOutilsDessin extends JToolBar {
         paintBucketButton = createToolbarButton("images/paint-bucket.png", "Coloration");
         
         paintBucketButton.addActionListener((ActionEvent e) -> {
+            
+            // Affiche une boîte de dialogue de choix de couleur avec le composant parent "currentFrame",
+            // un titre de dialogue "Choix de Couleur" et une couleur par défaut "currentFrame.getBackground()".
+            Color selectedColor = JColorChooser.showDialog(
+                currentFrame, // Composant parent
+                "Choix de Couleur", // Titre du dialogue
+                currentFrame.getBackground() // Couleur par défaut
+            );
+            
             interfacedessin.setcurrentDrawState("Coloration");
+            interfacedessin.setSelectedColor(selectedColor);
+
         });
         
         jeuModeButton = createToolbarButton("images/cont_change.png", "Mode Jeu");
@@ -156,4 +168,5 @@ public class BarreOutilsDessin extends JToolBar {
             currentFrame.dispose();
         }
     }
+    
 }

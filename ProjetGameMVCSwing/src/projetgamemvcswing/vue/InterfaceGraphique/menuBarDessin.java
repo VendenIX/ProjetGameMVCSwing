@@ -74,6 +74,11 @@ public class MenuBarDessin extends JMenuBar {
         });
         
         JMenuItem lineItem = new JMenuItem("Ligne");
+        
+        lineItem.addActionListener((ActionEvent e) -> {
+            interfacedessin.setcurrentDrawState("Ligne");
+        });
+        
         JMenuItem paintItem = new JMenuItem("Coloration");
         
         paintItem.addActionListener((ActionEvent e) -> {

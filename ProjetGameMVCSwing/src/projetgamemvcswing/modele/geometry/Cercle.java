@@ -1,4 +1,5 @@
 package projetgamemvcswing.modele.geometry;
+import java.awt.Color;
 import java.util.*;
 import projetgamemvcswing.modele.historique.Memento;
 
@@ -10,6 +11,7 @@ import projetgamemvcswing.modele.historique.Memento;
 public class Cercle implements Figure {
     private Point centre; // Centre du cercle
     private double rayon; // Rayon du cercle
+    private Color couleur; // Couleur du cercle
     
     //Historique des états du cercle pour permettre la sauvegarde et la restauration d'état.
     private final List<Memento> historique = new ArrayList<>(); //l'historique est final car on ne va pas modifier une valeur dans l'historique
@@ -17,13 +19,14 @@ public class Cercle implements Figure {
     /**
      * Constructeur pour créer un cercle avec des coordonnées spécifiques et un rayon.
      * 
-     * @param x Coordonnée x du centre du cercle.
-     * @param y Coordonnée y du centre du cercle.
+     * @param centre du cercle (x, y)
+     * @param couleur
      * @param rayon Rayon du cercle.
      */
-    public Cercle(Point centre, double rayon) {
+    public Cercle(Point centre, double rayon, Color couleur) {
         this.centre = centre;
         this.rayon = rayon;
+        this.couleur = couleur;
         sauvegarderEtat(); // Sauvegarde l'état initial
     }
     
@@ -53,6 +56,8 @@ public class Cercle implements Figure {
     public void setY(double y) { this.centre.setY(y); }
     public double getRayon() { return rayon; }
     public void setRayon(double rayon) { this.rayon = rayon; }
+    public Color getCouleur() { return couleur; }
+    public void setCouleur(Color couleur) { this.couleur = couleur; }
     
     /**
      * Translade le cercle par les distances spécifiées.

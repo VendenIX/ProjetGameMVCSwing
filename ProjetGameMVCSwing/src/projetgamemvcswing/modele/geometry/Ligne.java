@@ -1,16 +1,19 @@
 package projetgamemvcswing.modele.geometry;
 
+import java.awt.Color;
 import projetgamemvcswing.modele.historique.Memento;
 
 public class Ligne implements Figure {
     
     private Point debut;
     private Point fin;
+    private Color couleur;
     
     
-    public Ligne(Point debut, Point fin) {
+    public Ligne(Point debut, Point fin, Color couleur) {
         this.debut = debut;
         this.fin = fin;
+        this.couleur = couleur;
     }
     
     public double getXDebut() { return this.debut.getX(); }
@@ -23,7 +26,10 @@ public class Ligne implements Figure {
      public double getYFin() { return this.fin.getY(); }
      
     public void setXFin(double Xfin) { this.fin.setX(Xfin); }
-    public void setYFin(double Yfin) { this.fin.setY(Yfin); }  
+    public void setYFin(double Yfin) { this.fin.setY(Yfin); }
+    
+    public Color getCouleur() { return couleur; }
+    public void setCouleur(Color couleur) { this.couleur = couleur; }
     
     /**
     * Translade la ligne par les distances spécifiées.

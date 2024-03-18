@@ -1,5 +1,6 @@
 package projetgamemvcswing.modele.geometry;
 
+import java.awt.Color;
 import projetgamemvcswing.modele.geometry.Cercle;
 import projetgamemvcswing.modele.historique.Memento;
 import java.util.*;
@@ -12,6 +13,7 @@ import java.util.*;
 public class Rectangle implements Figure {
     private double x, y; // Coordonnées du coin supérieur gauche
     private double largeur, hauteur; // Dimensions du rectangle
+    private Color couleur;
     
     //Historique des états du rectangle pour permettre la sauvegarde et la restauration d'état.
     private final List<Memento> historique = new ArrayList<>();
@@ -23,12 +25,14 @@ public class Rectangle implements Figure {
      * @param y La coordonnée y du coin supérieur gauche du rectangle.
      * @param largeur La largeur du rectangle.
      * @param hauteur La hauteur du rectangle.
+     * @param couleur du rectangle.
      */
-    public Rectangle(double x, double y, double largeur, double hauteur) {
+    public Rectangle(double x, double y, double largeur, double hauteur, Color couleur) {
         this.x = x;
         this.y = y;
         this.largeur = largeur;
         this.hauteur = hauteur;
+        this.couleur = couleur;
         sauvegarderEtat(); // Sauvegarde l'état initial
     }
     
@@ -55,6 +59,8 @@ public class Rectangle implements Figure {
     public void setLargeur(double largeur) { this.largeur = largeur; }
     public double getHauteur() { return hauteur; }
     public void setHauteur(double hauteur) { this.hauteur = hauteur; }
+    public Color getCouleur() { return couleur; }
+    public void setCouleur(Color couleur) { this.couleur = couleur; }
     
     /**
      * Sauvegarde l'état actuel du rectangle dans l'historique.

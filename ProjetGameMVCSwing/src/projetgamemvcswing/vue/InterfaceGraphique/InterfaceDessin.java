@@ -2,8 +2,10 @@ package projetgamemvcswing.vue.InterfaceGraphique;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Line2D;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
@@ -32,7 +34,10 @@ public class InterfaceDessin extends JPanel {
     private final List<Figure> figures = new ArrayList<>();
     private Figure figureEnCoursDeDessin;
     private Figure figureEnCoursDeTranslation;
+    private Figure figureEnCoursDeColoration;
     private String currentDrawState = "Default";
+    
+    private Color couleurChoisie;
     
     private double lastMouseX;
     private double lastMouseY;
@@ -82,16 +87,16 @@ public class InterfaceDessin extends JPanel {
 
         if ("Cercle".equals(currentDrawState)) {
             
-            figureEnCoursDeDessin = new Cercle(new Point(x, y), 0);
+            figureEnCoursDeDessin = new Cercle(new Point(x, y), 0, Color.WHITE);
             
         } else if ("Rectangle".equals(currentDrawState)) {
             
-            figureEnCoursDeDessin = new Rectangle(x, y, 0, 0);
+            figureEnCoursDeDessin = new Rectangle(x, y, 0, 0, Color.WHITE);
             
         } else if ("Ligne".equals(currentDrawState)){
             
             System.out.println("Ligne");
-            figureEnCoursDeDessin = new Ligne(new Point(x, y),new Point(0, 0));
+            figureEnCoursDeDessin = new Ligne(new Point(x, y),new Point(0, 0),Color.WHITE);
             
         } else if ("Supprimer".equals(currentDrawState)) {
             
@@ -109,21 +114,40 @@ public class InterfaceDessin extends JPanel {
             }
             
         } else if ("Déplacer".equals(currentDrawState)){
+            
             for (Figure f : figures) {
                 if (f.contient(x, y)) {
                     figureEnCoursDeTranslation = f;
                     return;
                 }
             }
+            
         } else if ("Coloration".equals(currentDrawState)){
             for (Figure f : figures) {
+                
                 if (f.contient(x, y)) {
-                    figureEnCoursDeTranslation = f;
+                    
+                    figureEnCoursDeColoration = f;
+                    
+                    if (figureEnCoursDeColoration != null) {
+                        if (figureEnCoursDeColoration instanceof Cercle) {
+                            ((Cercle) figureEnCoursDeColoration).setCouleur(couleurChoisie);
+                        } else if (figureEnCoursDeColoration instanceof Rectangle) {
+                            ((Rectangle) figureEnCoursDeColoration).setCouleur(couleurChoisie);
+                        } else if (figureEnCoursDeColoration instanceof Ligne) {
+                            ((Ligne) figureEnCoursDeColoration).setCouleur(couleurChoisie);
+                        }
+                    }
+
+                    repaint();
                     return;
                 }
             }
+            
+                  
+            }
         }
-    }
+    
 
     /**
      * Gère l'événement de relâchement de la souris.
@@ -144,6 +168,15 @@ public class InterfaceDessin extends JPanel {
             
             repaint();
         }
+        
+        if ("Coloration".equals(currentDrawState) && figureEnCoursDeColoration != null) {
+            
+            figureEnCoursDeColoration = null;
+            
+            repaint();
+        }
+        
+        
         
     }
 
@@ -205,8 +238,7 @@ public class InterfaceDessin extends JPanel {
                 
             }
             repaint();
-        }
-        
+        } 
     }
 
     /**
@@ -215,45 +247,92 @@ public class InterfaceDessin extends JPanel {
      * @param g L'objet Graphics pour dessiner.
      */
     @Override
-    public void paint(Graphics g) {
-        super.paint(g);
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        Graphics2D g2d = (Graphics2D) g;
+        
+       
+        for (Figure forme : figures) {
+            if (forme instanceof Cercle) {
+                Cercle cercle = (Cercle) forme;
+                g2d.setColor(((Cercle) forme).getCouleur());
+                fillCircle(g2d, cercle.getX(), cercle.getY(), cercle.getRayon());
+            } else if (forme instanceof Rectangle) {
+                Rectangle rectangle = (Rectangle) forme;
+                g2d.setColor(((Rectangle) forme).getCouleur());
+                fillRectangle(g2d, rectangle.getX(), rectangle.getY(), rectangle.getLargeur(), rectangle.getHauteur());
+            } else if (forme instanceof Ligne) {
+                Ligne ligne = (Ligne) forme;
+                g2d.setColor(((Ligne) forme).getCouleur());
+                fillLine(g2d, ligne.getXDebut(), ligne.getYDebut(), ligne.getXFin(), ligne.getYFin());
+            }
+        }
+
+        if (figureEnCoursDeColoration != null) {
+            if (figureEnCoursDeColoration instanceof Cercle) {
+                Cercle cercleEnCours = (Cercle) figureEnCoursDeColoration;
+                fillCircle(g2d, cercleEnCours.getX(), cercleEnCours.getY(), cercleEnCours.getRayon());
+            } else if (figureEnCoursDeColoration instanceof Rectangle) {
+                Rectangle rectangleEnCours = (Rectangle) figureEnCoursDeColoration;
+                fillRectangle(g2d, rectangleEnCours.getX(), rectangleEnCours.getY(),
+                        rectangleEnCours.getLargeur(), rectangleEnCours.getHauteur());
+            } else if (figureEnCoursDeColoration instanceof Ligne) {
+                Ligne ligneEnCours = (Ligne) figureEnCoursDeColoration;
+                fillLine(g2d, ligneEnCours.getXDebut(), ligneEnCours.getYDebut(), ligneEnCours.getXFin(), ligneEnCours.getYFin());
+            }
+        }
+        
 
         for (Figure forme : figures) {
-            
             if (forme instanceof Cercle) {
                 Cercle cercle = (Cercle) forme;
                 drawCircle(g, cercle.getX(), cercle.getY(), cercle.getRayon());
-                
             } else if (forme instanceof Rectangle) {
-                
                 Rectangle rectangle = (Rectangle) forme;
                 drawRectangle(g, rectangle.getX(), rectangle.getY(), rectangle.getLargeur(), rectangle.getHauteur());
-                
             } else if (forme instanceof Ligne) {
-                
                 Ligne ligneEnCours = (Ligne) forme;
-                drawLine(g,ligneEnCours.getXDebut(), ligneEnCours.getYDebut(), ligneEnCours.getXFin(), ligneEnCours.getYFin());
+                drawLine(g, ligneEnCours.getXDebut(), ligneEnCours.getYDebut(), ligneEnCours.getXFin(), ligneEnCours.getYFin());
             }
         }
 
         if (figureEnCoursDeDessin != null) {
             if (figureEnCoursDeDessin instanceof Cercle) {
-                
                 Cercle cercleEnCours = (Cercle) figureEnCoursDeDessin;
                 drawCircle(g, cercleEnCours.getX(), cercleEnCours.getY(), cercleEnCours.getRayon());
-                
             } else if (figureEnCoursDeDessin instanceof Rectangle) {
-                
                 Rectangle rectangleEnCours = (Rectangle) figureEnCoursDeDessin;
                 drawRectangle(g, rectangleEnCours.getX(), rectangleEnCours.getY(),
                         rectangleEnCours.getLargeur(), rectangleEnCours.getHauteur());
-                
             } else if (figureEnCoursDeDessin instanceof Ligne) {
-                
                 Ligne ligneEnCours = (Ligne) figureEnCoursDeDessin;
-                drawLine(g,ligneEnCours.getXDebut(), ligneEnCours.getYDebut(), ligneEnCours.getXFin(), ligneEnCours.getYFin());
+                drawLine(g, ligneEnCours.getXDebut(), ligneEnCours.getYDebut(), ligneEnCours.getXFin(), ligneEnCours.getYFin());
             }
         }
+    }
+    
+    // Fill a circle
+    private void fillCircle(Graphics2D g, double centerX, double centerY, double radius) {
+        int x = (int) Math.round(centerX - radius);
+        int y = (int) Math.round(centerY - radius);
+        int diameter = (int) Math.round(2 * radius);
+        g.fillOval(x, y, diameter, diameter);
+    }
+
+    // Fill a rectangle
+    private void fillRectangle(Graphics2D g, double x, double y, double width, double height) {
+        int xInt = (int) Math.round(x);
+        int yInt = (int) Math.round(y);
+        int widthInt = (int) Math.round(width);
+        int heightInt = (int) Math.round(height);
+        g.fillRect(xInt, yInt, widthInt, heightInt);
+    }
+
+    // Fill a line (not standard, as lines usually don't get filled, but can be drawn with a filled shape)
+    private void fillLine(Graphics2D g, double x1, double y1, double x2, double y2) {
+        // This method is non-standard as lines are not usually filled, but you can draw a filled shape
+        g.fill(new Line2D.Double(x1, y1, x2, y2));
     }
 
     /**
@@ -410,6 +489,10 @@ public class InterfaceDessin extends JPanel {
      */
     public String getcurrentDrawState() {
         return this.currentDrawState;
+    }
+    
+    public void setSelectedColor(Color selectedColor) {
+        this.couleurChoisie = selectedColor;
     }
 }
 
