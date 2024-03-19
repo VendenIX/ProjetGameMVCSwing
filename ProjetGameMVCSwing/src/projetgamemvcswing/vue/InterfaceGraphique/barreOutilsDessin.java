@@ -40,40 +40,56 @@ public class BarreOutilsDessin extends JToolBar {
         setOrientation(JToolBar.VERTICAL);
 
         // Créer des boutons avec des icônes personnalisées
+        
+        // Initialisation bouton Circle
         circleButton = createToolbarButton("images/circle.png", "Dessin Cercle");
         
+        // Lorsque le bouton de cercle est cliqué
         circleButton.addActionListener((ActionEvent e) -> {
             interfacedessin.setcurrentDrawState("Cercle");
         });
-        
+        // Initialisation bouton Rectangle
         rectangleButton = createToolbarButton("images/rectangle.png", "Dessin Rectangle");
         
+        // Lorsque le bouton de Rectangle est cliqué
         rectangleButton.addActionListener((ActionEvent e) -> {
             interfacedessin.setcurrentDrawState("Rectangle");
         });
         
+        // Initialisation bouton Ligne
         lineButton = createToolbarButton("images/line.png", "Ligne");
         
+        // Lorsque le bouton de Ligne est cliqué
         lineButton.addActionListener((ActionEvent e) -> {
             interfacedessin.setcurrentDrawState("Ligne");
         });
         
+        // Initialisation bouton Deplacer
         moveButton = createToolbarButton("images/move-selection.png", "Déplacement de Formes");
         
+        // Lorsque le bouton de Deplacer est cliqué
         moveButton.addActionListener((ActionEvent e) -> {
             interfacedessin.setcurrentDrawState("Déplacer");
         });
         
+        // Initialisation bouton Undo
         undoButton = createToolbarButton("images/undo.png", "Annuler");
+        
+        // Initialisation bouton Redo
         redoButton = createToolbarButton("images/redo.png", "Refaire");
+        
+        // Initialisation bouton Supprimer
         deleteButton = createToolbarButton("images/delete.png", "Supprimer");
         
+        // Lorsque le bouton de Supprimer est cliqué
         deleteButton.addActionListener((ActionEvent e) -> {
             interfacedessin.setcurrentDrawState("Supprimer");
         });
-            
+        
+        // Initialisation bouton Coloration
         paintBucketButton = createToolbarButton("images/paint-bucket.png", "Coloration");
         
+        // Lorsque le bouton de Coloration est cliqué
         paintBucketButton.addActionListener((ActionEvent e) -> {
             
             // Affiche une boîte de dialogue de choix de couleur avec le composant parent "currentFrame",
@@ -89,9 +105,10 @@ public class BarreOutilsDessin extends JToolBar {
 
         });
         
+        // Initialisation bouton Changement de mode
         jeuModeButton = createToolbarButton("images/cont_change.png", "Mode Jeu");
         
-        // Ajouter des boutons avec des icônes personnalisées
+        // Ajouter des boutons avec des icônes personnalisées a la JtoolBar
         add(circleButton);
         add(rectangleButton);
         add(lineButton);

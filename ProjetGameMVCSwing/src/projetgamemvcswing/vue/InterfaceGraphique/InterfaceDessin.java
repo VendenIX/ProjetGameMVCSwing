@@ -30,29 +30,39 @@ import javax.swing.JOptionPane;
  * @author Islem
  */
 public class InterfaceDessin extends JPanel {
-
+    
+    
+    // Variables
+    // ArrayList qui stock toute les figures
     private final List<Figure> figures = new ArrayList<>();
+    
     private Figure figureEnCoursDeDessin;
     private Figure figureEnCoursDeTranslation;
     private Figure figureEnCoursDeColoration;
+    
+    // Etat
     private String currentDrawState = "Default";
     
+    // Couleur choisie
     private Color couleurChoisie;
     
+    // Position précédente de la souris 
     private double lastMouseX;
     private double lastMouseY;
 
     /**
-     * Constructeur par défaut de la classe InterfaceDessin.
+     * Constructeur de la classe InterfaceDessin.
      * Il initialise le panneau de dessin avec un fond blanc et ajoute des écouteurs de souris.
      */
     public InterfaceDessin() {
+        // Set de fond blanc
         setBackground(Color.WHITE);
         
         
 
         // Ajouter un écouteur pour les événements de la souris
         addMouseListener(new MouseAdapter() {
+            // Quand il y a un clique de souris
             @Override
             public void mousePressed(MouseEvent e) {
                 lastMouseX = e.getX();
@@ -60,6 +70,7 @@ public class InterfaceDessin extends JPanel {
                 handleMousePressed(e);
             }
 
+            // Quand il y a une relache de souris
             @Override
             public void mouseReleased(MouseEvent e) {
                 handleMouseReleased(e);
@@ -81,70 +92,83 @@ public class InterfaceDessin extends JPanel {
      * 
      * @param e L'événement de la souris.
      */
-    private void handleMousePressed(MouseEvent e) {
-        double x = e.getX();
-        double y = e.getY();
+        private void handleMousePressed(MouseEvent e) {
+            // Obtenir les coordonnées de la souris
+            double x = e.getX();
+            double y = e.getY();
 
-        if ("Cercle".equals(currentDrawState)) {
-            
-            figureEnCoursDeDessin = new Cercle(new Point(x, y), 0, Color.WHITE);
-            
-        } else if ("Rectangle".equals(currentDrawState)) {
-            
-            figureEnCoursDeDessin = new Rectangle(x, y, 0, 0, Color.WHITE);
-            
-        } else if ("Ligne".equals(currentDrawState)){
-            
-            System.out.println("Ligne");
-            figureEnCoursDeDessin = new Ligne(new Point(x, y),new Point(0, 0),Color.WHITE);
-            
-        } else if ("Supprimer".equals(currentDrawState)) {
-            
-            for (Figure f : figures) {
-                if (f.contient(x, y)) {
-                    // Supprimer la figure sélectionnée de la liste principale
-                    figures.remove(f);
+            // Si l'état de dessin actuel est "Cercle"
+            if ("Cercle".equals(currentDrawState)) {
+                // Créer un nouveau cercle avec le point de départ à (x, y)
+                // un rayon initial de 0 et une couleur transparent
+                figureEnCoursDeDessin = new Cercle(new Point(x, y), 0, new Color(0, 0, 0, 0));
 
-                    // Redessiner le panneau
-                    repaint();
+            // Si l'état de dessin actuel est "Rectangle"
+            } else if ("Rectangle".equals(currentDrawState)) {
+                // Créer un nouveau rectangle avec le coin supérieur gauche à (x, y)
+                // une largeur et une hauteur initiales de 0 et une couleur blanche
+                figureEnCoursDeDessin = new Rectangle(x, y, 0, 0, new Color(0, 0, 0, 0));
 
-                    // Sortir de la boucle après la suppression d'une figure
-                    return;
-                }
-            }
-            
-        } else if ("Déplacer".equals(currentDrawState)){
-            
-            for (Figure f : figures) {
-                if (f.contient(x, y)) {
-                    figureEnCoursDeTranslation = f;
-                    return;
-                }
-            }
-            
-        } else if ("Coloration".equals(currentDrawState)){
-            for (Figure f : figures) {
-                
-                if (f.contient(x, y)) {
-                    
-                    figureEnCoursDeColoration = f;
-                    
-                    if (figureEnCoursDeColoration != null) {
-                        if (figureEnCoursDeColoration instanceof Cercle) {
-                            ((Cercle) figureEnCoursDeColoration).setCouleur(couleurChoisie);
-                        } else if (figureEnCoursDeColoration instanceof Rectangle) {
-                            ((Rectangle) figureEnCoursDeColoration).setCouleur(couleurChoisie);
-                        } else if (figureEnCoursDeColoration instanceof Ligne) {
-                            ((Ligne) figureEnCoursDeColoration).setCouleur(couleurChoisie);
-                        }
+            // Si l'état de dessin actuel est "Ligne"
+            } else if ("Ligne".equals(currentDrawState)){
+                // Créer une nouvelle ligne avec le point de départ à (x, y)
+                // le point d'arrivée initial à (0, 0) et une couleur blanche
+                figureEnCoursDeDessin = new Ligne(new Point(x, y), new Point(x, y), new Color(0, 0, 0, 0));
+
+            // Si l'état de dessin actuel est "Supprimer"
+            } else if ("Supprimer".equals(currentDrawState)) {
+                // Parcourir la liste des figures
+                for (Figure f : figures) {
+                    // Vérifier si la figure contient les coordonnées de la souris
+                    if (f.contient(x, y)) {
+                        // Supprimer la figure sélectionnée de la liste principale
+                        figures.remove(f);
+
+                        // Redessiner le panneau
+                        repaint();
+
+                        // Sortir de la boucle après la suppression d'une figure
+                        return;
                     }
-
-                    repaint();
-                    return;
                 }
-            }
-            
-                  
+
+            // Si l'état de dessin actuel est "Déplacer"
+            } else if ("Déplacer".equals(currentDrawState)){
+                // Parcourir la liste des figures
+                for (Figure f : figures) {
+                    // Vérifier si la figure contient les coordonnées de la souris
+                    if (f.contient(x, y)) {
+                        // Définir la figure sélectionnée comme celle à déplacer
+                        figureEnCoursDeTranslation = f;
+                        return;
+                    }
+                }
+
+            // Si l'état de dessin actuel est "Coloration"
+            } else if ("Coloration".equals(currentDrawState)){
+                // Parcourir la liste des figures
+                for (Figure f : figures) {
+                    // Vérifier si la figure contient les coordonnées de la souris
+                    if (f.contient(x, y)) {
+                        // Définir la figure sélectionnée comme celle à colorier
+                        figureEnCoursDeColoration = f;
+
+                        // Appliquer la couleur sélectionnée à la figure, si elle existe
+                        if (figureEnCoursDeColoration != null) {
+                            if (figureEnCoursDeColoration instanceof Cercle) {
+                                ((Cercle) figureEnCoursDeColoration).setCouleur(couleurChoisie);
+                            } else if (figureEnCoursDeColoration instanceof Rectangle) {
+                                ((Rectangle) figureEnCoursDeColoration).setCouleur(couleurChoisie);
+                            } else if (figureEnCoursDeColoration instanceof Ligne) {
+                                ((Ligne) figureEnCoursDeColoration).setCouleur(couleurChoisie);
+                            }
+                        }
+
+                        // Redessiner le panneau
+                        repaint();
+                        return;
+                    }
+                }   
             }
         }
     
@@ -155,30 +179,30 @@ public class InterfaceDessin extends JPanel {
      * 
      * @param e L'événement de la souris.
      */
-    private void handleMouseReleased(MouseEvent e) {
-        if (figureEnCoursDeDessin != null) {
-            figures.add(figureEnCoursDeDessin);
-            figureEnCoursDeDessin = null;
-            repaint();
+        private void handleMouseReleased(MouseEvent e) {
+            
+            // Si une figure est en cours de dessin, l'ajoute à la liste des figures
+            // et la réinitialise
+            if (figureEnCoursDeDessin != null) {
+                figures.add(figureEnCoursDeDessin);
+                figureEnCoursDeDessin = null;
+                repaint();
+            }
+
+            // Si l'état de dessin est "Déplacer" et une figure est en cours de translation,
+            // réinitialise cette dernière
+            if ("Déplacer".equals(currentDrawState) && figureEnCoursDeTranslation != null) {
+                figureEnCoursDeTranslation = null;
+                repaint();
+            }
+
+            // Si l'état de dessin est "Coloration" et une figure est en cours de coloration,
+            // réinitialise cette dernière
+            if ("Coloration".equals(currentDrawState) && figureEnCoursDeColoration != null) {
+                figureEnCoursDeColoration = null;
+                repaint();
+            }
         }
-        
-        if ("Déplacer".equals(currentDrawState) && figureEnCoursDeTranslation != null) {
-            
-            figureEnCoursDeTranslation = null;
-            
-            repaint();
-        }
-        
-        if ("Coloration".equals(currentDrawState) && figureEnCoursDeColoration != null) {
-            
-            figureEnCoursDeColoration = null;
-            
-            repaint();
-        }
-        
-        
-        
-    }
 
     /**
      * Gère l'événement de mouvement de la souris lors du dessin d'une figure.
@@ -187,72 +211,85 @@ public class InterfaceDessin extends JPanel {
      * @param e L'événement de la souris.
      */
     private void handleMouseDragged(MouseEvent e) {
-        
+
+        // Récupère les coordonnées de la souris
         double mouseX = e.getX();
         double mouseY = e.getY();
-            
-        if (figureEnCoursDeDessin != null) {
-            
 
+        // Si une figure est en cours de dessin, ajuste sa taille ou position
+        if (figureEnCoursDeDessin != null) {
+
+            // Si la figure en cours est un cercle
             if (figureEnCoursDeDessin instanceof Cercle) {
-                
+
+                // Calcule le rayon en fonction de la position de la souris
                 double rayon = ((Cercle) figureEnCoursDeDessin).distance(mouseX, mouseY);
                 ((Cercle) figureEnCoursDeDessin).setRayon(rayon);
-                
-            } else if (figureEnCoursDeDessin instanceof Rectangle) {
-                
+
+            } 
+            // Si la figure en cours est un rectangle
+            else if (figureEnCoursDeDessin instanceof Rectangle) {
+
+                // Calcule la largeur et la hauteur en fonction de la position de la souris
                 double width = Math.abs(mouseX - ((Rectangle) figureEnCoursDeDessin).getX());
                 double height = Math.abs(mouseY - ((Rectangle) figureEnCoursDeDessin).getY());
 
                 ((Rectangle) figureEnCoursDeDessin).setLargeur(width);
                 ((Rectangle) figureEnCoursDeDessin).setHauteur(height);
-                
-            } else if (figureEnCoursDeDessin instanceof Ligne) {
+
+            } 
+            // Si la figure en cours est une ligne
+            else if (figureEnCoursDeDessin instanceof Ligne) {
                 ((Ligne) figureEnCoursDeDessin).setXFin(mouseX);
                 ((Ligne) figureEnCoursDeDessin).setYFin(mouseY);
             }
 
-            repaint();
+            repaint(); // Redessine le panneau
         }
-        
+
+        // Si l'état de dessin est "Déplacer" et une figure est en cours de translation
         if ("Déplacer".equals(currentDrawState) && figureEnCoursDeTranslation != null) {
-            
+
+            // Calcule les déplacements en x et y
             double dx = mouseX - lastMouseX;
             double dy = mouseY - lastMouseY;
 
-            
-            lastMouseX = mouseX;
+
+            // Met à jour la dernière position de la souris
+            lastMouseX = mouseX; 
             lastMouseY = mouseY;
 
+            // Translate la figure en cours de translation en fonction des déplacements
             if (figureEnCoursDeTranslation instanceof Cercle) {
-                
+
                 ((Cercle) figureEnCoursDeTranslation).translater(dx, dy);
-                
+
             } else if (figureEnCoursDeTranslation instanceof Rectangle) {
-                
+
                 ((Rectangle) figureEnCoursDeTranslation).translater(dx, dy);
-                
+
             } else if (figureEnCoursDeTranslation instanceof Ligne) {
-                
+
                 ((Ligne) figureEnCoursDeTranslation).translater(dx, dy);
-                
+
             }
-            repaint();
+            repaint(); // Redessine le panneau
         } 
     }
 
     /**
-     * Redéfinition de la méthode paint pour dessiner les figures.
-     * 
-     * @param g L'objet Graphics pour dessiner.
-     */
+    * Redéfinition de la méthode paintComponent pour dessiner les figures.
+    * 
+    * @param g L'objet Graphics pour dessiner.
+    */
     @Override
     protected void paintComponent(Graphics g) {
+        
         super.paintComponent(g);
 
         Graphics2D g2d = (Graphics2D) g;
-        
-       
+
+        // Dessiner les figures existantes
         for (Figure forme : figures) {
             if (forme instanceof Cercle) {
                 Cercle cercle = (Cercle) forme;
@@ -269,6 +306,7 @@ public class InterfaceDessin extends JPanel {
             }
         }
 
+        // Dessiner la figure en cours de coloration
         if (figureEnCoursDeColoration != null) {
             if (figureEnCoursDeColoration instanceof Cercle) {
                 Cercle cercleEnCours = (Cercle) figureEnCoursDeColoration;
@@ -282,8 +320,8 @@ public class InterfaceDessin extends JPanel {
                 fillLine(g2d, ligneEnCours.getXDebut(), ligneEnCours.getYDebut(), ligneEnCours.getXFin(), ligneEnCours.getYFin());
             }
         }
-        
 
+        // Dessiner les bordures des figures existantes
         for (Figure forme : figures) {
             if (forme instanceof Cercle) {
                 Cercle cercle = (Cercle) forme;
@@ -297,6 +335,7 @@ public class InterfaceDessin extends JPanel {
             }
         }
 
+        // Dessiner la figure en cours de dessin
         if (figureEnCoursDeDessin != null) {
             if (figureEnCoursDeDessin instanceof Cercle) {
                 Cercle cercleEnCours = (Cercle) figureEnCoursDeDessin;
@@ -311,27 +350,51 @@ public class InterfaceDessin extends JPanel {
             }
         }
     }
+
     
-    // Fill a circle
-    private void fillCircle(Graphics2D g, double centerX, double centerY, double radius) {
-        int x = (int) Math.round(centerX - radius);
-        int y = (int) Math.round(centerY - radius);
-        int diameter = (int) Math.round(2 * radius);
-        g.fillOval(x, y, diameter, diameter);
+    /**
+    * Remplir un cercle.
+    *
+    * @param g       L'objet Graphics2D pour dessiner.
+    * @param centerX La coordonnée x du centre du cercle.
+    * @param centerY La coordonnée y du centre du cercle.
+    * @param rayon   Le rayon du cercle.
+    */
+    private void fillCircle(Graphics2D g, double centerX, double centerY, double rayon) {
+        int x = (int) Math.round(centerX - rayon);
+        int y = (int) Math.round(centerY - rayon);
+        int diamètre = (int) Math.round(2 * rayon);
+        g.fillOval(x, y, diamètre, diamètre);
     }
 
-    // Fill a rectangle
-    private void fillRectangle(Graphics2D g, double x, double y, double width, double height) {
+   /**
+    * Remplir un rectangle.
+    *
+    * @param g      L'objet Graphics2D pour dessiner.
+    * @param x      La coordonnée x du coin supérieur gauche du rectangle.
+    * @param y      La coordonnée y du coin supérieur gauche du rectangle.
+    * @param largeur  La largeur du rectangle.
+    * @param hauteur La hauteur du rectangle.
+    */
+    private void fillRectangle(Graphics2D g, double x, double y, double largeur, double hauteur) {
         int xInt = (int) Math.round(x);
         int yInt = (int) Math.round(y);
-        int widthInt = (int) Math.round(width);
-        int heightInt = (int) Math.round(height);
-        g.fillRect(xInt, yInt, widthInt, heightInt);
+        int largeurInt = (int) Math.round(largeur);
+        int hauteurInt = (int) Math.round(hauteur);
+        g.fillRect(xInt, yInt, largeurInt, hauteurInt);
     }
 
-    // Fill a line (not standard, as lines usually don't get filled, but can be drawn with a filled shape)
+   /**
+    * Remplir une ligne (non standard, car les lignes ne sont généralement pas remplies, mais peuvent être dessinées avec une forme remplie).
+    *
+    * @param g  L'objet Graphics2D pour dessiner.
+    * @param x1 La coordonnée x du début de la ligne.
+    * @param y1 La coordonnée y du début de la ligne.
+    * @param x2 La coordonnée x de la fin de la ligne.
+    * @param y2 La coordonnée y de la fin de la ligne.
+    */
     private void fillLine(Graphics2D g, double x1, double y1, double x2, double y2) {
-        // This method is non-standard as lines are not usually filled, but you can draw a filled shape
+        // Cette méthode est non standard car les lignes ne sont généralement pas remplies, mais vous pouvez dessiner une forme remplie
         g.fill(new Line2D.Double(x1, y1, x2, y2));
     }
 
@@ -404,6 +467,7 @@ public class InterfaceDessin extends JPanel {
     
     /**
     * Cette méthode réinitialise la liste des figures à une liste vide.
+    * Donc le panel Dessin sera vide
     */
     public void CreeNouvelInterfaceDessin() {
         figures.clear();
@@ -483,14 +547,19 @@ public class InterfaceDessin extends JPanel {
     }
 
     /**
-     * Obtient l'état actuel du dessin.
-     * 
-     * @return L'état actuel du dessin.
-     */
+    * Obtient l'état actuel du dessin.
+    * 
+    * @return L'état actuel du dessin.
+    */
     public String getcurrentDrawState() {
         return this.currentDrawState;
     }
     
+    /**
+    * Définit la couleur sélectionnée.
+    * 
+    * @param selectedColor La couleur sélectionnée.
+    */
     public void setSelectedColor(Color selectedColor) {
         this.couleurChoisie = selectedColor;
     }
