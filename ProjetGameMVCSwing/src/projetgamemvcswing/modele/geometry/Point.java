@@ -70,8 +70,10 @@ public class Point {
      * au format "(x, y)".
      * @return Une chaîne de caractères représentant le point
      */
+    
     @Override
     public String toString(){
         return "("+this.x+", "+this.y+")";
     }
+    
 }

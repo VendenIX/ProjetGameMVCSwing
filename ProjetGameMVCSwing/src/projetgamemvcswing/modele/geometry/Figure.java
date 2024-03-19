@@ -1,6 +1,5 @@
 package projetgamemvcswing.modele.geometry;
 
-import projetgamemvcswing.modele.historique.Memento;
 /**
  * Interface définissant les opérations de base d'une figure géométrique.
  */
@@ -12,20 +11,6 @@ public interface Figure {
      * @param dy Déplacement vertical.
      */
     void translater(double dx, double dy);
-
-    /**
-     * Crée un memento contenant l'état actuel de la figure.
-     *
-     * @return Le memento de l'état actuel.
-     */
-    Memento creerMemento();
-
-    /**
-     * Restaure l'état de la figure à partir d'un memento donné.
-     *
-     * @param memento Le memento à partir duquel restaurer l'état de la figure.
-     */
-    void restaurerEtat(Memento memento);
 
     /**
      * Vérifie si la figure intersecte avec une autre figure.

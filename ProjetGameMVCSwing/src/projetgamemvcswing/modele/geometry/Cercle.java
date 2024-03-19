@@ -1,30 +1,24 @@
 package projetgamemvcswing.modele.geometry;
 import java.util.*;
-import projetgamemvcswing.modele.historique.Memento;
-
 
 /**
  * Représente un cercle dans un espace bidimensionnel. Cette classe permet de créer un cercle,
  * de le manipuler et d'interagir avec d'autres figures géométriques. Elle implémente l'interface Figure.
  */
 public class Cercle implements Figure {
+    
     private Point centre; // Centre du cercle
     private double rayon; // Rayon du cercle
     
-    //Historique des états du cercle pour permettre la sauvegarde et la restauration d'état.
-    private final List<Memento> historique = new ArrayList<>(); //l'historique est final car on ne va pas modifier une valeur dans l'historique
-
     /**
      * Constructeur pour créer un cercle avec des coordonnées spécifiques et un rayon.
      * 
-     * @param x Coordonnée x du centre du cercle.
-     * @param y Coordonnée y du centre du cercle.
+     * @param centre Point représentant le centre du cercle.
      * @param rayon Rayon du cercle.
      */
     public Cercle(Point centre, double rayon) {
         this.centre = centre;
         this.rayon = rayon;
-        sauvegarderEtat(); // Sauvegarde l'état initial
     }
     
     /**
@@ -35,15 +29,6 @@ public class Cercle implements Figure {
     @Override
     public String toString() {
         return "Cercle{centre=" +this.centre.toString()+", rayon=" + rayon + "}";
-    }
-    
-    /**
-     * Accède à l'historique des états du cercle.
-     * 
-     * @return La liste des mementos représentant l'historique du cercle.
-     */
-    public List<Memento> getHistorique() {
-        return historique;
     }
 
     // Getters et setters
@@ -64,16 +49,8 @@ public class Cercle implements Figure {
     public void translater(double dx, double dy) {
         this.setX(this.centre.getX()+dx);
         this.setY(this.centre.getY()+dy);
-        sauvegarderEtat();
     }
     
-    /**
-     * Sauvegarde l'état actuel du cercle dans l'historique.
-     */
-    public void sauvegarderEtat() {
-        this.historique.add(creerMemento());
-    }
-
     /**
      * Détermine si le cercle intersecte avec une autre figure.
      * 
@@ -105,26 +82,4 @@ public class Cercle implements Figure {
         return false;
     }
     
-    /**
-     * Crée un memento contenant l'état actuel du cercle.
-     * 
-     * @return Le memento de l'état actuel.
-     */
-    @Override
-    public Memento creerMemento() {
-        return new Memento(this.getX(), this.getY(), rayon);
-    }
-    
-    /**
-     * Restaure l'état du cercle à partir d'un memento.
-     * 
-     * @param memento Le memento à partir duquel restaurer l'état du cercle.
-     */
-    @Override
-    public void restaurerEtat(Memento memento) {
-        this.setX(memento.getX());
-        this.setY(memento.getY());
-        this.rayon = memento.getProprietes()[0];
-    }
-
 }

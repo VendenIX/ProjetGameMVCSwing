@@ -6,7 +6,6 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import projetgamemvcswing.modele.historique.Memento;
 
 public class CercleTest {
     
@@ -23,12 +22,6 @@ public class CercleTest {
     public void testToString() {
         String expected = "Cercle{centre=(0.0, 0.0), rayon=5.0}";
         assertEquals("La représentation en chaîne de caractères du cercle est incorrecte", expected, cercle.toString());
-    }
-
-    @Test
-    public void testGetHistorique() {
-        // Après la création, l'historique doit avoir 1 état (état initial)
-        assertEquals("L'historique doit contenir 1 état après la création du cercle", 1, cercle.getHistorique().size());
     }
 
     @Test
@@ -59,12 +52,6 @@ public class CercleTest {
     }
 
     @Test
-    public void testSauvegarderEtat() {
-        cercle.translater(10, 5); // Cela devrait sauvegarder un nouvel état
-        assertEquals("L'historique doit contenir 2 états après une translation", 2, cercle.getHistorique().size());
-    }
-
-    @Test
     public void testIntersecteAvec() {
         Point autreCentre = new Point(5,0);
         Cercle autreCercle = new Cercle(autreCentre, 5);
@@ -75,12 +62,4 @@ public class CercleTest {
         assertFalse("Les cercles ne devraient pas s'intersecter", cercle.intersecteAvec(cercleEloigne));
     }
 
-    @Test
-    public void testRestaurerEtat() {
-        cercle.translater(10, 5);
-        Memento etatInitial = cercle.getHistorique().get(0);
-        cercle.restaurerEtat(etatInitial);
-        assertEquals("La restauration d'état ne fonctionne pas pour x", 0.0, cercle.getX(), 0.0);
-        assertEquals("La restauration d'état ne fonctionne pas pour y", 0.0, cercle.getY(), 0.0);
-    }
 }

@@ -6,7 +6,6 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import projetgamemvcswing.modele.geometry.Rectangle;
-import projetgamemvcswing.modele.historique.Memento;
 
 public class RectangleTest {
     
@@ -21,11 +20,6 @@ public class RectangleTest {
     public void testToString() {
         String expected = "Rectangle{coinSupérieurGauche=(0.0, 0.0), largeur=10.0, hauteur=20.0}";
         assertEquals(expected, rectangle.toString());
-    }
-
-    @Test
-    public void testGetHistorique() {
-        assertEquals(1, rectangle.getHistorique().size());
     }
 
     @Test
@@ -57,21 +51,6 @@ public class RectangleTest {
         rectangle.translater(10, 5);
         assertEquals(10.0, rectangle.getX(), 0.0);
         assertEquals(5.0, rectangle.getY(), 0.0);
-    }
-
-    @Test
-    public void testSauvegarderEtat() {
-        rectangle.translater(10, 5);
-        assertEquals(2, rectangle.getHistorique().size());
-    }
-
-    @Test
-    public void testRestaurerEtat() {
-        rectangle.translater(10, 5);
-        Memento etatInitial = rectangle.getHistorique().get(0);
-        rectangle.restaurerEtat(etatInitial);
-        assertEquals(0.0, rectangle.getX(), 0.0);
-        assertEquals(0.0, rectangle.getY(), 0.0);
     }
 
     @Test
