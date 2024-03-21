@@ -29,8 +29,7 @@ import javax.swing.JOptionPane;
  * 
  * @author Islem
  */
-public class InterfaceDessin extends JPanel {
-
+public class InterfaceDessin extends JPanel {    
     private final List<Figure> figures = new ArrayList<>();
     private Figure figureEnCoursDeDessin;
     private Figure figureEnCoursDeTranslation;
@@ -49,8 +48,6 @@ public class InterfaceDessin extends JPanel {
     public InterfaceDessin() {
         setBackground(Color.WHITE);
         
-        
-
         // Ajouter un écouteur pour les événements de la souris
         addMouseListener(new MouseAdapter() {
             @Override
@@ -190,7 +187,7 @@ public class InterfaceDessin extends JPanel {
         
         double mouseX = e.getX();
         double mouseY = e.getY();
-            
+
         if (figureEnCoursDeDessin != null) {
             
 
@@ -200,12 +197,29 @@ public class InterfaceDessin extends JPanel {
                 ((Cercle) figureEnCoursDeDessin).setRayon(rayon);
                 
             } else if (figureEnCoursDeDessin instanceof Rectangle) {
-                
-                double width = Math.abs(mouseX - ((Rectangle) figureEnCoursDeDessin).getX());
-                double height = Math.abs(mouseY - ((Rectangle) figureEnCoursDeDessin).getY());
+                Rectangle rectangle = (Rectangle) figureEnCoursDeDessin;
 
-                ((Rectangle) figureEnCoursDeDessin).setLargeur(width);
-                ((Rectangle) figureEnCoursDeDessin).setHauteur(height);
+                // nouvelle largeur et hauteur
+                double newWidth = Math.abs(mouseX - lastMouseX);
+                double newHeight = Math.abs(mouseY - lastMouseY);
+
+                // update le x et y du rectangle pour être toujours le coin supérieur gauche
+                double newX = Math.min(mouseX, lastMouseX);
+                double newY = Math.min(mouseY, lastMouseY);
+
+                // déplacement vers le haut/gauche depuis le point initial
+                if (mouseX < lastMouseX) {
+                    newX = mouseX; // Le nouveau x est celui de la souris si on va vers la gauche
+                }
+                if (mouseY < lastMouseY) {
+                    newY = mouseY; // Le nouveau y est celui de la souris si on va vers le haut
+                }
+
+                rectangle.setX(newX);
+                rectangle.setY(newY);
+                rectangle.setLargeur(newWidth);
+                rectangle.setHauteur(newHeight);
+    
                 
             } else if (figureEnCoursDeDessin instanceof Ligne) {
                 ((Ligne) figureEnCoursDeDessin).setXFin(mouseX);

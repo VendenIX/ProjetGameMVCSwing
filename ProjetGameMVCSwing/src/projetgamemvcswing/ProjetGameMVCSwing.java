@@ -17,7 +17,6 @@ public class ProjetGameMVCSwing{
         //new fenetreContact();
         //new fenetreDessin();
         //new fenetreJeu();
-        
     }
     
 }
