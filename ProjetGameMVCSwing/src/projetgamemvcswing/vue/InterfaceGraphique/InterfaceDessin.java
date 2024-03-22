@@ -58,8 +58,6 @@ public class InterfaceDessin extends JPanel {
         // Set de fond blanc
         setBackground(Color.WHITE);
         
-        
-
         // Ajouter un écouteur pour les événements de la souris
         addMouseListener(new MouseAdapter() {
             // Quand il y a un clique de souris
@@ -112,7 +110,7 @@ public class InterfaceDessin extends JPanel {
             // Si l'état de dessin actuel est "Ligne"
             } else if ("Ligne".equals(currentDrawState)){
                 // Créer une nouvelle ligne avec le point de départ à (x, y)
-                // le point d'arrivée initial à (0, 0) et une couleur blanche
+                // le point d'arrivée initial à (x, y) et une couleur blanche
                 figureEnCoursDeDessin = new Ligne(new Point(x, y), new Point(x, y), new Color(0, 0, 0, 0));
 
             // Si l'état de dessin actuel est "Supprimer"
