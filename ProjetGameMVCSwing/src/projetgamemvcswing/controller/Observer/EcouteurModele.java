@@ -2,13 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package projetgamemvcswing.controller;
+package projetgamemvcswing.controller.Observer;
 
 /**
  *
  * @author 21907062
  */
-public interface ModeleEcoutable {
-    public void ajoutEcouteur(EcouteurModele e);
-    public void retraitEcouteur(EcouteurModele e);
+public interface EcouteurModele {
+    void modelUpdated(Object source);
 }

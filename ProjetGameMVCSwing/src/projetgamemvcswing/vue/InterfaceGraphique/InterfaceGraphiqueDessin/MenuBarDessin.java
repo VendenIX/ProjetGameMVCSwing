@@ -1,7 +1,18 @@
-package projetgamemvcswing.vue.InterfaceGraphique;
+package projetgamemvcswing.vue.InterfaceGraphique.InterfaceGraphiqueDessin;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
+import projetgamemvcswing.controller.State.ColorForm;
+import projetgamemvcswing.controller.State.CreateCircle;
+import projetgamemvcswing.controller.State.CreateLine;
+import projetgamemvcswing.controller.State.CreateRectangle;
+import projetgamemvcswing.controller.State.DeleteForm;
+import projetgamemvcswing.controller.State.MoveForm;
+import projetgamemvcswing.vue.InterfaceGraphique.FenetreContact;
+import projetgamemvcswing.vue.InterfaceGraphique.FenetreInformation;
+import projetgamemvcswing.vue.InterfaceGraphique.InterfaceGraphiqueJeu.FenetreJeu;
+import projetgamemvcswing.vue.InterfaceGraphique.SauvegardeurImage;
 
 /**
  * La classe MenuBarDessin représente la barre de menu de l'application de dessin.
@@ -20,7 +31,7 @@ public class MenuBarDessin extends JMenuBar {
      * @param frame La fenêtre principale
      * @param interfacedessin L'interface de dessin associée
      */
-    public MenuBarDessin(JFrame frame, InterfaceDessin interfacedessin) {
+    public MenuBarDessin(JFrame frame, PanelDessin interfacedessin) {
         currentFrame = frame;
 
         // Créer le menu Fichier
@@ -41,7 +52,8 @@ public class MenuBarDessin extends JMenuBar {
         // Ecouter pour l'item saveItem/Enregistrer
         saveItem.addActionListener((ActionEvent e) -> {
             // Enregistrer le dessin comme une image JPG
-            interfacedessin.SauvegarderImageCommeJPG();
+            SauvegardeurImage sauvegardeurImage = new SauvegardeurImage();
+            sauvegardeurImage.SauvegarderImageCommeJPG(interfacedessin);
         });
         
         // Créer l'item Sortir
@@ -65,7 +77,7 @@ public class MenuBarDessin extends JMenuBar {
         JMenuItem circleItem = new JMenuItem("Cercle");
 
         circleItem.addActionListener((ActionEvent e) -> {
-            interfacedessin.setcurrentDrawState("Cercle");
+            interfacedessin.setCurrentState(new CreateCircle());
         });
 
         // Créer l'item Rectangle
@@ -73,7 +85,7 @@ public class MenuBarDessin extends JMenuBar {
 
         // Ecouter pour l'item rectangleItem/Rectangle
         rectangleItem.addActionListener((ActionEvent e) -> {
-            interfacedessin.setcurrentDrawState("Rectangle");
+            interfacedessin.setCurrentState(new CreateRectangle());
         });
 
         // Créer l'item Déplacer
@@ -81,7 +93,7 @@ public class MenuBarDessin extends JMenuBar {
         
         // Ecouter pour l'item moveItem/Déplacer
         moveItem.addActionListener((ActionEvent e) -> {
-            interfacedessin.setcurrentDrawState("Déplacer");
+            interfacedessin.setCurrentState(new MoveForm());
         });
         
         // Créer l'item Ligne
@@ -89,7 +101,7 @@ public class MenuBarDessin extends JMenuBar {
         
         // Ecouter pour l'item lineItem/Ligne
         lineItem.addActionListener((ActionEvent e) -> {
-            interfacedessin.setcurrentDrawState("Ligne");
+            interfacedessin.setCurrentState(new CreateLine());
         });
         
         // Créer l'item Coloration
@@ -97,7 +109,16 @@ public class MenuBarDessin extends JMenuBar {
         
         // Ecouter pour l'item lineItem/Ligne
         paintItem.addActionListener((ActionEvent e) -> {
-            interfacedessin.setcurrentDrawState("Coloration");
+            // Affiche une boîte de dialogue de choix de couleur avec le composant parent "currentFrame",
+            // un titre de dialogue "Choix de Couleur" et une couleur par défaut "currentFrame.getBackground()".
+            Color selectedColor = JColorChooser.showDialog(
+                currentFrame, // Composant parent
+                "Choix de Couleur", // Titre du dialogue
+                currentFrame.getBackground() // Couleur par défaut
+            );
+            
+            interfacedessin.setCurrentState(new ColorForm());
+            interfacedessin.setSelectedColor(selectedColor);
         });
         
         // Créer l'item Annuler
@@ -111,7 +132,7 @@ public class MenuBarDessin extends JMenuBar {
         
         // Ecouter pour l'item deleteItem/Supprimer
         deleteItem.addActionListener((ActionEvent e) -> {
-            interfacedessin.setcurrentDrawState("Supprimer");
+            interfacedessin.setCurrentState(new DeleteForm());
         });
         
         // Ajouter les items dans le menu Outils

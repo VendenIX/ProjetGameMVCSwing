@@ -1,13 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package projetgamemvcswing.controller;
+
+package projetgamemvcswing.controller.Observer;
 import java.util.*;
-/**
- *
- * @author 21907062
- */
+
 public class AbstractModeleEcoutable implements ModeleEcoutable {
   private List<EcouteurModele> ecouteurs;
 

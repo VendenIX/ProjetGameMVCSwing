@@ -1,4 +1,4 @@
-package projetgamemvcswing.vue.InterfaceGraphique;
+package projetgamemvcswing.vue.InterfaceGraphique.InterfaceGraphiqueJeu;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
