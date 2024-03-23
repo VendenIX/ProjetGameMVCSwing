@@ -1,5 +1,9 @@
 package projetgamemvcswing.modele.geometry;
 
+import java.awt.Color;
+
+
+
 /**
  * Classe représentant un rectangle dans un espace bidimensionnel. 
  * Elle fournit des fonctionnalités pour manipuler le rectangle, y compris le déplacer 
@@ -9,6 +13,7 @@ public class Rectangle implements Figure {
     
     private double x, y; // Coordonnées du coin supérieur gauche
     private double largeur, hauteur; // Dimensions du rectangle
+    private Color couleur;
     
     /**
      * Constructeur pour initialiser un nouveau rectangle avec ses dimensions et position.
@@ -17,12 +22,14 @@ public class Rectangle implements Figure {
      * @param y La coordonnée y du coin supérieur gauche du rectangle.
      * @param largeur La largeur du rectangle.
      * @param hauteur La hauteur du rectangle.
+     * @param couleur du rectangle.
      */
-    public Rectangle(double x, double y, double largeur, double hauteur) {
+    public Rectangle(double x, double y, double largeur, double hauteur, Color couleur) {
         this.x = x;
         this.y = y;
         this.largeur = largeur;
         this.hauteur = hauteur;
+        this.couleur = couleur;
     }
     
     @Override
@@ -39,6 +46,8 @@ public class Rectangle implements Figure {
     public void setLargeur(double largeur) { this.largeur = largeur; }
     public double getHauteur() { return hauteur; }
     public void setHauteur(double hauteur) { this.hauteur = hauteur; }
+    public Color getCouleur() { return couleur; }
+    public void setCouleur(Color couleur) { this.couleur = couleur; }
     
     /**
      * Translate le rectangle par les distances spécifiées sur les axes x et y.
@@ -48,8 +57,8 @@ public class Rectangle implements Figure {
      */
     @Override
     public void translater(double dx, double dy) {
-        x += dx;
-        y += dy;
+        this.x += dx;
+        this.y += dy;
     }
 
     /**
@@ -95,5 +104,19 @@ public class Rectangle implements Figure {
         }
         return false;
     }
-    
+        
+    /**
+    * Vérifie si le rectangle contient le point spécifié par les coordonnées (x, y).
+    *
+    * @param x La coordonnée x du point.
+    * @param y La coordonnée y du point.
+    * @return True si le rectangle contient le point, false sinon.
+    */
+    @Override
+    public boolean contient(double x, double y) {
+        // Vérifier si le point (x, y) est à l'intérieur des limites du rectangle
+        return x >= this.x && x <= this.x + this.largeur &&
+               y >= this.y && y <= this.y + this.hauteur;
+    }
+
 }

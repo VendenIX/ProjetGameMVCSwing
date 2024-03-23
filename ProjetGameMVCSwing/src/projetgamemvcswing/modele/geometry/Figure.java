@@ -19,4 +19,13 @@ public interface Figure {
      * @return true si les figures s'intersectent, false sinon.
      */
     boolean intersecteAvec(Figure autre);
+    
+    /**
+    * Vérifie si la figure contient le point donné (x, y).
+    *
+    * @param x La coordonnée x du point.
+    * @param y La coordonnée y du point.
+    * @return Vrai si la figure contient le point, faux sinon.
+    */
+   boolean contient(double x, double y);
 }

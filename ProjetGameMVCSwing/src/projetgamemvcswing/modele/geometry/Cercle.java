@@ -1,5 +1,5 @@
 package projetgamemvcswing.modele.geometry;
-import java.util.*;
+import java.awt.Color;
 
 /**
  * Représente un cercle dans un espace bidimensionnel. Cette classe permet de créer un cercle,
@@ -9,16 +9,19 @@ public class Cercle implements Figure {
     
     private Point centre; // Centre du cercle
     private double rayon; // Rayon du cercle
+    private Color couleur; // Couleur du cercle
     
     /**
      * Constructeur pour créer un cercle avec des coordonnées spécifiques et un rayon.
      * 
-     * @param centre Point représentant le centre du cercle.
+     * @param centre du cercle (x, y)
+     * @param couleur
      * @param rayon Rayon du cercle.
      */
-    public Cercle(Point centre, double rayon) {
+    public Cercle(Point centre, double rayon, Color couleur) {
         this.centre = centre;
         this.rayon = rayon;
+        this.couleur = couleur;
     }
     
     /**
@@ -38,6 +41,8 @@ public class Cercle implements Figure {
     public void setY(double y) { this.centre.setY(y); }
     public double getRayon() { return rayon; }
     public void setRayon(double rayon) { this.rayon = rayon; }
+    public Color getCouleur() { return couleur; }
+    public void setCouleur(Color couleur) { this.couleur = couleur; }
     
     /**
      * Translade le cercle par les distances spécifiées.
@@ -82,4 +87,31 @@ public class Cercle implements Figure {
         return false;
     }
     
+    /**
+     * Calcule la distance entre les coordonnées actuelles du centre du cercle
+     * et les coordonnées spécifiées (draggedX, draggedY).
+     * 
+     * @param draggedX Coordonnée x du point spécifié.
+     * @param draggedY Coordonnée y du point spécifié.
+     * @return La distance euclidienne entre le centre du cercle et les coordonnées spécifiées.
+     */
+    public double distance(double draggedX, double draggedY ){
+        return Math.sqrt(Math.pow(draggedX - this.getX(), 2) + Math.pow(draggedY - this.getY(), 2));
+    }
+    
+    /**
+    * Vérifie si le cercle contient le point spécifié par les coordonnées (x, y).
+    *
+    * @param x La coordonnée x du point.
+    * @param y La coordonnée y du point.
+    * @return True si le cercle contient le point, false sinon.
+    */
+    @Override
+    public boolean contient(double x, double y) {
+        // Calculer la distance entre le point (x, y) et le centre du cercle
+        double distance = Math.sqrt(Math.pow(x - this.centre.getX(), 2) + Math.pow(y - this.centre.getY(), 2));
+        
+        // Vérifier si la distance est inférieure ou égale au rayon du cercle
+        return distance <= this.rayon;
+    }
 }

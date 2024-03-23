@@ -1,10 +1,14 @@
 package projetgamemvcswing.geometry;
 
-import projetgamemvcswing.modele.geometry.Cercle;
-import projetgamemvcswing.modele.geometry.Point;
+import static org.junit.Assert.*;
+
+import java.awt.Color;
+
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import projetgamemvcswing.modele.geometry.Cercle;
+import projetgamemvcswing.modele.geometry.Point;
 import projetgamemvcswing.modele.geometry.Rectangle;
 
 public class RectangleTest {
@@ -13,7 +17,7 @@ public class RectangleTest {
     
     @Before
     public void setUp() {
-        rectangle = new Rectangle(0, 0, 10, 20);
+        rectangle = new Rectangle(0, 0, 10, 20, Color.WHITE);
     }
 
     @Test
@@ -55,14 +59,14 @@ public class RectangleTest {
 
     @Test
     public void testIntersecteAvecRectangle() {
-        Rectangle autreRectangle = new Rectangle(5, 5, 5, 5);
+        Rectangle autreRectangle = new Rectangle(5, 5, 5, 5, Color.WHITE);
         assertTrue(rectangle.intersecteAvec(autreRectangle));
     }
 
     @Test
     public void testIntersecteAvecCercle() {
         Point centre = new Point(5,5);
-        Cercle cercle = new Cercle(centre, 5);
+        Cercle cercle = new Cercle(centre, 5, Color.WHITE);
         assertTrue(rectangle.intersecteAvec(cercle));
     }
 }
