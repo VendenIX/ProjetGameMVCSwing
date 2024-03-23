@@ -1,5 +1,6 @@
 package projetgamemvcswing.geometry;
 
+import java.awt.Color;
 import projetgamemvcswing.modele.geometry.Cercle;
 import projetgamemvcswing.modele.geometry.Point;
 import java.util.List;
@@ -16,7 +17,7 @@ public class CercleTest {
     @Before
     public void setUp() {
         centre = new Point(0,0);
-        cercle = new Cercle(centre, 5);
+        cercle = new Cercle(centre, 5, Color.WHITE);
     }
 
     @Test
@@ -67,11 +68,11 @@ public class CercleTest {
     @Test
     public void testIntersecteAvec() {
         Point autreCentre = new Point(5,0);
-        Cercle autreCercle = new Cercle(autreCentre, 5);
+        Cercle autreCercle = new Cercle(autreCentre, 5, Color.WHITE);
         assertTrue("Les cercles devraient s'intersecter", cercle.intersecteAvec(autreCercle));
         
         Point centreEloigne = new Point(20,20);
-        Cercle cercleEloigne = new Cercle(centreEloigne, 2);
+        Cercle cercleEloigne = new Cercle(centreEloigne, 2, Color.WHITE);
         assertFalse("Les cercles ne devraient pas s'intersecter", cercle.intersecteAvec(cercleEloigne));
     }
 
