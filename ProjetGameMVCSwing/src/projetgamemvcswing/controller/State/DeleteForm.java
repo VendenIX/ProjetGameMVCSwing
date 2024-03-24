@@ -23,7 +23,7 @@ public class DeleteForm implements DessinState {
         for (Figure f : panelDessin.getFigures()) {
             if (f.contient(x, y)) {
                 // Supprimer la figure sélectionnée de la liste principale
-                panelDessin.getFigures().remove(f);                    
+                panelDessin.supprimerFigure(f);
                 // Sortir de la boucle après la suppression d'une figure
                 return;
             }

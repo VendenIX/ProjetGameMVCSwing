@@ -175,11 +175,25 @@ public class PanelDessin extends JPanel implements EcouteurModele {
     public void setSelectedColor(Color selectedColor) {
         this.couleurChoisie = selectedColor;
     }
-
+    
+    /**
+     * Met à jour le panel
+     * @param source 
+     */
     @Override
     public void modelUpdated(Object source) {
         repaint();
     }
+    
+    /**
+     * Suprimme une figure du panel
+     * @param f 
+     */
+    public void supprimerFigure(Figure f) {
+        this.figures.remove(f);
+        this.modelUpdated(this); // Notifie que le modèle a changé, ce qui déclenchera un repaint
+    }
+
 
 }
 
