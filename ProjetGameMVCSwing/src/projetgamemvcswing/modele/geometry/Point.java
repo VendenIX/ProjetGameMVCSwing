@@ -1,9 +1,3 @@
-
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
 /*
  * Cette classe représente un point dans un espace bidimensionnel, défini par ses coordonnées (x, y).
  */

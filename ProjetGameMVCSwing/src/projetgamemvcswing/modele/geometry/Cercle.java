@@ -1,11 +1,12 @@
 package projetgamemvcswing.modele.geometry;
 import java.awt.Color;
+import projetgamemvcswing.controller.Observer.AbstractModeleEcoutable;
 
 /**
  * Représente un cercle dans un espace bidimensionnel. Cette classe permet de créer un cercle,
  * de le manipuler et d'interagir avec d'autres figures géométriques. Elle implémente l'interface Figure.
  */
-public class Cercle implements Figure {
+public class Cercle extends AbstractModeleEcoutable implements Figure {
     
     private Point centre; // Centre du cercle
     private double rayon; // Rayon du cercle
@@ -36,13 +37,32 @@ public class Cercle implements Figure {
 
     // Getters et setters
     public double getX() { return this.centre.getX(); }
-    public void setX(double x) { this.centre.setX(x); }
+    
+    public void setX(double x) { 
+        this.centre.setX(x); 
+        fireChange(); // Notifier les écouteurs du changement
+    }
+    
     public double getY() { return this.centre.getY(); }
-    public void setY(double y) { this.centre.setY(y); }
+    
+    public void setY(double y) { 
+        this.centre.setY(y); 
+        fireChange(); // Notifier les écouteurs du changement
+    }
+    
     public double getRayon() { return rayon; }
-    public void setRayon(double rayon) { this.rayon = rayon; }
+    
+    public void setRayon(double rayon) { 
+        this.rayon = rayon; 
+        fireChange(); // Notifier les écouteurs du changement
+    }
+    
     public Color getCouleur() { return couleur; }
-    public void setCouleur(Color couleur) { this.couleur = couleur; }
+    
+    public void setCouleur(Color couleur) { 
+        this.couleur = couleur; 
+        fireChange(); // Notifier les écouteurs du changement
+    }
     
     /**
      * Translade le cercle par les distances spécifiées.

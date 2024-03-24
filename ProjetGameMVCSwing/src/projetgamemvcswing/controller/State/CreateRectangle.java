@@ -23,8 +23,11 @@ public class CreateRectangle implements DessinState {
         panelDessin.setLastMouseX(x);
         panelDessin.setLastMouseY(y);
         
-        // Créer un rectangle avec une couleur transparente
-        panelDessin.setFigureEnCoursDeDessin(new Rectangle(x, y, 0, 0, new Color(0, 0, 0, 0)));
+        Rectangle nouveauRectangle = new Rectangle(x, y, 0, 0, new Color(0, 0, 0, 0));
+
+        nouveauRectangle.ajoutEcouteur(panelDessin); 
+
+        panelDessin.setFigureEnCoursDeDessin(nouveauRectangle);
     }
 
     @Override

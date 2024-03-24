@@ -1,5 +1,5 @@
 package projetgamemvcswing.modele.geometry;
-
+import projetgamemvcswing.controller.Observer.AbstractModeleEcoutable;
 import java.awt.Color;
 
 
@@ -9,7 +9,7 @@ import java.awt.Color;
  * Elle fournit des fonctionnalités pour manipuler le rectangle, y compris le déplacer 
  * et vérifier les intersections avec d'autres figures géométriques.
  */
-public class Rectangle implements Figure {
+public class Rectangle extends AbstractModeleEcoutable implements Figure {
     
     private double x, y; // Coordonnées du coin supérieur gauche
     private double largeur, hauteur; // Dimensions du rectangle
@@ -39,15 +39,39 @@ public class Rectangle implements Figure {
     
     // Getters et setters
     public double getX() { return x; }
-    public void setX(double x) { this.x = x; }
+    
+    public void setX(double x) { 
+        this.x = x; 
+        fireChange(); // Notifier les écouteurs du changement
+    }
+    
     public double getY() { return y; }
-    public void setY(double y) { this.y = y; }
+    
+    public void setY(double y) { 
+        this.y = y; 
+        fireChange(); // Notifier les écouteurs du changement
+    }
+    
     public double getLargeur() { return largeur; }
-    public void setLargeur(double largeur) { this.largeur = largeur; }
+    
+    public void setLargeur(double largeur) { 
+        this.largeur = largeur; 
+        fireChange(); // Notifier les écouteurs du changement
+    }
+    
     public double getHauteur() { return hauteur; }
-    public void setHauteur(double hauteur) { this.hauteur = hauteur; }
+    
+    public void setHauteur(double hauteur) { 
+        this.hauteur = hauteur; 
+        fireChange(); // Notifier les écouteurs du changement
+    }
+    
     public Color getCouleur() { return couleur; }
-    public void setCouleur(Color couleur) { this.couleur = couleur; }
+    
+    public void setCouleur(Color couleur) { 
+        this.couleur = couleur; 
+        fireChange(); // Notifier les écouteurs du changement
+    }
     
     /**
      * Translate le rectangle par les distances spécifiées sur les axes x et y.
@@ -57,8 +81,8 @@ public class Rectangle implements Figure {
      */
     @Override
     public void translater(double dx, double dy) {
-        this.x += dx;
-        this.y += dy;
+        setX(this.x + dx);
+        setY(this.y + dy);
     }
 
     /**

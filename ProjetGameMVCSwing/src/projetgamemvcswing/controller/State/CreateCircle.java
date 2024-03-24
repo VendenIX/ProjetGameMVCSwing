@@ -23,8 +23,11 @@ public class CreateCircle implements DessinState {
         double x = e.getX();
         double y = e.getY();
         
-        // Créer un cercle avec un point de départ (x, y), un rayon de 0 et une couleur transparente
-        panelDessin.setFigureEnCoursDeDessin(new Cercle(new Point(x, y), 0, new Color(0, 0, 0, 0)));
+    
+        
+        Cercle cercle = new Cercle(new Point(x, y), 0, new Color(0, 0, 0, 0));
+        cercle.ajoutEcouteur(panelDessin); // Enregistre PanelDessin comme écouteur
+        panelDessin.setFigureEnCoursDeDessin(cercle);
     }
 
     @Override

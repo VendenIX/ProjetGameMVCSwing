@@ -7,6 +7,7 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
+import projetgamemvcswing.controller.Observer.EcouteurModele;
 import projetgamemvcswing.modele.geometry.*;
 import projetgamemvcswing.controller.ShapeDrawer;
 import projetgamemvcswing.controller.ShapeFiller;
@@ -24,7 +25,7 @@ import projetgamemvcswing.controller.State.DessinState;
  * 
  * @author Islem
  */
-public class PanelDessin extends JPanel {
+public class PanelDessin extends JPanel implements EcouteurModele {
     
     
     // Variables
@@ -70,14 +71,12 @@ public class PanelDessin extends JPanel {
             @Override
             public void mousePressed(MouseEvent e) {
                 currentState.handleMousePressed(PanelDessin.this, e);
-                repaint();
             }
 
             // Quand il y a une relache de souris
             @Override
             public void mouseReleased(MouseEvent e) {
                 currentState.handleMouseReleased(PanelDessin.this, e);
-                repaint();
             }
         });
 
@@ -87,7 +86,6 @@ public class PanelDessin extends JPanel {
             public void mouseDragged(MouseEvent e) {
                 //handleMouseDragged(e);
                 currentState.handleMouseDragged(PanelDessin.this, e);
-                repaint();
             }
         });
     }
@@ -176,6 +174,11 @@ public class PanelDessin extends JPanel {
     */
     public void setSelectedColor(Color selectedColor) {
         this.couleurChoisie = selectedColor;
+    }
+
+    @Override
+    public void modelUpdated(Object source) {
+        repaint();
     }
 
 }

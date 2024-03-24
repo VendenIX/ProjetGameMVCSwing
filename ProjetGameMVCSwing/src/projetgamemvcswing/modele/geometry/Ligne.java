@@ -1,8 +1,8 @@
 package projetgamemvcswing.modele.geometry;
-
+import projetgamemvcswing.controller.Observer.AbstractModeleEcoutable;
 import java.awt.Color;
 
-public class Ligne implements Figure {
+public class Ligne extends AbstractModeleEcoutable implements Figure {
     
     private Point debut;
     private Point fin;
@@ -16,19 +16,39 @@ public class Ligne implements Figure {
     }
     
     public double getXDebut() { return this.debut.getX(); }
+    
     public double getYDebut() { return this.debut.getY(); }
     
-    public void setXDebut(double Xdebut) { this.debut.setX(Xdebut);}
-    public void setYDebut(double Ydebut) { this.debut.setY(Ydebut); }
+    public void setXDebut(double Xdebut) { 
+        this.debut.setX(Xdebut);
+        fireChange(); // Notifier les écouteurs du changement
+    }
+    
+    public void setYDebut(double Ydebut) { 
+        this.debut.setY(Ydebut); 
+        fireChange(); // Notifier les écouteurs du changement
+    }
     
     public double getXFin() { return this.fin.getX(); }
+    
      public double getYFin() { return this.fin.getY(); }
      
-    public void setXFin(double Xfin) { this.fin.setX(Xfin); }
-    public void setYFin(double Yfin) { this.fin.setY(Yfin); }
+    public void setXFin(double Xfin) { 
+        this.fin.setX(Xfin); 
+        fireChange(); // Notifier les écouteurs du changement
+    }
+    
+    public void setYFin(double Yfin) { 
+        this.fin.setY(Yfin); 
+        fireChange(); // Notifier les écouteurs du changement
+    }
     
     public Color getCouleur() { return couleur; }
-    public void setCouleur(Color couleur) { this.couleur = couleur; }
+    
+    public void setCouleur(Color couleur) { 
+        this.couleur = couleur; 
+        fireChange(); // Notifier les écouteurs du changement
+    }
     
     /**
     * Translade la ligne par les distances spécifiées.

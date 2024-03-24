@@ -22,8 +22,11 @@ public class CreateLine implements DessinState {
         double x = e.getX();
         double y = e.getY();
         
-        // Créer une ligne avec un point de départ et de fin identiques et une couleur noire
-        panelDessin.setFigureEnCoursDeDessin(new Ligne(new Point(x, y), new Point(x, y), Color.BLACK));
+        Ligne nouvelleLigne = new Ligne(new Point(x, y), new Point(x, y), Color.BLACK);
+
+        nouvelleLigne.ajoutEcouteur(panelDessin);
+
+        panelDessin.setFigureEnCoursDeDessin(nouvelleLigne);
     }
 
     @Override
