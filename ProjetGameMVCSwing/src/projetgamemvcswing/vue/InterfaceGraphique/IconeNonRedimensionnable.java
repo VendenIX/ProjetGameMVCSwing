@@ -6,11 +6,11 @@ import javax.swing.*;
  *
  * @author Islem
  */
-public class NoScalingIcon implements Icon {
+public class IconeNonRedimensionnable implements Icon {
 
     private final Icon icon;
     
-    public NoScalingIcon(Icon icon)
+    public IconeNonRedimensionnable(Icon icon)
     {
         this.icon = icon;
     }

@@ -1,11 +1,14 @@
-package projetgamemvcswing.vue.InterfaceGraphique;
+package projetgamemvcswing.vue.InterfaceGraphique.InterfaceGraphiqueJeu;
 
+import projetgamemvcswing.vue.InterfaceGraphique.InterfaceGraphiqueDessin.FenetreDessin;
 import java.awt.event.ActionEvent;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import projetgamemvcswing.vue.InterfaceGraphique.FenetreContact;
+import projetgamemvcswing.vue.InterfaceGraphique.FenetreInformation;
 
 /**
  *

@@ -1,17 +1,27 @@
-package projetgamemvcswing.vue.InterfaceGraphique;
+package projetgamemvcswing.vue.InterfaceGraphique.InterfaceGraphiqueDessin;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
+import projetgamemvcswing.controller.State.ColorForm;
+import projetgamemvcswing.controller.State.CreateCircle;
+import projetgamemvcswing.controller.State.CreateLine;
+import projetgamemvcswing.controller.State.CreateRectangle;
+import projetgamemvcswing.controller.State.DeleteForm;
+import projetgamemvcswing.controller.State.MoveForm;
+import projetgamemvcswing.vue.InterfaceGraphique.FenetreContact;
+import projetgamemvcswing.vue.InterfaceGraphique.FenetreInformation;
+import projetgamemvcswing.vue.InterfaceGraphique.InterfaceGraphiqueJeu.FenetreJeu;
+import projetgamemvcswing.vue.InterfaceGraphique.SauvegardeurImage;
 
 /**
  * La classe MenuBarDessin représente la barre de menu de l'application de dessin.
  * Elle étend JMenuBar et contient les menus Fichier, Outils, Mode et Aide.
  * 
- * @author Islem
  */
 public class MenuBarDessin extends JMenuBar {
 
-    // Variables de classe
+    // Variables de la Jframe encours
     private final JFrame currentFrame;
 
     /**
@@ -21,78 +31,111 @@ public class MenuBarDessin extends JMenuBar {
      * @param frame La fenêtre principale
      * @param interfacedessin L'interface de dessin associée
      */
-    public MenuBarDessin(JFrame frame, InterfaceDessin interfacedessin) {
+    public MenuBarDessin(JFrame frame, PanelDessin interfacedessin) {
         currentFrame = frame;
 
         // Créer le menu Fichier
         JMenu menuFichier = new JMenu("Fichier");
+        
+        // Créer l'item Nouveau
         JMenuItem newItem = new JMenuItem("Nouveau");
         
+        // Ecouter pour l'item newItem/Nouveau
         newItem.addActionListener((ActionEvent e) -> {
-            // Cree une nouvel page de dessin
+            // Crée une nouvelle page de dessin
             interfacedessin.CreeNouvelInterfaceDessin();
         });
         
+        // Créer l'item Enregistrer
         JMenuItem saveItem = new JMenuItem("Enregistrer");
         
+        // Ecouter pour l'item saveItem/Enregistrer
         saveItem.addActionListener((ActionEvent e) -> {
             // Enregistrer le dessin comme une image JPG
-            interfacedessin.SauvegarderImageCommeJPG();
+            SauvegardeurImage sauvegardeurImage = new SauvegardeurImage();
+            sauvegardeurImage.SauvegarderImageCommeJPG(interfacedessin);
         });
         
-        
+        // Créer l'item Sortir
         JMenuItem exitItem = new JMenuItem("Sortir");
 
         // Ecouter pour l'item exitItem/Sortir
         exitItem.addActionListener((ActionEvent e) -> {
-            // Methode pour fermer la fenetre current
+            // Méthode pour fermer la fenêtre courante
             handleExitAction(currentFrame);
         });
-
+        
+        // Ajouter les items dans le menu Fichier
         menuFichier.add(newItem);
         menuFichier.add(saveItem);
         menuFichier.add(exitItem);
 
         // Créer le menu Outils
         JMenu menuOutils = new JMenu("Outils");
+        
+        // Créer l'item Cercle
         JMenuItem circleItem = new JMenuItem("Cercle");
 
         circleItem.addActionListener((ActionEvent e) -> {
-            interfacedessin.setcurrentDrawState("Cercle");
+            interfacedessin.setCurrentState(new CreateCircle());
         });
 
+        // Créer l'item Rectangle
         JMenuItem rectangleItem = new JMenuItem("Rectangle");
 
+        // Ecouter pour l'item rectangleItem/Rectangle
         rectangleItem.addActionListener((ActionEvent e) -> {
-            interfacedessin.setcurrentDrawState("Rectangle");
+            interfacedessin.setCurrentState(new CreateRectangle());
         });
 
+        // Créer l'item Déplacer
         JMenuItem moveItem = new JMenuItem("Déplacer");
         
+        // Ecouter pour l'item moveItem/Déplacer
         moveItem.addActionListener((ActionEvent e) -> {
-            interfacedessin.setcurrentDrawState("Déplacer");
+            interfacedessin.setCurrentState(new MoveForm());
         });
         
+        // Créer l'item Ligne
         JMenuItem lineItem = new JMenuItem("Ligne");
         
+        // Ecouter pour l'item lineItem/Ligne
         lineItem.addActionListener((ActionEvent e) -> {
-            interfacedessin.setcurrentDrawState("Ligne");
+            interfacedessin.setCurrentState(new CreateLine());
         });
         
+        // Créer l'item Coloration
         JMenuItem paintItem = new JMenuItem("Coloration");
         
+        // Ecouter pour l'item lineItem/Ligne
         paintItem.addActionListener((ActionEvent e) -> {
-            interfacedessin.setcurrentDrawState("Coloration");
+            // Affiche une boîte de dialogue de choix de couleur avec le composant parent "currentFrame",
+            // un titre de dialogue "Choix de Couleur" et une couleur par défaut "currentFrame.getBackground()".
+            Color selectedColor = JColorChooser.showDialog(
+                currentFrame, // Composant parent
+                "Choix de Couleur", // Titre du dialogue
+                currentFrame.getBackground() // Couleur par défaut
+            );
+            
+            interfacedessin.setCurrentState(new ColorForm());
+            interfacedessin.setSelectedColor(selectedColor);
         });
         
+        // Créer l'item Annuler
         JMenuItem undoItem = new JMenuItem("Annuler");
+        
+        // Créer l'item Refaire
         JMenuItem redoItem = new JMenuItem("Refaire");
+        
+        // Créer l'item Supprimer
         JMenuItem deleteItem = new JMenuItem("Supprimer");
         
+        // Ecouter pour l'item deleteItem/Supprimer
         deleteItem.addActionListener((ActionEvent e) -> {
-            interfacedessin.setcurrentDrawState("Supprimer");
+            interfacedessin.setCurrentState(new DeleteForm());
         });
         
+        // Ajouter les items dans le menu Outils
         menuOutils.add(circleItem);
         menuOutils.add(rectangleItem);
         menuOutils.add(moveItem);
@@ -102,34 +145,41 @@ public class MenuBarDessin extends JMenuBar {
         menuOutils.add(redoItem);
         menuOutils.add(deleteItem);
 
-        // Créer le menu mode
+        // Créer le menu Mode
         JMenu menuMode = new JMenu("Mode");
+        
+        // Créer l'item jeuItem
         JMenuItem jeuItem = new JMenuItem("Mode Jeu");
 
         // Ecouter pour l'item jeuItem/ Changer le mode vers jeu
         jeuItem.addActionListener((ActionEvent e) -> {
-            // Methode pour Changer le mode vers jeu
+            // Méthode pour changer le mode vers jeu
             handleJeuAction();
         });
 
+        // Ajouter les items dans le menu Mode
         menuMode.add(jeuItem);
 
-        // Créer le menu aide
+        // Créer le menu Aide
         JMenu menuAide = new JMenu("Aide");
+        
+        // Créer l'item infoItem
         JMenuItem infoItem = new JMenuItem("Information");
+        
+        // Créer l'item contactItem
         JMenuItem contactItem = new JMenuItem("Contact");
         menuAide.add(infoItem);
         menuAide.add(contactItem);
 
-        // Ecouter pour l'item infoItem/Afficher une petite fenetre Information
+        // Ecouter pour l'item infoItem/Afficher une petite fenêtre Information
         infoItem.addActionListener((ActionEvent e) -> {
-            // Methode pour afficher une petite fenetre Information
+            // Méthode pour afficher une petite fenêtre Information
             handleInformationAction();
         });
 
-        // Ecouter pour l'item contactItem/Afficher une petite fenetre Contact
+        // Ecouter pour l'item contactItem/Afficher une petite fenêtre Contact
         contactItem.addActionListener((ActionEvent e) -> {
-            // Methode pour afficher une petite fenetre Contact
+            // Méthode pour afficher une petite fenêtre Contact
             handleContactAction();
         });
 
@@ -140,7 +190,7 @@ public class MenuBarDessin extends JMenuBar {
         add(menuAide);
     }
 
-    // Methode fermeture de la fenetre Dessin avec un message d'alerte
+    // Méthode de fermeture de la fenêtre Dessin avec un message d'alerte
     private static void handleExitAction(JFrame frame) {
         int option = JOptionPane.showConfirmDialog(frame, "Voulez-vous vraiment quitter ?", "Quitter", JOptionPane.YES_NO_OPTION);
         if (option == JOptionPane.YES_OPTION) {
@@ -148,19 +198,19 @@ public class MenuBarDessin extends JMenuBar {
         }
     }
 
-    // Methode qui ouvre la fenetre Information
+    // Méthode qui ouvre la fenêtre Information
     private void handleInformationAction() {
         FenetreInformation fInformation = new FenetreInformation();
         fInformation.setVisible(true);
     }
 
-    // Methode qui ouvre la fenetre Contact
+    // Méthode qui ouvre la fenêtre Contact
     private void handleContactAction() {
         FenetreContact fcontact = new FenetreContact();
         fcontact.setVisible(true);
     }
 
-    // Methode qui change le mode de dessin vers jeu
+    // Méthode qui change le mode de dessin vers jeu
     private void handleJeuAction() {
         FenetreJeu fJeu = new FenetreJeu();
         fJeu.setVisible(true);
@@ -170,4 +220,3 @@ public class MenuBarDessin extends JMenuBar {
         }
     }
 }
-

@@ -1,9 +1,11 @@
-package projetgamemvcswing.vue.InterfaceGraphique;
+package projetgamemvcswing.vue.InterfaceGraphique.InterfaceGraphiqueJeu;
 
+import projetgamemvcswing.vue.InterfaceGraphique.InterfaceGraphiqueDessin.FenetreDessin;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import javax.swing.border.Border;
+import projetgamemvcswing.vue.InterfaceGraphique.IconeNonRedimensionnable;
 
 /**
  *
@@ -57,7 +59,7 @@ public class BarreOutilsJeu extends JToolBar {
         ImageIcon originalIcon = new ImageIcon(iconPath);
 
         // Créer une icône sans mise à l'échelle
-        NoScalingIcon icon = new NoScalingIcon(originalIcon);
+        IconeNonRedimensionnable icon = new IconeNonRedimensionnable(originalIcon);
         
         // Créer un bouton avec l'icône personnalisée
         JButton button = new JButton(icon);

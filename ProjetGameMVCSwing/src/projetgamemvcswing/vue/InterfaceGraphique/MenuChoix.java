@@ -1,5 +1,7 @@
 package projetgamemvcswing.vue.InterfaceGraphique;
 
+import projetgamemvcswing.vue.InterfaceGraphique.InterfaceGraphiqueJeu.FenetreJeu;
+import projetgamemvcswing.vue.InterfaceGraphique.InterfaceGraphiqueDessin.FenetreDessin;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;

@@ -1,4 +1,4 @@
-package projetgamemvcswing.vue.InterfaceGraphique;
+package projetgamemvcswing.vue.InterfaceGraphique.InterfaceGraphiqueDessin;
 
 import java.awt.BorderLayout;
 import javax.swing.ImageIcon;
@@ -14,7 +14,7 @@ import javax.swing.JMenuBar;
 public class FenetreDessin extends JFrame {
 
     // Variables de classe
-    private InterfaceDessin interfacedessin;
+    private PanelDessin interfacedessin;
     private MenuBarDessin menuBarDessin;
     private BarreOutilsDessin barDessin;
 
@@ -64,7 +64,7 @@ public class FenetreDessin extends JFrame {
      */
     private void initUIComponents() {
         // Créer une instance de l'interface de dessin
-        interfacedessin = new InterfaceDessin();
+        interfacedessin = new PanelDessin();
     }
 
 }
