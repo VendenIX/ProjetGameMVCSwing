@@ -1,5 +1,6 @@
 package projetgamemvcswing.modele.geometry;
 import java.awt.Color;
+
 import projetgamemvcswing.controller.Observer.AbstractModeleEcoutable;
 
 /**
@@ -133,5 +134,15 @@ public class Cercle extends AbstractModeleEcoutable implements Figure {
         
         // Vérifier si la distance est inférieure ou égale au rayon du cercle
         return distance <= this.rayon;
+    }
+
+    @Override
+    public void finalize() {
+        fireChange(); // Notifier les écouteurs du changement
+    }
+
+    public void deplacer(double x, double y) {
+        this.setX(x);
+        this.setY(y);
     }
 }

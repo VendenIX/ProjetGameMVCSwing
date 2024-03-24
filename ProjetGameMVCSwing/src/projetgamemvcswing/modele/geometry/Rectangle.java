@@ -1,6 +1,7 @@
 package projetgamemvcswing.modele.geometry;
-import projetgamemvcswing.controller.Observer.AbstractModeleEcoutable;
 import java.awt.Color;
+
+import projetgamemvcswing.controller.Observer.AbstractModeleEcoutable;
 
 
 
@@ -141,6 +142,17 @@ public class Rectangle extends AbstractModeleEcoutable implements Figure {
         // Vérifier si le point (x, y) est à l'intérieur des limites du rectangle
         return x >= this.x && x <= this.x + this.largeur &&
                y >= this.y && y <= this.y + this.hauteur;
+    }
+
+    @Override
+    public void finalize() {
+        fireChange(); // Notifier les écouteurs du changement
+    }
+
+    public void deplacer(double xFinal, double yFinal) {
+        this.x = xFinal;
+        this.y = yFinal;
+        fireChange();
     }
 
 }
