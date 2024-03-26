@@ -13,15 +13,16 @@ import projetgamemvcswing.controller.ShapeDrawer;
 import projetgamemvcswing.controller.ShapeFiller;
 import projetgamemvcswing.controller.State.DefaultState;
 import projetgamemvcswing.controller.State.DessinState;
+import projetgamemvcswing.modele.geometry.FormContainer;
 
 
 /**
  * La classe InterfaceDessin représente un JPanel pour dessiner des figures.
  * Elle permet de dessiner des cercles, des rectangles, des lignes et de les afficher.
- * Elle permet la coloration des diffirents formes
- * Elle permet le deplacment des diffirents formes
- * Elle permet la suppression des diffirents formes
- * Elle permet a annuler ou refaire les Etapes de dessin
+ * Elle permet la coloration des différentes formes
+ * Elle permet le deplacment des différentes formes
+ * Elle permet la suppression des différentes formes
+ * Elle permet d'annuler ou de refaire les étapes de dessin
  * 
  * @author Islem
  */
@@ -30,8 +31,8 @@ public class PanelDessin extends JPanel implements EcouteurModele {
     
     // Variables
 
-    // ArrayList qui stock toute les figures
-    private final List<Figure> figures = new ArrayList<>();
+    // Container de type FormContainer qui stocke toutes les figures
+    private final FormContainer container = new FormContainer();
     
     // Class contenant des methodes d'affichage de formes 
     private final ShapeDrawer shapeDrawer = new ShapeDrawer();
@@ -100,7 +101,7 @@ public class PanelDessin extends JPanel implements EcouteurModele {
     public void setCurrentState(DessinState state) {this.currentState = state;}
 
     // Getter pour obtenir la liste des figures
-    public List<Figure> getFigures() {return this.figures;}
+    public List<Figure> getFigures() {return this.container.getFormList();}
 
     // Getter pour obtenir la figure en cours de translation
     public Figure getFigureEnCoursDeTranslation() {return figureEnCoursDeTranslation;}
@@ -142,10 +143,10 @@ public class PanelDessin extends JPanel implements EcouteurModele {
         Graphics2D g2d = (Graphics2D) g;
         
         // Dessiner les contours des formes existantes
-        shapeDrawer.drawFigures(g, figures);
+        shapeDrawer.drawFigures(g, this.getFigures());
 
         // Dessiner les formes remplies existantes
-        shapeFiller.drawFilledFigures(g2d, figures);
+        shapeFiller.drawFilledFigures(g2d, this.getFigures());
 
         // Dessiner la figure en cours de coloration
         if (figureEnCoursDeColoration != null) {
@@ -163,7 +164,7 @@ public class PanelDessin extends JPanel implements EcouteurModele {
     * Donc le panel Dessin devient vide
     */
     public void CreeNouvelInterfaceDessin() {
-        figures.clear();
+        this.container.getFormList().clear();
         repaint();
     }
    
@@ -190,7 +191,7 @@ public class PanelDessin extends JPanel implements EcouteurModele {
      * @param f 
      */
     public void supprimerFigure(Figure f) {
-        this.figures.remove(f);
+        this.container.suppressionForm(f);
         this.modelUpdated(this); // Notifie que le modèle a changé, ce qui déclenchera un repaint
     }
 
