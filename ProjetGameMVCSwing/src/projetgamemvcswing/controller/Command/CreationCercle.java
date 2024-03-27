@@ -26,6 +26,7 @@ public class CreationCercle implements OperationCommand{
     private Point coordonne;
     private double rayon;
     private FormContainer formContainer;
+    private Cercle cercle;
     private Color color;
 
 
