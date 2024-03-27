@@ -23,30 +23,26 @@ public class CreationRectangle implements OperationCommand{
     /**
      * Attibuts de la classe CreationRectangle
      */
-    private double x;
-    private double y;
     private Rectangle rectangle;
     private FormContainer formContainer;
-    private double largeur;
-    private double hauteur;
-    private Color color;
 
     /**
      * Constructeur de la classe CreationRectangle
-     * @param x
-     * @param y
-     * @param largeur
-     * @param hauteur
-     * @param formContainer
      * @param rectangle
+     * @param formContainer
      */
-    public CreationRectangle(double x, double y, double largeur, double hauteur, Rectangle rectangle){
-        this.x = x;
-        this.y = y;
-        this.largeur = largeur;
-        this.hauteur = hauteur;
-        //this.formContainer = formContainer;
+
+//    public CreationRectangle(double x, double y, double largeur, double hauteur, Color couleur){
+//        this.x = x;
+//       this.y = y;
+//        this.largeur = largeur;
+//        this.hauteur = hauteur;
+//        this.couleur = couleur;
+//    }
+    
+    public CreationRectangle(Rectangle rectangle, FormContainer formContainer){
         this.rectangle = rectangle;
+        this.formContainer = formContainer;
     }
 
     /**
@@ -55,8 +51,7 @@ public class CreationRectangle implements OperationCommand{
     @Override
     public void operate() {
         // On va créer un rectangle 
-        this.rectangle = new Rectangle(this.x, this.y, this.largeur, this.hauteur, this.color);
-        //this.formContainer.ajoutForm(this.rectangle);
+        this.formContainer.ajoutForm(this.rectangle);
         
     }
 
@@ -65,9 +60,8 @@ public class CreationRectangle implements OperationCommand{
      */
     @Override
     public void compensate() {
-        //this.formContainer.suppressionForm(this.rectangle);
-        // On détruit le rectangle créé
-        this.rectangle.finalize();
+        this.formContainer.suppressionForm(this.rectangle);
+        //this.rectangle.finalize();
     }
 
 }

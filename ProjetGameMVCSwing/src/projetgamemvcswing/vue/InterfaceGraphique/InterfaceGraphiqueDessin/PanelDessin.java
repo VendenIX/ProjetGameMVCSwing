@@ -79,7 +79,7 @@ public class PanelDessin extends JPanel implements EcouteurModele {
             // Quand il y a une relache de souris
             @Override
             public void mouseReleased(MouseEvent e) {
-                currentState.handleMouseReleased(PanelDessin.this, e);
+                currentState.handleMouseReleased(PanelDessin.this, e, handler, container);
             }
         });
 
@@ -157,7 +157,7 @@ public class PanelDessin extends JPanel implements EcouteurModele {
 
         // Dessiner la figure en cours de dessin
         if (figureEnCoursDeDessin != null) {
-            currentState.drawShape(g, figureEnCoursDeDessin, handler);
+            currentState.drawShape(g, figureEnCoursDeDessin);
         }
     }
 

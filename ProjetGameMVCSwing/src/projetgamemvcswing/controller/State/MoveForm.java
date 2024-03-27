@@ -9,6 +9,7 @@ import projetgamemvcswing.modele.geometry.Rectangle;
 import projetgamemvcswing.modele.geometry.Ligne;
 import projetgamemvcswing.vue.InterfaceGraphique.InterfaceGraphiqueDessin.PanelDessin;
 import projetgamemvcswing.controller.Command.CommandHandler;
+import projetgamemvcswing.modele.geometry.FormContainer;
 
 /**
  * La classe MoveForm implémente l'interface DessinState
@@ -36,7 +37,7 @@ public class MoveForm implements DessinState {
     }
 
     @Override
-    public void handleMouseReleased(PanelDessin panelDessin, MouseEvent e) {
+    public void handleMouseReleased(PanelDessin panelDessin, MouseEvent e, CommandHandler handler, FormContainer container) {
         // Remettre la figure en cours de déplacement à null
         panelDessin.setFigureEnCoursDeTranslation(null);
     }
@@ -70,7 +71,7 @@ public class MoveForm implements DessinState {
     }
 
     @Override
-    public void drawShape(Graphics g, Figure forme, CommandHandler handler) {
+    public void drawShape(Graphics g, Figure forme) {
         // Non Implémenté 
     }
 

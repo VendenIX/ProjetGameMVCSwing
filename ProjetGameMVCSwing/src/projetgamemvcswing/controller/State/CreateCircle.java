@@ -11,6 +11,7 @@ import projetgamemvcswing.modele.geometry.Point;
 import projetgamemvcswing.vue.InterfaceGraphique.InterfaceGraphiqueDessin.PanelDessin;
 import projetgamemvcswing.controller.Command.CommandHandler;
 import projetgamemvcswing.controller.Command.CreationCercle;
+import projetgamemvcswing.modele.geometry.FormContainer;
 
 /**
  * La classe CreateCircle gére l'état de la creation de Cercle
@@ -33,13 +34,20 @@ public class CreateCircle implements DessinState {
     }
 
     @Override
-    public void handleMouseReleased(PanelDessin panelDessin, MouseEvent e) {
+    public void handleMouseReleased(PanelDessin panelDessin, MouseEvent e, CommandHandler handler, FormContainer container) {
         
         // Recuperer le cercle en cours de dessin
         Figure cercleEnCoursDeDessin = panelDessin.getFigureEnCoursDeDessin();
         
         // Ajouter le cercle actuellement dessiné à la liste des figures
         panelDessin.getFigures().add(cercleEnCoursDeDessin);
+        
+        if (cercleEnCoursDeDessin instanceof Cercle) {
+            Cercle cercle = (Cercle) cercleEnCoursDeDessin;
+            handler.handle(new CreationCercle(cercle, container));
+        }
+        
+        System.out.println("Taille handler : " + handler.getStackSize());
         
         // Réinitialiser la figure en cours de dessin à null
         panelDessin.setFigureEnCoursDeDessin(null);
@@ -63,7 +71,7 @@ public class CreateCircle implements DessinState {
     }
     
     @Override
-    public void drawShape(Graphics g, Figure forme, CommandHandler handler) {
+    public void drawShape(Graphics g, Figure forme) {
         g.setColor(Color.BLACK);
         Cercle cercle = (Cercle) forme;
         
@@ -72,8 +80,6 @@ public class CreateCircle implements DessinState {
         int y = (int) Math.round(cercle.getY() - cercle.getRayon());
         int diameter = (int) Math.round(2 * cercle.getRayon());
         
-        
-        handler.handle(new CreationCercle(cercle.getCentre(), cercle.getRayon(), cercle));
         // Dessiner un cercle avec les coordonnées et le diamètre calculés
         g.drawOval(x, y, diameter, diameter);
     }

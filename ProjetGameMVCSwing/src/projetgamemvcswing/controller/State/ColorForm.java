@@ -11,6 +11,7 @@ import projetgamemvcswing.modele.geometry.Ligne;
 import projetgamemvcswing.modele.geometry.Rectangle;
 import projetgamemvcswing.vue.InterfaceGraphique.InterfaceGraphiqueDessin.PanelDessin;
 import projetgamemvcswing.controller.Command.CommandHandler;
+import projetgamemvcswing.modele.geometry.FormContainer;
 
 /**
  * La classe ColorForm gére l'état coloration
@@ -58,7 +59,7 @@ public class ColorForm implements DessinState {
     }
 
     @Override
-    public void handleMouseReleased(PanelDessin panelDessin, MouseEvent e) {
+    public void handleMouseReleased(PanelDessin panelDessin, MouseEvent e,  CommandHandler handler, FormContainer container) {
         // Remettre la figure en cours de coloration à null lors du relâchement de la souris
         panelDessin.setFigureEnCoursDeColoration(null); 
     }
@@ -69,7 +70,7 @@ public class ColorForm implements DessinState {
     }
 
     @Override
-    public void drawShape(Graphics g, Figure forme, CommandHandler handler) {
+    public void drawShape(Graphics g, Figure forme) {
         // Non Implémenté 
     }
     

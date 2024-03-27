@@ -9,6 +9,7 @@ import projetgamemvcswing.modele.geometry.Rectangle;
 import projetgamemvcswing.vue.InterfaceGraphique.InterfaceGraphiqueDessin.PanelDessin;
 import projetgamemvcswing.controller.Command.CommandHandler;
 import projetgamemvcswing.controller.Command.CreationRectangle;
+import projetgamemvcswing.modele.geometry.FormContainer;
 
 /**
  * La classe CreateRectangle gére l'état de la creation de Rectangle
@@ -33,12 +34,19 @@ public class CreateRectangle implements DessinState {
     }
 
     @Override
-    public void handleMouseReleased(PanelDessin panelDessin, MouseEvent e) {
+    public void handleMouseReleased(PanelDessin panelDessin, MouseEvent e, CommandHandler handler, FormContainer container) {
         
         Figure rectangleEnCoursDeDessin = panelDessin.getFigureEnCoursDeDessin();
         
         // Ajouter le rectangle actuellement dessiné à la liste des figures du panneau
         panelDessin.getFigures().add(rectangleEnCoursDeDessin);
+        
+        if (rectangleEnCoursDeDessin instanceof Rectangle) {
+            Rectangle rectangle = (Rectangle) rectangleEnCoursDeDessin;
+            handler.handle(new CreationRectangle(rectangle, container));
+        }
+        
+        System.out.println("Taille handler : " + handler.getStackSize());
         
         // Réinitialiser la figure en cours de dessin à null
         panelDessin.setFigureEnCoursDeDessin(null);
@@ -77,7 +85,7 @@ public class CreateRectangle implements DessinState {
     }
 
     @Override
-    public void drawShape(Graphics g, Figure forme, CommandHandler handler) {
+    public void drawShape(Graphics g, Figure forme) {
         // Dessiner la forme (rectangle) sur le panneau
         g.setColor(Color.BLACK);
         
@@ -89,9 +97,6 @@ public class CreateRectangle implements DessinState {
         int LargeurInt = (int) Math.round(rectangle.getLargeur());
         int HauteurtInt = (int) Math.round(rectangle.getHauteur());
         
-        handler.handle(new CreationRectangle(xInt, yInt, LargeurInt, HauteurtInt, rectangle));
-        
-        System.out.println("Taille handler : " + handler.getStackSize());
         // Dessiner le rectangle avec les coordonnées calculées
         g.drawRect(xInt, yInt, LargeurInt, HauteurtInt);
     }

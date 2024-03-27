@@ -1,10 +1,7 @@
 package projetgamemvcswing.controller.Command;
 
-import java.awt.Color;
-
 import projetgamemvcswing.modele.geometry.Cercle;
 import projetgamemvcswing.modele.geometry.FormContainer;
-import projetgamemvcswing.modele.geometry.Point;
 
 /**
  * Définition de la classe CreationCercle qui permet de créer un cercle avec la commande de création
@@ -23,25 +20,18 @@ public class CreationCercle implements OperationCommand{
     /**
      * Attributs de la classe CreationCercle
      */
-    private Point coordonne;
-    private double rayon;
-    private Cercle cercle;
-    //private FormContainer formContainer;
-    private Color color;
+    private final Cercle cercle;
+    private final FormContainer formContainer;
 
 
     /**
      * Constructeur de la classe CreationCercle
-     * @param coordonne
-     * @param rayon
      * @param formContainer
      * @param cercle
      */
-    public CreationCercle(Point coordonne, double rayon, Cercle cercle){
-        this.coordonne = coordonne;
-        this.rayon = rayon;
-        //this.formContainer = formContainer;
+    public CreationCercle(Cercle cercle, FormContainer formContainer){
         this.cercle = cercle;
+        this.formContainer = formContainer;
     }
 
     /**
@@ -50,8 +40,7 @@ public class CreationCercle implements OperationCommand{
     @Override
     public void operate() {
         // On va créer un cercle
-        this.cercle = new Cercle(this.coordonne, this.rayon, this.color);
-        //this.formContainer.ajoutForm(this.cercle);
+        this.formContainer.ajoutForm(this.cercle);
     }
 
     /**
@@ -59,8 +48,8 @@ public class CreationCercle implements OperationCommand{
      */
     @Override
     public void compensate() {
-        //this.formContainer.suppressionForm(this.cercle);
+        this.formContainer.suppressionForm(this.cercle);
         // On détruit le cercle créé
-        this.cercle.finalize();
+        //this.cercle.finalize();
     }
 }
