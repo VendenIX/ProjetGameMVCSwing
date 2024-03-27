@@ -25,7 +25,6 @@ public class CreationCercle implements OperationCommand{
      */
     private Point coordonne;
     private double rayon;
-    private Cercle cercle;
     private FormContainer formContainer;
     private Color color;
 
@@ -37,11 +36,10 @@ public class CreationCercle implements OperationCommand{
      * @param formContainer
      * @param cercle
      */
-    public CreationCercle(Point coordonne, double rayon, FormContainer formContainer, Cercle cercle){
+    public CreationCercle(Point coordonne, double rayon, FormContainer formContainer){
         this.coordonne = coordonne;
         this.rayon = rayon;
         this.formContainer = formContainer;
-        this.cercle = cercle;
     }
 
     /**

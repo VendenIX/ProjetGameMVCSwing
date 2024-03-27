@@ -39,13 +39,12 @@ public class CreationRectangle implements OperationCommand{
      * @param formContainer
      * @param rectangle
      */
-    public CreationRectangle(double x, double y, double largeur, double hauteur, FormContainer formContainer, Rectangle rectangle){
+    public CreationRectangle(double x, double y, double largeur, double hauteur, FormContainer formContainer){
         this.x = x;
         this.y = y;
         this.largeur = largeur;
         this.hauteur = hauteur;
         this.formContainer = formContainer;
-        this.rectangle = rectangle;
     }
 
     /**
