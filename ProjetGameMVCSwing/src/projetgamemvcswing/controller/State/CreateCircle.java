@@ -9,6 +9,8 @@ import projetgamemvcswing.modele.geometry.Cercle;
 import projetgamemvcswing.modele.geometry.Figure;
 import projetgamemvcswing.modele.geometry.Point;
 import projetgamemvcswing.vue.InterfaceGraphique.InterfaceGraphiqueDessin.PanelDessin;
+import projetgamemvcswing.controller.Command.CommandHandler;
+import projetgamemvcswing.controller.Command.CreationCercle;
 
 /**
  * La classe CreateCircle gére l'état de la creation de Cercle
@@ -61,7 +63,7 @@ public class CreateCircle implements DessinState {
     }
     
     @Override
-    public void drawShape(Graphics g, Figure forme) {
+    public void drawShape(Graphics g, Figure forme, CommandHandler handler) {
         g.setColor(Color.BLACK);
         Cercle cercle = (Cercle) forme;
         
@@ -70,6 +72,8 @@ public class CreateCircle implements DessinState {
         int y = (int) Math.round(cercle.getY() - cercle.getRayon());
         int diameter = (int) Math.round(2 * cercle.getRayon());
         
+        
+        handler.handle(new CreationCercle(cercle.getCentre(), cercle.getRayon(), cercle));
         // Dessiner un cercle avec les coordonnées et le diamètre calculés
         g.drawOval(x, y, diameter, diameter);
     }

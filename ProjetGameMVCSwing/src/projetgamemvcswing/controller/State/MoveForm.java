@@ -8,6 +8,7 @@ import projetgamemvcswing.modele.geometry.Cercle;
 import projetgamemvcswing.modele.geometry.Rectangle;
 import projetgamemvcswing.modele.geometry.Ligne;
 import projetgamemvcswing.vue.InterfaceGraphique.InterfaceGraphiqueDessin.PanelDessin;
+import projetgamemvcswing.controller.Command.CommandHandler;
 
 /**
  * La classe MoveForm implémente l'interface DessinState
@@ -69,7 +70,7 @@ public class MoveForm implements DessinState {
     }
 
     @Override
-    public void drawShape(Graphics g, Figure forme) {
+    public void drawShape(Graphics g, Figure forme, CommandHandler handler) {
         // Non Implémenté 
     }
 

@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import projetgamemvcswing.modele.geometry.Figure;
 import projetgamemvcswing.vue.InterfaceGraphique.InterfaceGraphiqueDessin.PanelDessin;
+import projetgamemvcswing.controller.Command.CommandHandler;
 
 /**
  * L'interface DessinState définit les méthodes nécessaires pour
@@ -42,8 +43,9 @@ public interface DessinState {
      * 
      * @param g     L'objet Graphics pour dessiner.
      * @param forme La forme à dessiner.
+     * @param handler Handler de commandes à passer en paramètres pour undo/redo
      */
-    void drawShape(Graphics g, Figure forme);
+    void drawShape(Graphics g, Figure forme, CommandHandler handler);
     
     /**
      * Remplit la forme spécifiée.

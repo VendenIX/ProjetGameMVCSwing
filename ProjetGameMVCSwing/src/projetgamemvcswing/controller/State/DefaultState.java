@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import projetgamemvcswing.modele.geometry.Figure;
 import projetgamemvcswing.vue.InterfaceGraphique.InterfaceGraphiqueDessin.PanelDessin;
+import projetgamemvcswing.controller.Command.CommandHandler;
 
 /**
  * La classe DefaultState gére l'état par défaut  
@@ -31,7 +32,7 @@ public class DefaultState implements DessinState {
     }
 
     @Override
-    public void drawShape(Graphics g, Figure forme) {
+    public void drawShape(Graphics g, Figure forme, CommandHandler handler) {
         // Dessiner la forme dans l'état par défaut
         System.out.println("État par défaut : dessiner la forme");
     }

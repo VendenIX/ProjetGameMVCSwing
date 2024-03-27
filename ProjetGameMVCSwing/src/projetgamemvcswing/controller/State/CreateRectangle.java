@@ -7,6 +7,8 @@ import java.awt.event.MouseEvent;
 import projetgamemvcswing.modele.geometry.Figure;
 import projetgamemvcswing.modele.geometry.Rectangle;
 import projetgamemvcswing.vue.InterfaceGraphique.InterfaceGraphiqueDessin.PanelDessin;
+import projetgamemvcswing.controller.Command.CommandHandler;
+import projetgamemvcswing.controller.Command.CreationRectangle;
 
 /**
  * La classe CreateRectangle gére l'état de la creation de Rectangle
@@ -75,7 +77,7 @@ public class CreateRectangle implements DessinState {
     }
 
     @Override
-    public void drawShape(Graphics g, Figure forme) {
+    public void drawShape(Graphics g, Figure forme, CommandHandler handler) {
         // Dessiner la forme (rectangle) sur le panneau
         g.setColor(Color.BLACK);
         
@@ -87,6 +89,9 @@ public class CreateRectangle implements DessinState {
         int LargeurInt = (int) Math.round(rectangle.getLargeur());
         int HauteurtInt = (int) Math.round(rectangle.getHauteur());
         
+        handler.handle(new CreationRectangle(xInt, yInt, LargeurInt, HauteurtInt, rectangle));
+        
+        System.out.println("Taille handler : " + handler.getStackSize());
         // Dessiner le rectangle avec les coordonnées calculées
         g.drawRect(xInt, yInt, LargeurInt, HauteurtInt);
     }

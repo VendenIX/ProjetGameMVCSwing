@@ -35,8 +35,13 @@ public class Cercle extends AbstractModeleEcoutable implements Figure {
     public String toString() {
         return "Cercle{centre=" +this.centre.toString()+", rayon=" + rayon + "}";
     }
+    
+    
 
     // Getters et setters
+    
+    public Point getCentre() { return this.centre; }
+    
     public double getX() { return this.centre.getX(); }
     
     public void setX(double x) { 

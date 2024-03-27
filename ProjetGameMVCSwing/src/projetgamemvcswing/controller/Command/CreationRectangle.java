@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import projetgamemvcswing.modele.geometry.FormContainer;
 import projetgamemvcswing.modele.geometry.Rectangle;
+
 /**
  * Classe pour la création d'un rectangle avec la commande de création 
  * 
@@ -39,12 +40,12 @@ public class CreationRectangle implements OperationCommand{
      * @param formContainer
      * @param rectangle
      */
-    public CreationRectangle(double x, double y, double largeur, double hauteur, FormContainer formContainer, Rectangle rectangle){
+    public CreationRectangle(double x, double y, double largeur, double hauteur, Rectangle rectangle){
         this.x = x;
         this.y = y;
         this.largeur = largeur;
         this.hauteur = hauteur;
-        this.formContainer = formContainer;
+        //this.formContainer = formContainer;
         this.rectangle = rectangle;
     }
 
@@ -55,7 +56,7 @@ public class CreationRectangle implements OperationCommand{
     public void operate() {
         // On va créer un rectangle 
         this.rectangle = new Rectangle(this.x, this.y, this.largeur, this.hauteur, this.color);
-        this.formContainer.ajoutForm(this.rectangle);
+        //this.formContainer.ajoutForm(this.rectangle);
         
     }
 
@@ -64,7 +65,7 @@ public class CreationRectangle implements OperationCommand{
      */
     @Override
     public void compensate() {
-        this.formContainer.suppressionForm(this.rectangle);
+        //this.formContainer.suppressionForm(this.rectangle);
         // On détruit le rectangle créé
         this.rectangle.finalize();
     }

@@ -14,6 +14,7 @@ import projetgamemvcswing.controller.ShapeFiller;
 import projetgamemvcswing.controller.State.DefaultState;
 import projetgamemvcswing.controller.State.DessinState;
 import projetgamemvcswing.modele.geometry.FormContainer;
+import projetgamemvcswing.controller.Command.CommandHandler;
 
 
 /**
@@ -31,6 +32,7 @@ public class PanelDessin extends JPanel implements EcouteurModele {
     
     // Variables
 
+    private final CommandHandler handler = new CommandHandler();
     // Container de type FormContainer qui stocke toutes les figures
     private final FormContainer container = new FormContainer();
     
@@ -155,7 +157,7 @@ public class PanelDessin extends JPanel implements EcouteurModele {
 
         // Dessiner la figure en cours de dessin
         if (figureEnCoursDeDessin != null) {
-            currentState.drawShape(g, figureEnCoursDeDessin);
+            currentState.drawShape(g, figureEnCoursDeDessin, handler);
         }
     }
 
@@ -187,7 +189,7 @@ public class PanelDessin extends JPanel implements EcouteurModele {
     }
     
     /**
-     * Suprimme une figure du panel
+     * Supprime une figure du panel
      * @param f 
      */
     public void supprimerFigure(Figure f) {
@@ -195,6 +197,4 @@ public class PanelDessin extends JPanel implements EcouteurModele {
         this.modelUpdated(this); // Notifie que le modèle a changé, ce qui déclenchera un repaint
     }
 
-
 }
-

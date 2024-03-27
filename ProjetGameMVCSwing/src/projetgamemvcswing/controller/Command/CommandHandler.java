@@ -70,4 +70,17 @@ public class CommandHandler implements Serializable{ // Serializable pour sauveg
         }
     }
     
+    public int getStackSize(){
+        return this.stack.size();
+    }
+    
+    public int getRedoStackSize(){
+        return this.redoStack.size();
+    }
+    
+    @Override
+    public String toString(){
+        return "()";
+    }
+    
 }

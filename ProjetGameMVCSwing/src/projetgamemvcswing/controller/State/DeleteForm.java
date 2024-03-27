@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import projetgamemvcswing.modele.geometry.Figure;
 import projetgamemvcswing.vue.InterfaceGraphique.InterfaceGraphiqueDessin.PanelDessin;
+import projetgamemvcswing.controller.Command.CommandHandler;
 
 /**
  * La classe DeleteForm gére l'état suppression des formes 
@@ -41,7 +42,7 @@ public class DeleteForm implements DessinState {
     }
 
     @Override
-    public void drawShape(Graphics g, Figure forme) {
+    public void drawShape(Graphics g, Figure forme, CommandHandler handler) {
         // Non Implémenté 
     }
 

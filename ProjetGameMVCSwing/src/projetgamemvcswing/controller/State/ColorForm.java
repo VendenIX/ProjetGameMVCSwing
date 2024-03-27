@@ -10,6 +10,7 @@ import projetgamemvcswing.modele.geometry.Cercle;
 import projetgamemvcswing.modele.geometry.Ligne;
 import projetgamemvcswing.modele.geometry.Rectangle;
 import projetgamemvcswing.vue.InterfaceGraphique.InterfaceGraphiqueDessin.PanelDessin;
+import projetgamemvcswing.controller.Command.CommandHandler;
 
 /**
  * La classe ColorForm gére l'état coloration
@@ -68,7 +69,7 @@ public class ColorForm implements DessinState {
     }
 
     @Override
-    public void drawShape(Graphics g, Figure forme) {
+    public void drawShape(Graphics g, Figure forme, CommandHandler handler) {
         // Non Implémenté 
     }
     

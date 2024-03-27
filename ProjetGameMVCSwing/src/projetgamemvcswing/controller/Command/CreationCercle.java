@@ -26,7 +26,7 @@ public class CreationCercle implements OperationCommand{
     private Point coordonne;
     private double rayon;
     private Cercle cercle;
-    private FormContainer formContainer;
+    //private FormContainer formContainer;
     private Color color;
 
 
@@ -37,10 +37,10 @@ public class CreationCercle implements OperationCommand{
      * @param formContainer
      * @param cercle
      */
-    public CreationCercle(Point coordonne, double rayon, FormContainer formContainer, Cercle cercle){
+    public CreationCercle(Point coordonne, double rayon, Cercle cercle){
         this.coordonne = coordonne;
         this.rayon = rayon;
-        this.formContainer = formContainer;
+        //this.formContainer = formContainer;
         this.cercle = cercle;
     }
 
@@ -51,7 +51,7 @@ public class CreationCercle implements OperationCommand{
     public void operate() {
         // On va créer un cercle
         this.cercle = new Cercle(this.coordonne, this.rayon, this.color);
-        this.formContainer.ajoutForm(this.cercle);
+        //this.formContainer.ajoutForm(this.cercle);
     }
 
     /**
@@ -59,7 +59,7 @@ public class CreationCercle implements OperationCommand{
      */
     @Override
     public void compensate() {
-        this.formContainer.suppressionForm(this.cercle);
+        //this.formContainer.suppressionForm(this.cercle);
         // On détruit le cercle créé
         this.cercle.finalize();
     }
