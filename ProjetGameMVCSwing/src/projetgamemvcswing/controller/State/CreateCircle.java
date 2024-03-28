@@ -11,6 +11,7 @@ import projetgamemvcswing.modele.geometry.Point;
 import projetgamemvcswing.vue.InterfaceGraphique.InterfaceGraphiqueDessin.PanelDessin;
 import projetgamemvcswing.controller.Command.CommandHandler;
 import projetgamemvcswing.controller.Command.CreationCercle;
+import projetgamemvcswing.controller.Command.CreationForme;
 import projetgamemvcswing.modele.geometry.FormContainer;
 
 /**
@@ -37,14 +38,16 @@ public class CreateCircle implements DessinState {
     public void handleMouseReleased(PanelDessin panelDessin, MouseEvent e, CommandHandler handler, FormContainer container) {
         
         // Recuperer le cercle en cours de dessin
-        Figure cercleEnCoursDeDessin = panelDessin.getFigureEnCoursDeDessin();
-        
-        // Ajouter le cercle actuellement dessiné à la liste des figures
-        panelDessin.getFigures().add(cercleEnCoursDeDessin);
-        
-        if (cercleEnCoursDeDessin instanceof Cercle) {
-            Cercle cercle = (Cercle) cercleEnCoursDeDessin;
-            handler.handle(new CreationCercle(cercle, container));
+        Figure formeEnCoursDeDessin = panelDessin.getFigureEnCoursDeDessin();
+    
+        if (formeEnCoursDeDessin != null) {
+            
+            // Ajouter le cercle actuellement dessiné à la liste des figures
+            panelDessin.getFigures().add(formeEnCoursDeDessin);
+            // Utiliser CreationForme avec l'objet Figure et le container
+            handler.handle(new CreationForme(formeEnCoursDeDessin, container));
+            
+            panelDessin.setFigureEnCoursDeDessin(null);
         }
         
         System.out.println("Taille handler : " + handler.getStackSize());

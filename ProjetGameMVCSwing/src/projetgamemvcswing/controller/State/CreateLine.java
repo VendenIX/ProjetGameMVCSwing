@@ -9,6 +9,7 @@ import projetgamemvcswing.modele.geometry.Ligne;
 import projetgamemvcswing.modele.geometry.Point;
 import projetgamemvcswing.vue.InterfaceGraphique.InterfaceGraphiqueDessin.PanelDessin;
 import projetgamemvcswing.controller.Command.CommandHandler;
+import projetgamemvcswing.controller.Command.CreationForme;
 import projetgamemvcswing.modele.geometry.FormContainer;
 
 /**
@@ -34,12 +35,17 @@ public class CreateLine implements DessinState {
     @Override
     public void handleMouseReleased(PanelDessin panelDessin, MouseEvent e, CommandHandler handler, FormContainer container) {
         
-        Figure ligneEnCoursDeDessin = panelDessin.getFigureEnCoursDeDessin();
-        
-        // Ajouter la ligne actuellement dessinée à la liste des figures du panneau
-        panelDessin.getFigures().add(ligneEnCoursDeDessin);
-        
-        // Réinitialiser la figure en cours de dessin à null
+        Figure formeEnCoursDeDessin = panelDessin.getFigureEnCoursDeDessin();
+    
+        if (formeEnCoursDeDessin != null) {
+            // Ajouter la forme actuellement dessinée à la liste des figures du panneau
+            panelDessin.getFigures().add(formeEnCoursDeDessin);
+
+            // Utiliser CreationForme pour ajouter la forme dans le système de commande
+            handler.handle(new CreationForme(formeEnCoursDeDessin, container));
+        }
+
+        // Réinitialiser la figure en cours de dessin à null pour le prochain dessin
         panelDessin.setFigureEnCoursDeDessin(null);
     }
 
