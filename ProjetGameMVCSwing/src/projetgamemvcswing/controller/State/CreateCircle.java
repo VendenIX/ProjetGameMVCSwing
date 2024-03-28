@@ -48,7 +48,7 @@ public class CreateCircle implements DessinState {
         }
         
         System.out.println("Taille handler : " + handler.getStackSize());
-        
+        System.out.println(handler);
         // Réinitialiser la figure en cours de dessin à null
         panelDessin.setFigureEnCoursDeDessin(null);
     }

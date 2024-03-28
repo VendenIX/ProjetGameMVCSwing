@@ -79,8 +79,19 @@ public class CommandHandler implements Serializable{ // Serializable pour sauveg
     }
     
     @Override
-    public String toString(){
-        return "()";
-    }
+    public String toString() {
+        String result = "Commandes effectuées (pile d'undo) : \n";
+        for (OperationCommand cmd : stack) {
+            result += "- " + cmd.getClass().getSimpleName() + "\n";
+        }
+
+        result += "\nCommandes annulées (pile de redo) : \n";
+        for (OperationCommand cmd : redoStack) {
+            result += "- " + cmd.getClass().getSimpleName() + "\n";
+        }
+
+        return result;
+}
+
     
 }

@@ -9,6 +9,8 @@ import projetgamemvcswing.modele.geometry.Rectangle;
 import projetgamemvcswing.modele.geometry.Ligne;
 import projetgamemvcswing.vue.InterfaceGraphique.InterfaceGraphiqueDessin.PanelDessin;
 import projetgamemvcswing.controller.Command.CommandHandler;
+import projetgamemvcswing.controller.Command.DeplacerCercle;
+import projetgamemvcswing.controller.Command.DeplacerRectangle;
 import projetgamemvcswing.modele.geometry.FormContainer;
 
 /**
@@ -16,19 +18,21 @@ import projetgamemvcswing.modele.geometry.FormContainer;
  * pour gérer le déplacement des formes dans le panneau de dessin.
  */
 public class MoveForm implements DessinState {
+    
+    private double initialX, initialY; // des attributs pour stocker les positions initiales
 
     @Override
     public void handleMousePressed(PanelDessin panelDessin, MouseEvent e) {
-        double x = e.getX();
-        double y = e.getY();
+        initialX = e.getX();
+        initialY = e.getY();
         
         // Sauvegarde de la position précédente de la souris
-        panelDessin.setLastMouseX(x); 
-        panelDessin.setLastMouseY(y);
+        panelDessin.setLastMouseX(initialX); 
+        panelDessin.setLastMouseY(initialY);
         
         // Parcours la liste des figures
         for (Figure f : panelDessin.getFigures()) {
-            if (f.contient(x, y)) {
+            if (f.contient(initialX, initialY)) {
                 // Définir la figure sélectionnée comme celle à déplacer
                 panelDessin.setFigureEnCoursDeTranslation(f);                    
                 return;
@@ -38,7 +42,24 @@ public class MoveForm implements DessinState {
 
     @Override
     public void handleMouseReleased(PanelDessin panelDessin, MouseEvent e, CommandHandler handler, FormContainer container) {
-        // Remettre la figure en cours de déplacement à null
+        double finalX = e.getX();
+        double finalY = e.getY();
+        Figure figureEnCoursDeTranslation = panelDessin.getFigureEnCoursDeTranslation();
+        
+        if (figureEnCoursDeTranslation != null) {
+            // Créez et exécutez la commande de déplacement appropriée selon le type de la figure
+            if (figureEnCoursDeTranslation instanceof Cercle) {
+                DeplacerCercle commandeDeplacerCercle = new DeplacerCercle(initialX, initialY, finalX, finalY, container, (Cercle) figureEnCoursDeTranslation);
+                handler.handle(commandeDeplacerCercle);
+            } else if (figureEnCoursDeTranslation instanceof Rectangle) {
+                DeplacerRectangle commandeDeplacerRectangle = new DeplacerRectangle(initialX, initialY, finalX, finalY, container, (Rectangle) figureEnCoursDeTranslation);
+                handler.handle(commandeDeplacerRectangle);
+            }
+
+            panelDessin.repaint(); // Mise à jour de l'affichage
+        }
+        
+        // Réinitialisez la figure en cours de déplacement à null pour la prochaine opération
         panelDessin.setFigureEnCoursDeTranslation(null);
     }
 
