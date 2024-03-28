@@ -6,6 +6,7 @@ import java.awt.event.MouseEvent;
 import projetgamemvcswing.modele.geometry.Figure;
 import projetgamemvcswing.vue.InterfaceGraphique.InterfaceGraphiqueDessin.PanelDessin;
 import projetgamemvcswing.controller.Command.CommandHandler;
+import projetgamemvcswing.controller.Command.SuppressionForme;
 import projetgamemvcswing.modele.geometry.FormContainer;
 
 /**
@@ -15,26 +16,35 @@ import projetgamemvcswing.modele.geometry.FormContainer;
  */
 public class DeleteForm implements DessinState {
 
+    private Figure figureASupprimer = null;
     @Override
     public void handleMousePressed(PanelDessin panelDessin, MouseEvent e) {
-        // Gérer l'événement de pression de la souris pour la suppression de la forme
         double x = e.getX();
         double y = e.getY();
-        
-        // Parcourir la liste des figures pour trouver celle qui contient les coordonnées de la souris
+
+        // Identifier la figure à supprimer
         for (Figure f : panelDessin.getFigures()) {
             if (f.contient(x, y)) {
-                // Supprimer la figure sélectionnée de la liste principale
-                panelDessin.supprimerFigure(f);
-                // Sortir de la boucle après la suppression d'une figure
-                return;
+                figureASupprimer = f;
+                break; // Sortir de la boucle après avoir trouvé une figure
             }
         }
     }
 
     @Override
     public void handleMouseReleased(PanelDessin panelDessin, MouseEvent e, CommandHandler handler, FormContainer container) {
-        // Non Implémenté 
+        // S'assurer qu'une figure a été sélectionnée pour la suppression
+        if (figureASupprimer != null) {
+            // Créer et exécuter la commande de suppression
+            handler.handle(new SuppressionForme(figureASupprimer, container));
+
+            // Supprimer visuellement la figure
+            panelDessin.getFigures().remove(figureASupprimer);
+            panelDessin.modelUpdated(this); // Redessiner le panneau pour refléter la suppression
+
+            // Réinitialiser la figure à supprimer pour la prochaine opération
+            figureASupprimer = null;
+        }
     }
 
     @Override
