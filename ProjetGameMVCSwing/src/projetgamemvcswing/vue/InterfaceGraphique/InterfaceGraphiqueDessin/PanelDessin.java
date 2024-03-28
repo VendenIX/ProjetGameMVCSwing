@@ -40,6 +40,8 @@ public class PanelDessin extends JPanel implements EcouteurModele {
     private final ShapeDrawer shapeDrawer = new ShapeDrawer();
     private final ShapeFiller shapeFiller = new ShapeFiller();
     
+
+    
    // Variable pour stocker la figure en cours de dessin
     private Figure figureEnCoursDeDessin;
 
@@ -154,6 +156,7 @@ public class PanelDessin extends JPanel implements EcouteurModele {
         if (figureEnCoursDeColoration != null) {
             currentState.fillShape(g2d, figureEnCoursDeColoration);
         }
+        
 
         // Dessiner la figure en cours de dessin
         if (figureEnCoursDeDessin != null) {
@@ -196,5 +199,6 @@ public class PanelDessin extends JPanel implements EcouteurModele {
         this.container.suppressionForm(f);
         this.modelUpdated(this); // Notifie que le modèle a changé, ce qui déclenchera un repaint
     }
+
 
 }

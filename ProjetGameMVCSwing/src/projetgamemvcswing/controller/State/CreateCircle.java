@@ -10,7 +10,6 @@ import projetgamemvcswing.modele.geometry.Figure;
 import projetgamemvcswing.modele.geometry.Point;
 import projetgamemvcswing.vue.InterfaceGraphique.InterfaceGraphiqueDessin.PanelDessin;
 import projetgamemvcswing.controller.Command.CommandHandler;
-import projetgamemvcswing.controller.Command.CreationCercle;
 import projetgamemvcswing.controller.Command.CreationForme;
 import projetgamemvcswing.modele.geometry.FormContainer;
 

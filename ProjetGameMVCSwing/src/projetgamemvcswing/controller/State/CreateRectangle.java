@@ -9,7 +9,6 @@ import projetgamemvcswing.modele.geometry.Rectangle;
 import projetgamemvcswing.vue.InterfaceGraphique.InterfaceGraphiqueDessin.PanelDessin;
 import projetgamemvcswing.controller.Command.CommandHandler;
 import projetgamemvcswing.controller.Command.CreationForme;
-import projetgamemvcswing.controller.Command.CreationRectangle;
 import projetgamemvcswing.modele.geometry.FormContainer;
 
 /**
