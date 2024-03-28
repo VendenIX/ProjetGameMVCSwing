@@ -8,25 +8,27 @@ import projetgamemvcswing.modele.geometry.Cercle;
 import projetgamemvcswing.modele.geometry.Rectangle;
 import projetgamemvcswing.modele.geometry.Ligne;
 import projetgamemvcswing.vue.InterfaceGraphique.InterfaceGraphiqueDessin.PanelDessin;
+import projetgamemvcswing.controller.Command.CommandHandler;
+import projetgamemvcswing.controller.Command.DeplacementForme;
+import projetgamemvcswing.modele.geometry.FormContainer;
 
 /**
  * La classe MoveForm implémente l'interface DessinState
  * pour gérer le déplacement des formes dans le panneau de dessin.
  */
 public class MoveForm implements DessinState {
+    
+    private double initialX, initialY; // des attributs pour stocker les positions initiales
 
     @Override
     public void handleMousePressed(PanelDessin panelDessin, MouseEvent e) {
-        double x = e.getX();
-        double y = e.getY();
+        initialX = e.getX();
+        initialY = e.getY();
         
-        // Sauvegarde de la position précédente de la souris
-        panelDessin.setLastMouseX(x); 
-        panelDessin.setLastMouseY(y);
         
         // Parcours la liste des figures
         for (Figure f : panelDessin.getFigures()) {
-            if (f.contient(x, y)) {
+            if (f.contient(initialX, initialY)) {
                 // Définir la figure sélectionnée comme celle à déplacer
                 panelDessin.setFigureEnCoursDeTranslation(f);                    
                 return;
@@ -35,36 +37,40 @@ public class MoveForm implements DessinState {
     }
 
     @Override
-    public void handleMouseReleased(PanelDessin panelDessin, MouseEvent e) {
-        // Remettre la figure en cours de déplacement à null
-        panelDessin.setFigureEnCoursDeTranslation(null);
+    public void handleMouseReleased(PanelDessin panelDessin, MouseEvent e, CommandHandler handler, FormContainer container) {
+        Figure figureEnCoursDeTranslation = panelDessin.getFigureEnCoursDeTranslation();
+        if (figureEnCoursDeTranslation != null) {
+            double dx = e.getX() - initialX;
+            double dy = e.getY() - initialY;
+            
+            // Appliquer de manière permanente la translation à la figure
+            figureEnCoursDeTranslation.translater(dx, dy);
+
+            // Créer et exécuter la commande de déplacement pour enregistrement
+            DeplacementForme commandeDeplacement = new DeplacementForme(figureEnCoursDeTranslation, dx, dy);
+            handler.handle(commandeDeplacement);
+
+            panelDessin.modelUpdated(this); // Rafraîchir l'affichage après le déplacement
+
+            // Réinitialiser la figure en cours de translation
+            panelDessin.setFigureEnCoursDeTranslation(null);
+        }
     }
 
     @Override
     public void handleMouseDragged(PanelDessin panelDessin, MouseEvent e) {
-        double mouseX = e.getX();
-        double mouseY = e.getY();
-        
-        // Calculer les déplacements en x et y
-        double dx = mouseX - panelDessin.getLastMouseX();
-        double dy = mouseY - panelDessin.getLastMouseY();
-
-        // Mettre à jour la dernière position de la souris
-        panelDessin.setLastMouseX(mouseX); 
-        panelDessin.setLastMouseY(mouseY);
-
-        // Déplacer la figure en cours de déplacement seulent son instance/type
-        if (panelDessin.getFigureEnCoursDeTranslation() instanceof Cercle) {
-            ((Cercle) panelDessin.getFigureEnCoursDeTranslation())
-                    .translater(dx, dy);
+        if (panelDessin.getFigureEnCoursDeTranslation() != null) {
+            double dx = e.getX() - initialX;
+            double dy = e.getY() - initialY;
             
-        } else if (panelDessin.getFigureEnCoursDeTranslation() instanceof Rectangle) {
-            ((Rectangle) panelDessin.getFigureEnCoursDeTranslation())
-                    .translater(dx, dy);
-            
-        } else if (panelDessin.getFigureEnCoursDeTranslation() instanceof Ligne) {
-            ((Ligne) panelDessin.getFigureEnCoursDeTranslation())
-                    .translater(dx, dy);
+            // Appliquer temporairement la translation pour affichage dynamique
+            panelDessin.getFigureEnCoursDeTranslation().translater(dx, dy);
+
+            // Préparer pour le prochain calcul de delta
+            initialX = e.getX();
+            initialY = e.getY();
+
+            panelDessin.modelUpdated(this); // Rafraîchir pour montrer la position temporaire
         }
     }
 

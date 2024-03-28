@@ -7,6 +7,9 @@ import java.awt.event.MouseEvent;
 import projetgamemvcswing.modele.geometry.Figure;
 import projetgamemvcswing.modele.geometry.Rectangle;
 import projetgamemvcswing.vue.InterfaceGraphique.InterfaceGraphiqueDessin.PanelDessin;
+import projetgamemvcswing.controller.Command.CommandHandler;
+import projetgamemvcswing.controller.Command.CreationForme;
+import projetgamemvcswing.modele.geometry.FormContainer;
 
 /**
  * La classe CreateRectangle gére l'état de la creation de Rectangle
@@ -31,12 +34,24 @@ public class CreateRectangle implements DessinState {
     }
 
     @Override
-    public void handleMouseReleased(PanelDessin panelDessin, MouseEvent e) {
+    public void handleMouseReleased(PanelDessin panelDessin, MouseEvent e, CommandHandler handler, FormContainer container) {
         
-        Figure rectangleEnCoursDeDessin = panelDessin.getFigureEnCoursDeDessin();
+        Figure formeEnCoursDeDessin = panelDessin.getFigureEnCoursDeDessin();
+
+        // S'assurer que la forme n'est pas nulle
+        if (formeEnCoursDeDessin != null) {
+            // Ajouter la forme actuellement dessinée à la liste des figures du panneau
+            panelDessin.getFigures().add(formeEnCoursDeDessin);
+
+            // Utiliser CreationForme avec l'objet Figure et le container
+            handler.handle(new CreationForme(formeEnCoursDeDessin, container));
+
+            // Réinitialiser la figure en cours de dessin à null pour le prochain dessin
+            panelDessin.setFigureEnCoursDeDessin(null);
+        }
+
         
-        // Ajouter le rectangle actuellement dessiné à la liste des figures du panneau
-        panelDessin.getFigures().add(rectangleEnCoursDeDessin);
+        System.out.println("Taille handler : " + handler.getStackSize());
         
         // Réinitialiser la figure en cours de dessin à null
         panelDessin.setFigureEnCoursDeDessin(null);

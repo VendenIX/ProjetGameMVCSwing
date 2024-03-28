@@ -43,6 +43,7 @@ public class Ligne extends AbstractModeleEcoutable implements Figure {
         fireChange(); // Notifier les écouteurs du changement
     }
     
+    @Override
     public Color getCouleur() { return couleur; }
     
     public void setCouleur(Color couleur) { 

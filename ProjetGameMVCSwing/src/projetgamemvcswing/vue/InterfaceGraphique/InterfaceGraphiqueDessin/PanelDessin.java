@@ -14,6 +14,7 @@ import projetgamemvcswing.controller.ShapeFiller;
 import projetgamemvcswing.controller.State.DefaultState;
 import projetgamemvcswing.controller.State.DessinState;
 import projetgamemvcswing.modele.geometry.FormContainer;
+import projetgamemvcswing.controller.Command.CommandHandler;
 
 
 /**
@@ -31,12 +32,15 @@ public class PanelDessin extends JPanel implements EcouteurModele {
     
     // Variables
 
+    private final CommandHandler handler = new CommandHandler();
     // Container de type FormContainer qui stocke toutes les figures
     private final FormContainer container = new FormContainer();
     
     // Class contenant des methodes d'affichage de formes 
     private final ShapeDrawer shapeDrawer = new ShapeDrawer();
     private final ShapeFiller shapeFiller = new ShapeFiller();
+    
+
     
    // Variable pour stocker la figure en cours de dessin
     private Figure figureEnCoursDeDessin;
@@ -65,7 +69,7 @@ public class PanelDessin extends JPanel implements EcouteurModele {
     public PanelDessin() {
         // Set de fond blanc
         setBackground(Color.WHITE);
-        
+        handler.ajoutEcouteur(this);
         // Ajouter un écouteur pour les événements de la souris
         addMouseListener(new MouseAdapter() {
             // Quand il y a un clique de souris
@@ -77,7 +81,7 @@ public class PanelDessin extends JPanel implements EcouteurModele {
             // Quand il y a une relache de souris
             @Override
             public void mouseReleased(MouseEvent e) {
-                currentState.handleMouseReleased(PanelDessin.this, e);
+                currentState.handleMouseReleased(PanelDessin.this, e, handler, container);
             }
         });
 
@@ -152,6 +156,7 @@ public class PanelDessin extends JPanel implements EcouteurModele {
         if (figureEnCoursDeColoration != null) {
             currentState.fillShape(g2d, figureEnCoursDeColoration);
         }
+        
 
         // Dessiner la figure en cours de dessin
         if (figureEnCoursDeDessin != null) {
@@ -187,7 +192,7 @@ public class PanelDessin extends JPanel implements EcouteurModele {
     }
     
     /**
-     * Suprimme une figure du panel
+     * Supprime une figure du panel
      * @param f 
      */
     public void supprimerFigure(Figure f) {
@@ -195,6 +200,9 @@ public class PanelDessin extends JPanel implements EcouteurModele {
         this.modelUpdated(this); // Notifie que le modèle a changé, ce qui déclenchera un repaint
     }
 
+    public CommandHandler getCommandHandler() {
+        return handler;
+    }
+
 
 }
-

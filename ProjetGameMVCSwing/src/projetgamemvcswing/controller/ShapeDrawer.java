@@ -37,6 +37,18 @@ public class ShapeDrawer {
             }
         }
     }
+    
+        // Methode generique pour dessiner une figure
+    public void drawFigure(Graphics g, Figure forme) {
+        if (forme instanceof Cercle) {
+            drawCircle(g, (Cercle) forme);
+        } else if (forme instanceof Rectangle) {
+            drawRectangle(g, (Rectangle) forme);
+        } else if (forme instanceof Ligne) {
+            drawLine(g, (Ligne) forme);
+        }
+        // Ajouter des else if pour d'autres types si nécessaire
+    }
 
     /**
      * Methode qui utilise g.drawOval pour Afficher / Dessiner un cercle.

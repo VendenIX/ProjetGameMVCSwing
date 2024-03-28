@@ -8,8 +8,8 @@ import projetgamemvcswing.controller.Observer.ModeleEcoutable;
 
 public class FormContainer extends AbstractModeleEcoutable implements EcouteurModele{
 
-    private ArrayList<Figure> formList;
-    private ArrayList<ModeleEcoutable> listListeners= new ArrayList<>();
+    private final ArrayList<Figure> formList;
+    private final ArrayList<ModeleEcoutable> listListeners= new ArrayList<>();
 
     public FormContainer(){
 
@@ -23,7 +23,7 @@ public class FormContainer extends AbstractModeleEcoutable implements EcouteurMo
 
     @Override
     public void modelUpdated(Object source) {
-        fireChange();
+        //fireChange();
     }
 
     /**

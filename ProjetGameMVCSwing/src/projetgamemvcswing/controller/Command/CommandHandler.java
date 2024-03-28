@@ -2,6 +2,7 @@ package projetgamemvcswing.controller.Command;
 
 import java.io.Serializable;
 import java.util.Stack;
+import projetgamemvcswing.controller.Observer.AbstractModeleEcoutable;
 
 /**
  * 
@@ -22,7 +23,7 @@ import java.util.Stack;
 
 
 
-public class CommandHandler implements Serializable{ // Serializable pour sauvegarder l'etat de l'objet
+public class CommandHandler extends AbstractModeleEcoutable implements Serializable{ // Serializable pour sauvegarder l'etat de l'objet
 
     private Stack<OperationCommand> stack;
     private Stack<OperationCommand> redoStack;
@@ -45,6 +46,8 @@ public class CommandHandler implements Serializable{ // Serializable pour sauveg
         command.operate();
         stack.push(command);
         redoStack.clear();
+        fireChange(); // Notifie les écouteurs
+
     }
 
 
@@ -52,10 +55,13 @@ public class CommandHandler implements Serializable{ // Serializable pour sauveg
      * Methode undo qui permet d'annuler la dernière action effectuée
      */
     public void undo() {
+        System.out.println("CommandHandler > undo");
         if (!stack.isEmpty()) {
             OperationCommand command = stack.pop();
             command.compensate();
             redoStack.push(command);
+            fireChange(); // Notifie les écouteurs
+
         }
     }
 
@@ -67,7 +73,33 @@ public class CommandHandler implements Serializable{ // Serializable pour sauveg
             OperationCommand command = redoStack.pop();
             command.operate();
             stack.push(command);
+            fireChange(); // Notifie les écouteurs
+
         }
     }
+    
+    public int getStackSize(){
+        return this.stack.size();
+    }
+    
+    public int getRedoStackSize(){
+        return this.redoStack.size();
+    }
+    
+    @Override
+    public String toString() {
+        String result = "Commandes effectuées (pile d'undo) : \n";
+        for (OperationCommand cmd : stack) {
+            result += "- " + cmd.getClass().getSimpleName() + "\n";
+        }
+
+        result += "\nCommandes annulées (pile de redo) : \n";
+        for (OperationCommand cmd : redoStack) {
+            result += "- " + cmd.getClass().getSimpleName() + "\n";
+        }
+
+        return result;
+}
+
     
 }
