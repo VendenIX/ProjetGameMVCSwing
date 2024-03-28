@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Line2D;
+import projetgamemvcswing.controller.Command.ColoriageForme;
 import projetgamemvcswing.modele.geometry.Figure;
 import projetgamemvcswing.modele.geometry.Cercle;
 import projetgamemvcswing.modele.geometry.Ligne;
@@ -60,8 +61,12 @@ public class ColorForm implements DessinState {
 
     @Override
     public void handleMouseReleased(PanelDessin panelDessin, MouseEvent e,  CommandHandler handler, FormContainer container) {
-        // Remettre la figure en cours de coloration à null lors du relâchement de la souris
-        panelDessin.setFigureEnCoursDeColoration(null); 
+        Figure forme = panelDessin.getFigureEnCoursDeColoration();
+        if (forme != null) {
+            ColoriageForme cmd = new ColoriageForme(forme, panelDessin.couleurChoisie);
+            handler.handle(cmd);
+        }
+        panelDessin.setFigureEnCoursDeColoration(null);
     }
     
     @Override

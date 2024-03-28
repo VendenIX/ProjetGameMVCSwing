@@ -1,5 +1,7 @@
 package projetgamemvcswing.modele.geometry;
 
+import java.awt.Color;
+
 /**
  * Interface définissant les opérations de base d'une figure géométrique.
  */
@@ -28,4 +30,8 @@ public interface Figure {
     * @return Vrai si la figure contient le point, faux sinon.
     */
    boolean contient(double x, double y);
+   
+   Color getCouleur(); // Obtenir la couleur de la figure
+   
+   void setCouleur(Color couleur); // Définir la couleur de la figure
 }
