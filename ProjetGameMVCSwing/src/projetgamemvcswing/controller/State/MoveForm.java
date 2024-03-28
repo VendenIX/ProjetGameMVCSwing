@@ -50,7 +50,7 @@ public class MoveForm implements DessinState {
             DeplacementForme commandeDeplacement = new DeplacementForme(figureEnCoursDeTranslation, dx, dy);
             handler.handle(commandeDeplacement);
 
-            panelDessin.repaint(); // Rafraîchir l'affichage après le déplacement
+            panelDessin.modelUpdated(this); // Rafraîchir l'affichage après le déplacement
 
             // Réinitialiser la figure en cours de translation
             panelDessin.setFigureEnCoursDeTranslation(null);
@@ -70,7 +70,7 @@ public class MoveForm implements DessinState {
             initialX = e.getX();
             initialY = e.getY();
 
-            panelDessin.repaint(); // Rafraîchir pour montrer la position temporaire
+            panelDessin.modelUpdated(this); // Rafraîchir pour montrer la position temporaire
         }
     }
 

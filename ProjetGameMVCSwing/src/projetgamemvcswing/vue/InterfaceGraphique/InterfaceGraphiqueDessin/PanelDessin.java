@@ -69,7 +69,7 @@ public class PanelDessin extends JPanel implements EcouteurModele {
     public PanelDessin() {
         // Set de fond blanc
         setBackground(Color.WHITE);
-        
+        handler.ajoutEcouteur(this);
         // Ajouter un écouteur pour les événements de la souris
         addMouseListener(new MouseAdapter() {
             // Quand il y a un clique de souris
@@ -198,6 +198,10 @@ public class PanelDessin extends JPanel implements EcouteurModele {
     public void supprimerFigure(Figure f) {
         this.container.suppressionForm(f);
         this.modelUpdated(this); // Notifie que le modèle a changé, ce qui déclenchera un repaint
+    }
+
+    public CommandHandler getCommandHandler() {
+        return handler;
     }
 
 

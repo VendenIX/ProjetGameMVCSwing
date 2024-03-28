@@ -123,9 +123,24 @@ public class MenuBarDessin extends JMenuBar {
         
         // Créer l'item Annuler
         JMenuItem undoItem = new JMenuItem("Annuler");
+        undoItem.addActionListener((ActionEvent e) -> {
+            System.out.println("Commande annuler");
+            // Assurez-vous d'avoir une référence à votre gestionnaire de commandes dans votre classe.
+            // Appeler la méthode d'annulation sur votre gestionnaire de commandes.
+            interfacedessin.getCommandHandler().undo();
+            interfacedessin.modelUpdated(this); // Pour rafraîchir l'affichage après annulation
+        });
         
         // Créer l'item Refaire
         JMenuItem redoItem = new JMenuItem("Refaire");
+            redoItem.addActionListener((ActionEvent e) -> {
+            System.out.println("Commande refaire");
+            // De même, assurez-vous d'avoir une référence à votre gestionnaire de commandes.
+            // Appeler la méthode refaire sur votre gestionnaire de commandes.
+            interfacedessin.getCommandHandler().redo();
+            interfacedessin.modelUpdated(this); // Pour rafraîchir l'affichage après avoir refait une action
+        });
+        
         
         // Créer l'item Supprimer
         JMenuItem deleteItem = new JMenuItem("Supprimer");
