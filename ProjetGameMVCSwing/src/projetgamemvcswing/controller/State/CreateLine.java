@@ -47,17 +47,17 @@ public class CreateLine implements DessinState {
 
     @Override
     public void handleMouseDragged(PanelDessin panelDessin, MouseEvent e) {
-        
         double mouseX = e.getX();
         double mouseY = e.getY();
-        
-        Figure ligneEnCoursDeDessin = panelDessin.getFigureEnCoursDeDessin();
-        
-        // update les coordonnées de fin de la ligne 
-        // en fonction de la position actuelle de la souris
-        ((Ligne) ligneEnCoursDeDessin).setXFin(mouseX);
-        ((Ligne) ligneEnCoursDeDessin).setYFin(mouseY);
+
+        Ligne ligneEnCoursDeDessin = (Ligne) panelDessin.getFigureEnCoursDeDessin();
+        if (ligneEnCoursDeDessin != null) {
+            ligneEnCoursDeDessin.setXFin(mouseX);
+            ligneEnCoursDeDessin.setYFin(mouseY);
+            panelDessin.modelUpdated(this);
+        }
     }
+
 
     @Override
     public void drawShape(Graphics g, Figure forme) {
