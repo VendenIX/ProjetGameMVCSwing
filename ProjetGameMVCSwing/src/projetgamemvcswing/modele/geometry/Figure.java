@@ -34,4 +34,11 @@ public interface Figure {
    Color getCouleur(); // Obtenir la couleur de la figure
    
    void setCouleur(Color couleur); // Définir la couleur de la figure
+   
+   //utilisation du pattern Prototype !
+   /**
+    * Fait tout simplement une copie.
+    * @return 
+    */
+   public abstract Figure copie();
 }

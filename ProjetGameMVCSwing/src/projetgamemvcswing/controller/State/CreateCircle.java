@@ -22,28 +22,22 @@ public class CreateCircle implements DessinState {
     @Override
     public void handleMousePressed(PanelDessin panelDessin, MouseEvent e) {
         
-        // Recuperation des cordonnés de la souris apres le press
         double x = e.getX();
         double y = e.getY();
         
-    
-        
         Cercle cercle = new Cercle(new Point(x, y), 0, new Color(0, 0, 0, 0));
-        cercle.ajoutEcouteur(panelDessin); // Enregistre PanelDessin comme écouteur
+        cercle.ajoutEcouteur(panelDessin); 
         panelDessin.setFigureEnCoursDeDessin(cercle);
     }
 
     @Override
     public void handleMouseReleased(PanelDessin panelDessin, MouseEvent e, CommandHandler handler, FormContainer container) {
         
-        // Recuperer le cercle en cours de dessin
         Figure formeEnCoursDeDessin = panelDessin.getFigureEnCoursDeDessin();
     
         if (formeEnCoursDeDessin != null) {
             
-            // Utiliser CreationForme avec l'objet Figure et le container
             handler.handle(new CreationForme(formeEnCoursDeDessin, container));
-            
             panelDessin.setFigureEnCoursDeDessin(null);
         }
         
@@ -54,17 +48,14 @@ public class CreateCircle implements DessinState {
     @Override
     public void handleMouseDragged(PanelDessin panelDessin, MouseEvent e) {
         
-        // Recuperer le cercle en cours de dessin
         Figure cercleEnCoursDeDessin = panelDessin.getFigureEnCoursDeDessin();
         
         Cercle cercle = (Cercle) cercleEnCoursDeDessin;
         double mouseX = e.getX();
         double mouseY = e.getY();
         
-        // Calculer la distance entre le centre du cercle et le point actuel de la souris
+        // calculer la distance entre le centre du cercle et le point actuel de la souris
         double radius = cercle.distance(mouseX, mouseY);
-        
-        // Mettre à jour le rayon du cercle
         cercle.setRayon(radius);
     }
     
@@ -73,12 +64,11 @@ public class CreateCircle implements DessinState {
         g.setColor(Color.BLACK);
         Cercle cercle = (Cercle) forme;
         
-        // Recuperation des coordonnees et Calcule du diamètre
+        // calcul du diamètre
         int x = (int) Math.round(cercle.getX() - cercle.getRayon());
         int y = (int) Math.round(cercle.getY() - cercle.getRayon());
         int diameter = (int) Math.round(2 * cercle.getRayon());
         
-        // Dessiner un cercle avec les coordonnées et le diamètre calculés
         g.drawOval(x, y, diameter, diameter);
     }
 

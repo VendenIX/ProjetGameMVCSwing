@@ -147,4 +147,9 @@ public class Cercle extends AbstractModeleEcoutable implements Figure {
         this.setX(x);
         this.setY(y);
     }
+    
+    @Override
+    public Figure copie() {
+        return new Cercle(this.getCentre(), this.getRayon(), this.getCouleur());
+    }
 }

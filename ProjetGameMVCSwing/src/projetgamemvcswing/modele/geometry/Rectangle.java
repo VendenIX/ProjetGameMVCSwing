@@ -150,4 +150,9 @@ public class Rectangle extends AbstractModeleEcoutable implements Figure {
         fireChange();
     }
 
+    @Override
+    public Figure copie() {
+        return new Rectangle(this.getX(), this.getY(), this.getLargeur(), this.getHauteur(), this.getCouleur());
+    }
+
 }

@@ -61,6 +61,8 @@ public class PanelDessin extends JPanel implements EcouteurModele {
     // Position précédente de la souris 
     public double lastMouseX;
     public double lastMouseY;
+    
+    private double tempDx = 0, tempDy = 0; //gere les deplacements temporaires
 
     /**
      * Constructeur de la classe InterfaceDessin.
@@ -144,8 +146,20 @@ public class PanelDessin extends JPanel implements EcouteurModele {
         // Utilise figures de FormContainer pour le dessin
         shapeDrawer.drawFigures(g, container.getFormList());
         shapeFiller.drawFilledFigures(g2d, container.getFormList());
-
-        // Plus besoin de dessiner figureEnCoursDeDessin ici, car toutes les modifications sont gérées via les commandes
+        
+        
+        //état temporaire pour dessinner les figures dynamiquement sans les enregistrer en tant que commande
+        if (figureEnCoursDeDessin != null) {
+            shapeDrawer.drawFigure(g, figureEnCoursDeDessin); // Utilisation de drawFigure pour la forme temporaire
+        }
+        
+        if (figureEnCoursDeTranslation != null && (tempDx != 0 || tempDy != 0)) {
+            Graphics2D gTemp = (Graphics2D) g.create();
+            gTemp.translate(tempDx, tempDy); // Applique la translation temporaire
+            shapeDrawer.drawFigure(gTemp, figureEnCoursDeTranslation); // Dessinez la figure temporairement déplacée
+            shapeFiller.drawFilledFigure(gTemp, figureEnCoursDeTranslation);
+            gTemp.dispose(); // Libérer la ressource graphique temporaire
+        }
     }
 
    
@@ -181,6 +195,30 @@ public class PanelDessin extends JPanel implements EcouteurModele {
     public CommandHandler getCommandHandler() {
         return handler;
     }
+    
+    public void setTempTranslation(double dx, double dy) {
+        this.tempDx = dx;
+        this.tempDy = dy;
+    }
+    
+    /**
+    * Cette méthode réinitialise la liste des figures à une liste vide.
+    * Donc le panel Dessin devient vide
+    */
+    public void CreeNouvelInterfaceDessin() {
+        this.container.getFormList().clear();
+        this.figureEnCoursDeDessin = null;
+        this.figureEnCoursDeTranslation = null; 
+        this.figureEnCoursDeColoration = null;
+        this.modelUpdated(this);
+    }
+    
+    // Ajout de la méthode pour réinitialiser les déplacements temporaires
+    public void resetTempTranslation() {
+        tempDx = 0;
+        tempDy = 0;
+    }
 
+    
 
 }

@@ -54,6 +54,21 @@ public class ShapeFiller {
             }
         }
     }
+    
+    public void drawFilledFigure(Graphics2D g2d, Figure forme) {
+        g2d.setColor(forme.getCouleur()); // Utiliser la couleur de la forme
+
+        if (forme instanceof Cercle) {
+            // Dessine un cercle rempli
+            fillCircle(g2d, (Cercle) forme);
+        } else if (forme instanceof Rectangle) {
+            // Dessine un rectangle rempli
+            fillRectangle(g2d, (Rectangle) forme);
+        } else if (forme instanceof Ligne) {   
+            fillLine(g2d, (Ligne) forme);
+        }
+    }
+
 
     /**
      * Dessine un cercle rempli sur le Graphics2D.

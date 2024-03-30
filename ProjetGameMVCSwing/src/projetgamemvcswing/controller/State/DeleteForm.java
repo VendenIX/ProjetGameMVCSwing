@@ -22,27 +22,25 @@ public class DeleteForm implements DessinState {
         double x = e.getX();
         double y = e.getY();
 
-        // Identifier la figure à supprimer
+        // identifier la figure à supprimer
         for (Figure f : panelDessin.getFigures()) {
             if (f.contient(x, y)) {
                 figureASupprimer = f;
-                break; // Sortir de la boucle après avoir trouvé une figure
+                break; // sortir de la boucle après avoir trouvé une figure
             }
         }
     }
 
     @Override
     public void handleMouseReleased(PanelDessin panelDessin, MouseEvent e, CommandHandler handler, FormContainer container) {
-        // S'assurer qu'une figure a été sélectionnée pour la suppression
+        
         if (figureASupprimer != null) {
-            // Créer et exécuter la commande de suppression
+
             handler.handle(new SuppressionForme(figureASupprimer, container));
 
-            // Supprimer visuellement la figure
             panelDessin.getFigures().remove(figureASupprimer);
-            panelDessin.modelUpdated(this); // Redessiner le panneau pour refléter la suppression
+            panelDessin.modelUpdated(this); 
 
-            // Réinitialiser la figure à supprimer pour la prochaine opération
             figureASupprimer = null;
         }
     }

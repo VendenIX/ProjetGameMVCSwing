@@ -18,7 +18,7 @@ import projetgamemvcswing.modele.geometry.FormContainer;
  */
 public class MoveForm implements DessinState {
     
-    private double initialX, initialY; // des attributs pour stocker les positions initiales
+    private double initialX, initialY; 
 
     @Override
     public void handleMousePressed(PanelDessin panelDessin, MouseEvent e) {
@@ -29,7 +29,7 @@ public class MoveForm implements DessinState {
         // Parcours la liste des figures
         for (Figure f : panelDessin.getFigures()) {
             if (f.contient(initialX, initialY)) {
-                // Définir la figure sélectionnée comme celle à déplacer
+                // def la figure sélectionnée comme celle à déplacer
                 panelDessin.setFigureEnCoursDeTranslation(f);                    
                 return;
             }
@@ -38,36 +38,30 @@ public class MoveForm implements DessinState {
 
     @Override
     public void handleMouseReleased(PanelDessin panelDessin, MouseEvent e, CommandHandler handler, FormContainer container) {
+        double finalX = e.getX();
+        double finalY = e.getY();
+        double dx = finalX - initialX;
+        double dy = finalY - initialY;
+
         Figure figureEnCoursDeTranslation = panelDessin.getFigureEnCoursDeTranslation();
         if (figureEnCoursDeTranslation != null) {
-            double dx = e.getX() - initialX;
-            double dy = e.getY() - initialY;
-            
-            // Appliquer de manière permanente la translation à la figure
-
-            // Créer et exécuter la commande de déplacement pour enregistrement
             DeplacementForme commandeDeplacement = new DeplacementForme(figureEnCoursDeTranslation, dx, dy);
             handler.handle(commandeDeplacement);
-
-            panelDessin.modelUpdated(this); // Rafraîchir l'affichage après le déplacement
-
-            // Réinitialiser la figure en cours de translation
             panelDessin.setFigureEnCoursDeTranslation(null);
+            panelDessin.resetTempTranslation(); // réinitialiser le déplacement temporaire
         }
     }
-
     @Override
     public void handleMouseDragged(PanelDessin panelDessin, MouseEvent e) {
-        if (panelDessin.getFigureEnCoursDeTranslation() != null) {
-            // Calcul des déplacements temporaires sans modifier la figure
-            double tempDx = e.getX() - initialX;
-            double tempDy = e.getY() - initialY;
-
-            // Stocker tempDx et tempDy quelque part pour l'utilisation pendant le dessin temporaire
-
-            // Mise à jour de l'affichage sans modifier le modèle
-            panelDessin.repaint();
-        }
+        double currentX = e.getX();
+        double currentY = e.getY();
+        double tempDx = currentX - initialX;
+        double tempDy = currentY - initialY;
+        
+        // update du déplacement temporaire dans PanelDessin pour l'affichage
+        panelDessin.setTempTranslation(tempDx, tempDy);
+        
+        panelDessin.modelUpdated(this);
     }
 
     @Override

@@ -29,6 +29,24 @@ public class Ligne extends AbstractModeleEcoutable implements Figure {
         fireChange(); // Notifier les écouteurs du changement
     }
     
+    public Point getDebut() {
+        return this.debut;
+    }
+    
+    public void setDebut(double Xdebut, double Ydebut) {
+        this.setXDebut(Xdebut);
+        this.setYDebut(Ydebut);
+    }
+    
+    public void setFin(double Xfin, double Yfin) {
+        this.setXFin(Xfin);
+        this.setYFin(Yfin);
+    }
+    
+    public Point getFin() {
+        return this.fin;
+    }
+    
     public double getXFin() { return this.fin.getX(); }
     
      public double getYFin() { return this.fin.getY(); }
@@ -111,6 +129,11 @@ public class Ligne extends AbstractModeleEcoutable implements Figure {
                              debut.getX(), debut.getY(), 
                              fin.getX(), fin.getY(), 
                              couleur.toString());
+    }
+
+    @Override
+    public Figure copie() {
+        return new Ligne(this.getDebut(), this.getFin(), this.getCouleur());
     }
 
     

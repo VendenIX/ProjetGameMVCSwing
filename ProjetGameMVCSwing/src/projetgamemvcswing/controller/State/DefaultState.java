@@ -17,31 +17,26 @@ import projetgamemvcswing.modele.geometry.FormContainer;
 public class DefaultState implements DessinState {
     @Override
     public void handleMousePressed(PanelDessin panelDessin, MouseEvent e) {
-        // Gérer l'événement de pression de la souris dans l'état par défaut
         System.out.println("État par défaut : pression de la souris");
     }
 
     @Override
     public void handleMouseReleased(PanelDessin panelDessin, MouseEvent e,  CommandHandler handler, FormContainer container) {
-        // Gérer l'événement de relâchement de la souris dans l'état par défaut
         System.out.println("État par défaut : relâchement de la souris");
     }
     
     @Override
     public void handleMouseDragged(PanelDessin panelDessin, MouseEvent e) {
-        // Gérer l'événement de glissement de la souris dans l'état par défaut
         System.out.println("État par défaut : glissement de la souris");
     }
 
     @Override
     public void drawShape(Graphics g, Figure forme) {
-        // Dessiner la forme dans l'état par défaut
         System.out.println("État par défaut : dessiner la forme");
     }
 
     @Override
     public void fillShape(Graphics2D g2d, Figure forme) {
-        // Remplir la forme dans l'état par défaut
         System.out.println("État par défaut : remplir la forme");
     }
 }
