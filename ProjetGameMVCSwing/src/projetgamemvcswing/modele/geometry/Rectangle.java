@@ -154,5 +154,15 @@ public class Rectangle extends AbstractModeleEcoutable implements Figure {
         this.y = yFinal;
         fireChange();
     }
-
+    
+    @Override
+    public String getName(){
+        return "Rectangle";
+    }
+    
+    @Override
+    public double getSurface(){
+        return this.hauteur*this.largeur;
+    }
+    
 }

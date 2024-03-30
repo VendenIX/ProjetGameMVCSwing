@@ -20,7 +20,19 @@ public class FormContainer extends AbstractModeleEcoutable implements EcouteurMo
     public ArrayList<Figure> getFormList() {
         return formList;
     }
-
+    
+    public int getNbForms() {
+        return this.formList.size();
+    }
+    
+    public double getTotalArea() {
+        double totalArea = 0.0;
+        for (Figure figure : formList) {
+            totalArea += figure.getSurface();
+        }
+        return totalArea;
+    }
+    
     @Override
     public void modelUpdated(Object source) {
         //fireChange();
@@ -62,7 +74,5 @@ public class FormContainer extends AbstractModeleEcoutable implements EcouteurMo
         this.formList.remove(f);
         retraitEcouteur(this);
     }
-
-
     
 }

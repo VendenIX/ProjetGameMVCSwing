@@ -34,4 +34,9 @@ public interface Figure {
    Color getCouleur(); // Obtenir la couleur de la figure
    
    void setCouleur(Color couleur); // Définir la couleur de la figure
+   
+   String getName();
+   
+   double getSurface();
+   
 }
