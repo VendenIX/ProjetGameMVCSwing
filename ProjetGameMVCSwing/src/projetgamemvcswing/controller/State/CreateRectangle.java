@@ -41,7 +41,6 @@ public class CreateRectangle implements DessinState {
         // S'assurer que la forme n'est pas nulle
         if (formeEnCoursDeDessin != null) {
             // Ajouter la forme actuellement dessinée à la liste des figures du panneau
-            panelDessin.getFigures().add(formeEnCoursDeDessin);
 
             // Utiliser CreationForme avec l'objet Figure et le container
             handler.handle(new CreationForme(formeEnCoursDeDessin, container));
@@ -53,8 +52,7 @@ public class CreateRectangle implements DessinState {
         
         System.out.println("Taille handler : " + handler.getStackSize());
         
-        // Réinitialiser la figure en cours de dessin à null
-        panelDessin.setFigureEnCoursDeDessin(null);
+
     }
 
     @Override

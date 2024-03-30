@@ -44,7 +44,6 @@ public class MoveForm implements DessinState {
             double dy = e.getY() - initialY;
             
             // Appliquer de manière permanente la translation à la figure
-            figureEnCoursDeTranslation.translater(dx, dy);
 
             // Créer et exécuter la commande de déplacement pour enregistrement
             DeplacementForme commandeDeplacement = new DeplacementForme(figureEnCoursDeTranslation, dx, dy);
@@ -60,17 +59,14 @@ public class MoveForm implements DessinState {
     @Override
     public void handleMouseDragged(PanelDessin panelDessin, MouseEvent e) {
         if (panelDessin.getFigureEnCoursDeTranslation() != null) {
-            double dx = e.getX() - initialX;
-            double dy = e.getY() - initialY;
-            
-            // Appliquer temporairement la translation pour affichage dynamique
-            panelDessin.getFigureEnCoursDeTranslation().translater(dx, dy);
+            // Calcul des déplacements temporaires sans modifier la figure
+            double tempDx = e.getX() - initialX;
+            double tempDy = e.getY() - initialY;
 
-            // Préparer pour le prochain calcul de delta
-            initialX = e.getX();
-            initialY = e.getY();
+            // Stocker tempDx et tempDy quelque part pour l'utilisation pendant le dessin temporaire
 
-            panelDessin.modelUpdated(this); // Rafraîchir pour montrer la position temporaire
+            // Mise à jour de l'affichage sans modifier le modèle
+            panelDessin.repaint();
         }
     }
 

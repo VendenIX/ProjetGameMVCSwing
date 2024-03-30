@@ -104,6 +104,17 @@ public class Ligne extends AbstractModeleEcoutable implements Figure {
     public boolean intersecteAvec(Figure autre) {
         throw new UnsupportedOperationException("Not supported yet."); 
     }
+    
+    @Override
+    public String toString() {
+        return String.format("Ligne [debut=(%.2f, %.2f), fin=(%.2f, %.2f), couleur=%s]", 
+                             debut.getX(), debut.getY(), 
+                             fin.getX(), fin.getY(), 
+                             couleur.toString());
+    }
+
+    
+    
 
     
     

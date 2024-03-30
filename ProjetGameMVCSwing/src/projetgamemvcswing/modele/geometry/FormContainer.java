@@ -3,13 +3,10 @@ package projetgamemvcswing.modele.geometry;
 import java.util.ArrayList;
 
 import projetgamemvcswing.controller.Observer.AbstractModeleEcoutable;
-import projetgamemvcswing.controller.Observer.EcouteurModele;
-import projetgamemvcswing.controller.Observer.ModeleEcoutable;
 
-public class FormContainer extends AbstractModeleEcoutable implements EcouteurModele{
+public class FormContainer extends AbstractModeleEcoutable {
 
     private final ArrayList<Figure> formList;
-    private final ArrayList<ModeleEcoutable> listListeners= new ArrayList<>();
 
     public FormContainer(){
 
@@ -21,37 +18,13 @@ public class FormContainer extends AbstractModeleEcoutable implements EcouteurMo
         return formList;
     }
 
-    @Override
-    public void modelUpdated(Object source) {
-        //fireChange();
-    }
-
-    /**
-     * Ajout d'un écouteur à la liste des écouteurs
-     * @param l 
-     */
-    public void ajoutContainerListeners(ModeleEcoutable l) {
-        this.listListeners.add(l);
-    }
-
-    /**
-     * Suppression d'un écouteur de la liste des écouteurs
-     * @param l 
-     */
-    public void supprimeContainerListeners(ModeleEcoutable l) {
-        this.listListeners.remove(l);
-    }
-
-
     /**
      * Ajout d'une forme à la liste des formes
      * @param f 
      */
-    public void ajoutForm(Figure f ) {
-        if(formList.size()<= 53){
-            this.formList.add(f);
-            ajoutEcouteur(this);
-        }
+    public void ajoutForm(Figure f) {
+        this.formList.add(f);
+        fireChange(); 
     }
 
     /**
@@ -60,7 +33,16 @@ public class FormContainer extends AbstractModeleEcoutable implements EcouteurMo
      */
     public void suppressionForm(Figure f) {
         this.formList.remove(f);
-        retraitEcouteur(this);
+        fireChange(); 
+    }
+    
+    @Override
+    public String toString() {
+        String result = "FormContainer contient les formes suivantes :\n";
+        for (Figure f : formList) {
+            result += f.toString() + "\n";
+        }
+        return result;
     }
 
 

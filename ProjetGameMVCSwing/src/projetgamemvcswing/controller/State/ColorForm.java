@@ -23,48 +23,24 @@ public class ColorForm implements DessinState {
 
     @Override
     public void handleMousePressed(PanelDessin panelDessin, MouseEvent e) {
-        
-        // Recuperation des cordonnés de la souris apres le press
         double x = e.getX();
         double y = e.getY();
-        
-        // Parcourir la liste des figures
-        for (Figure f : panelDessin.getFigures()) {
-            // Vérifier si la figure contient les coordonnées de la souris
-            if (f.contient(x, y)) {
-                
-                // Définir la figure sélectionnée comme celle à colorier
-                panelDessin.setFigureEnCoursDeColoration(f);
 
-                // Appliquer la couleur sélectionnée à la figure, si elle existe
-                if (panelDessin.getFigureEnCoursDeColoration() != null) {
-                    
-                    // Cas Cercle
-                    if (panelDessin.getFigureEnCoursDeColoration() instanceof Cercle) {
-                        ((Cercle) panelDessin.getFigureEnCoursDeColoration())
-                                .setCouleur(panelDessin.couleurChoisie);
-                    // Cas Rectangle   
-                    } else if (panelDessin.getFigureEnCoursDeColoration() instanceof Rectangle) {
-                        ((Rectangle) panelDessin.getFigureEnCoursDeColoration())
-                                .setCouleur(panelDessin.couleurChoisie);
-                    // Cas Ligne    
-                    } else if (panelDessin.getFigureEnCoursDeColoration() instanceof Ligne) {
-                        ((Ligne) panelDessin.getFigureEnCoursDeColoration())
-                                .setCouleur(panelDessin.couleurChoisie);
-                    }
-                }
+        // Trouver la première figure qui contient le point (x,y)
+        Figure selectedFigure = panelDessin.getFigures().stream() //pour pouvoir faire un filter (conversion en stream java)
+                                           .filter(f -> f.contient(x, y)) // garder les éléments qui respecte la condition f contient x y
+                                           .findFirst().orElse(null); // recup le premier element qui reste ds le stream, si y a r on return null avec orElse
 
-                return;
-            }
-        }  
+        if (selectedFigure != null) {
+            panelDessin.setFigureEnCoursDeColoration(selectedFigure);
+        }
     }
 
     @Override
     public void handleMouseReleased(PanelDessin panelDessin, MouseEvent e,  CommandHandler handler, FormContainer container) {
         Figure forme = panelDessin.getFigureEnCoursDeColoration();
         if (forme != null) {
-            ColoriageForme cmd = new ColoriageForme(forme, panelDessin.couleurChoisie);
-            handler.handle(cmd);
+            handler.handle(new ColoriageForme(forme, panelDessin.couleurChoisie));
         }
         panelDessin.setFigureEnCoursDeColoration(null);
     }

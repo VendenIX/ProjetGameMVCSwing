@@ -144,11 +144,6 @@ public class Rectangle extends AbstractModeleEcoutable implements Figure {
                y >= this.y && y <= this.y + this.hauteur;
     }
 
-    @Override
-    public void finalize() {
-        fireChange(); // Notifier les écouteurs du changement
-    }
-
     public void deplacer(double xFinal, double yFinal) {
         this.x = xFinal;
         this.y = yFinal;

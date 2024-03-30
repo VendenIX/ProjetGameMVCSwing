@@ -138,40 +138,16 @@ public class PanelDessin extends JPanel implements EcouteurModele {
     */
     @Override
     protected void paintComponent(Graphics g) {
-        // Appel à la méthode paintComponent de la classe parent
-        // pour effectuer les opérations de base
         super.paintComponent(g);
-
-        // Conversion de l'objet Graphics en Graphics2D pour accéder à des fonctionnalités
-        // avancées de dessin comme le remplissage
         Graphics2D g2d = (Graphics2D) g;
-        
-        // Dessiner les contours des formes existantes
-        shapeDrawer.drawFigures(g, this.getFigures());
 
-        // Dessiner les formes remplies existantes
-        shapeFiller.drawFilledFigures(g2d, this.getFigures());
+        // Utilise figures de FormContainer pour le dessin
+        shapeDrawer.drawFigures(g, container.getFormList());
+        shapeFiller.drawFilledFigures(g2d, container.getFormList());
 
-        // Dessiner la figure en cours de coloration
-        if (figureEnCoursDeColoration != null) {
-            currentState.fillShape(g2d, figureEnCoursDeColoration);
-        }
-        
-
-        // Dessiner la figure en cours de dessin
-        if (figureEnCoursDeDessin != null) {
-            currentState.drawShape(g, figureEnCoursDeDessin);
-        }
+        // Plus besoin de dessiner figureEnCoursDeDessin ici, car toutes les modifications sont gérées via les commandes
     }
 
-    /**
-    * Cette méthode réinitialise la liste des figures à une liste vide.
-    * Donc le panel Dessin devient vide
-    */
-    public void CreeNouvelInterfaceDessin() {
-        this.container.getFormList().clear();
-        repaint();
-    }
    
     /**
     * Définit la couleur sélectionnée.
@@ -188,6 +164,8 @@ public class PanelDessin extends JPanel implements EcouteurModele {
      */
     @Override
     public void modelUpdated(Object source) {
+        //System.out.println("Mise à jour du modèle reçue.");
+        //System.out.println(container.toString());
         repaint();
     }
     

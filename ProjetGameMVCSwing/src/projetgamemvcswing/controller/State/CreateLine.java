@@ -39,14 +39,13 @@ public class CreateLine implements DessinState {
     
         if (formeEnCoursDeDessin != null) {
             // Ajouter la forme actuellement dessinée à la liste des figures du panneau
-            panelDessin.getFigures().add(formeEnCoursDeDessin);
 
             // Utiliser CreationForme pour ajouter la forme dans le système de commande
             handler.handle(new CreationForme(formeEnCoursDeDessin, container));
+            panelDessin.setFigureEnCoursDeDessin(null);
         }
 
-        // Réinitialiser la figure en cours de dessin à null pour le prochain dessin
-        panelDessin.setFigureEnCoursDeDessin(null);
+
     }
 
     @Override

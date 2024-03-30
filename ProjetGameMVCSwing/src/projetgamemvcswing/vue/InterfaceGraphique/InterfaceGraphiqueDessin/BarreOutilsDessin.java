@@ -85,14 +85,14 @@ public class BarreOutilsDessin extends JToolBar {
         undoButton.addActionListener((ActionEvent e) -> {
             System.out.println("boutton undo cliqué");
             interfacedessin.getCommandHandler().undo();
-            interfacedessin.repaint(); // Rafraîchit l'affichage
+            interfacedessin.modelUpdated(this);// Rafraîchit l'affichage
         });
 
         // Lorsque le bouton Refaire (Redo) est cliqué
         redoButton.addActionListener((ActionEvent e) -> {
             System.out.println("Boutton redo cliqué");
             interfacedessin.getCommandHandler().redo();
-            interfacedessin.repaint(); // Rafraîchit l'affichage
+            interfacedessin.modelUpdated(this);// Rafraîchit l'affichage
         });
 
         // Initialisation bouton Supprimer

@@ -41,8 +41,6 @@ public class CreateCircle implements DessinState {
     
         if (formeEnCoursDeDessin != null) {
             
-            // Ajouter le cercle actuellement dessiné à la liste des figures
-            panelDessin.getFigures().add(formeEnCoursDeDessin);
             // Utiliser CreationForme avec l'objet Figure et le container
             handler.handle(new CreationForme(formeEnCoursDeDessin, container));
             
@@ -51,8 +49,6 @@ public class CreateCircle implements DessinState {
         
         System.out.println("Taille handler : " + handler.getStackSize());
         System.out.println(handler);
-        // Réinitialiser la figure en cours de dessin à null
-        panelDessin.setFigureEnCoursDeDessin(null);
     }
 
     @Override
