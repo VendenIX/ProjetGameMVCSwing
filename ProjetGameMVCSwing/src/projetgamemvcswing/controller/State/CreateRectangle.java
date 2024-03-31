@@ -10,7 +10,7 @@ import projetgamemvcswing.vue.InterfaceGraphique.InterfaceGraphiqueDessin.PanelD
 import projetgamemvcswing.controller.Command.CommandHandler;
 import projetgamemvcswing.controller.Command.CreationForme;
 import projetgamemvcswing.modele.geometry.FormContainer;
-import projetgamemvcswing.modele.factory.RectangleFactory;
+import projetgamemvcswing.modele.factory.FormesFactory;
 
 /**
  * La classe CreateRectangle gére l'état de la creation de Rectangle
@@ -26,7 +26,7 @@ public class CreateRectangle implements DessinState {
         panelDessin.setLastMouseX(x);
         panelDessin.setLastMouseY(y);
         
-        Rectangle nouveauRectangle = RectangleFactory.createRectangle(x, y, 0, 0, new Color(0, 0, 0, 0));
+        Rectangle nouveauRectangle = FormesFactory.createRectangle(x, y, 0, 0, new Color(0, 0, 0, 0));
 
         nouveauRectangle.ajoutEcouteur(panelDessin); 
 

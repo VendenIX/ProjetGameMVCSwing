@@ -12,8 +12,8 @@ import projetgamemvcswing.vue.InterfaceGraphique.InterfaceGraphiqueDessin.PanelD
 import projetgamemvcswing.controller.Command.CommandHandler;
 import projetgamemvcswing.controller.Command.CreationForme;
 import projetgamemvcswing.modele.geometry.FormContainer;
-import projetgamemvcswing.modele.factory.CercleFactory;
-import projetgamemvcswing.modele.factory.PointFactory;
+
+import projetgamemvcswing.modele.factory.FormesFactory;
 
 /**
  * La classe CreateCircle gére l'état de la creation de Cercle
@@ -26,8 +26,8 @@ public class CreateCircle implements DessinState {
         
         double x = e.getX();
         double y = e.getY();
-        Point centre = PointFactory.createPoint(x, y);
-        Cercle cercle = CercleFactory.createCercle(centre, 0, new Color(0, 0, 0, 0));
+        Point centre = FormesFactory.createPoint(x, y);
+        Cercle cercle = FormesFactory.createCercle(centre, 0, new Color(0, 0, 0, 0));
         cercle.ajoutEcouteur(panelDessin); 
         panelDessin.setFigureEnCoursDeDessin(cercle);
     }

@@ -11,7 +11,7 @@ import projetgamemvcswing.vue.InterfaceGraphique.InterfaceGraphiqueDessin.PanelD
 import projetgamemvcswing.controller.Command.CommandHandler;
 import projetgamemvcswing.controller.Command.CreationForme;
 import projetgamemvcswing.modele.geometry.FormContainer;
-import projetgamemvcswing.modele.factory.PointFactory;
+import projetgamemvcswing.modele.factory.FormesFactory;
 
 /**
  * La classe CreateLine gére l'état de la creation de Ligne
@@ -24,8 +24,8 @@ public class CreateLine implements DessinState {
         
         double x = e.getX();
         double y = e.getY();
-        Point origine = PointFactory.createPoint(x,y);
-        Point fin = PointFactory.createPoint(x,y);
+        Point origine = FormesFactory.createPoint(x,y);
+        Point fin = FormesFactory.createPoint(x,y);
         Ligne nouvelleLigne = new Ligne(origine, fin, Color.BLACK);
 
         nouvelleLigne.ajoutEcouteur(panelDessin);
