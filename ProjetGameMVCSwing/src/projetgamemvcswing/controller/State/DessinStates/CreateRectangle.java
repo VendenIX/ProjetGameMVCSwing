@@ -25,7 +25,7 @@ public class CreateRectangle implements DessinState {
         panelDessin.setLastMouseX(x);
         panelDessin.setLastMouseY(y);
         
-        Rectangle nouveauRectangle = new Rectangle(x, y, 0, 0, new Color(0, 0, 0, 0));
+        Rectangle nouveauRectangle = new Rectangle(x, y, 0, 0, new Color(255, 255, 255));
 
         nouveauRectangle.ajoutEcouteur(panelDessin); 
 
@@ -94,7 +94,7 @@ public class CreateRectangle implements DessinState {
         int LargeurInt = (int) Math.round(rectangle.getLargeur());
         int HauteurtInt = (int) Math.round(rectangle.getHauteur());
         
-        g.drawRect(xInt, yInt, LargeurInt, HauteurtInt);
+        //g.drawRect(xInt, yInt, LargeurInt, HauteurtInt);
     }
 
     @Override

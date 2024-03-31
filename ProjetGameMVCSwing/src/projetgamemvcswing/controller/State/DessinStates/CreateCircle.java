@@ -25,7 +25,7 @@ public class CreateCircle implements DessinState {
         double x = e.getX();
         double y = e.getY();
         
-        Cercle cercle = new Cercle(new Point(x, y), 0, new Color(0, 0, 0, 0));
+        Cercle cercle = new Cercle(new Point(x, y), 0, new Color(255, 255, 255));
         cercle.ajoutEcouteur(panelDessin); 
         panelDessin.setFigureEnCoursDeDessin(cercle);
     }

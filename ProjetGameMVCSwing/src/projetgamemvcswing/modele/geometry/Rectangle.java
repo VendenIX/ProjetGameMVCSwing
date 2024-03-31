@@ -179,7 +179,7 @@ public class Rectangle extends AbstractModeleEcoutable implements Figure {
 
     @Override
     public boolean needsBorder() {
-        return false; // Les rectangles peuvent être considérés comme ayant déjà une "bordure" via leur dessin de remplissage.
+        return true; //par defaut on part du principe que oui vu que la color default c'est blanc
     }
     
 }

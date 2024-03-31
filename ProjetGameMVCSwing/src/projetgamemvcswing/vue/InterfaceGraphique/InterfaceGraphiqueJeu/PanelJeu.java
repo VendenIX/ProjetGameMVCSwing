@@ -123,11 +123,11 @@ public class PanelJeu extends JPanel implements EcouteurModele {
         Graphics2D g2d = (Graphics2D) g;
         
         // Dessiner les formes remplies existantes
-        shapeFiller.drawFilledFigures(g2d, this.getFigures());
+        //shapeFiller.drawFilledFigures(g2d, this.getFigures());
         
         // Dessiner les contours des formes existantes
         shapeDrawer.drawFigures(g, this.getFigures());  
-
+        
         // Dessiner la figure en cours de dessin
         if (figureEnCoursDeDessin != null) {
             currentState.drawShape(g, figureEnCoursDeDessin);
