@@ -1,5 +1,6 @@
 package projetgamemvcswing.modele.geometry;
 import java.awt.Color;
+import java.awt.Graphics2D;
 
 import projetgamemvcswing.controller.Observer.AbstractModeleEcoutable;
 
@@ -160,5 +161,20 @@ public class Cercle extends AbstractModeleEcoutable implements Figure {
     @Override
     public double getSurface(){
         return Math.PI * Math.pow(this.rayon, 2);
+    }
+    
+    @Override
+    public void dessiner(Graphics2D g2d) {
+        g2d.fillOval((int) (centre.getX() - rayon), (int) (centre.getY() - rayon), (int) (2 * rayon), (int) (2 * rayon));
+    }
+
+    @Override
+    public void dessinerBordure(Graphics2D g2d) {
+        g2d.drawOval((int) (centre.getX() - rayon), (int) (centre.getY() - rayon), (int) (2 * rayon), (int) (2 * rayon));
+    }
+
+    @Override
+    public boolean needsBorder() {
+        return true; // Les cercles ont une bordure dessinée explicitement.
     }
 }

@@ -1,6 +1,7 @@
 package projetgamemvcswing.modele.geometry;
 
 import java.awt.Color;
+import java.awt.Graphics2D;
 
 /**
  * Interface définissant les opérations de base d'une figure géométrique.
@@ -45,5 +46,11 @@ public interface Figure {
    String getName();
    
    double getSurface();
+   
+   void dessiner(Graphics2D g2d);
+   
+   void dessinerBordure(Graphics2D g2d);
+   
+   boolean needsBorder();
    
 }

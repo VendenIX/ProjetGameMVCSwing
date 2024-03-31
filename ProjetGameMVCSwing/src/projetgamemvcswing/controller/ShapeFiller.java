@@ -1,6 +1,7 @@
 package projetgamemvcswing.controller;
 
 // Importation des bibliotheque
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Line2D;
 import java.util.List;
@@ -22,99 +23,52 @@ public class ShapeFiller {
      * @param g2d     L'objet Graphics2D pour dessiner.
      * @param figures La liste des figures à dessiner.
      */
-    public void drawFilledFigures(Graphics2D g2d, List<Figure> figures) {
-        for (Figure forme : figures) {
-            if (forme instanceof Cercle) {
-                // Afficher/Dessine un cercle rempli
-                Cercle cercle = (Cercle) forme;
-                
-                // Recuperer la couleur choisi
-                g2d.setColor(cercle.getCouleur());
-                
-                // Remplisage et dessin
-                fillCircle(g2d, cercle);
-            } else if (forme instanceof Rectangle) {
-                // Afficher/Dessine un rectangle rempli
-                Rectangle rectangle = (Rectangle) forme;
-                
-                // Recuperer la couleur choisi
-                g2d.setColor(rectangle.getCouleur());
-                
-                // Remplisage et dessin
-                fillRectangle(g2d, rectangle);
-            } else if (forme instanceof Ligne) {
-                // Afficher/Dessine une ligne remplie (non standard)
-                Ligne ligne = (Ligne) forme;
-                
-                // Recuperer la couleur choisi
-                g2d.setColor(ligne.getCouleur());
-                
-                // Remplisage et dessin
-                fillLine(g2d, ligne);
-            }
+    private void drawAndFillFigure(Graphics2D g2d, Figure forme) {
+        if (forme == null) return; // Vérifier si la forme est non nulle
+
+        // Vérifier la couleur de la forme et ajuster si nécessaire
+        if (forme.getCouleur().equals(Color.WHITE)) {
+            g2d.setColor(Color.BLACK); // Définir la couleur de la bordure pour les formes blanches
+        } else {
+            g2d.setColor(forme.getCouleur()); // Utiliser la couleur de la forme
+        }
+
+        // Dessiner la forme selon son type
+        forme.dessiner(g2d);
+
+        // S'il est nécessaire de dessiner la bordure spécifiquement (pour les formes non remplissables comme les lignes), le faire ici
+        if (forme.needsBorder()) {
+            g2d.setColor(Color.BLACK); // Pour la bordure
+            forme.dessinerBordure(g2d);
         }
     }
     
-    public void drawFilledFigure(Graphics2D g2d, Figure forme) {
-        g2d.setColor(forme.getCouleur()); // Utiliser la couleur de la forme
-
-        if (forme instanceof Cercle) {
-            // Dessine un cercle rempli
-            fillCircle(g2d, (Cercle) forme);
-        } else if (forme instanceof Rectangle) {
-            // Dessine un rectangle rempli
-            fillRectangle(g2d, (Rectangle) forme);
-        } else if (forme instanceof Ligne) {   
-            fillLine(g2d, (Ligne) forme);
+    public void drawFilledFigure(Graphics2D g2d, Figure figure) {
+        // Définir la couleur de remplissage de la figure
+        g2d.setColor(figure.getCouleur());
+        
+        // Dessiner la figure remplie
+        figure.dessiner(g2d);
+        
+        // Vérifier si une bordure doit être dessinée
+        if (figure.needsBorder()) {
+            g2d.setColor(Color.BLACK); // Définir la couleur de la bordure
+            figure.dessinerBordure(g2d); // Dessiner la bordure
+        }
+    }
+    
+    /**
+     * Dessine et remplit une liste de figures avec leurs couleurs respectives,
+     * et dessine une bordure autour si nécessaire.
+     *
+     * @param g2d     L'objet Graphics2D pour le dessin.
+     * @param figures La liste des figures à dessiner et à remplir.
+     */
+    public void drawFilledFigures(Graphics2D g2d, List<Figure> figures) {
+        for (Figure figure : figures) {
+            drawFilledFigure(g2d, figure); // Utilise la méthode existante pour dessiner chaque figure
         }
     }
 
 
-    /**
-     * Dessine un cercle rempli sur le Graphics2D.
-     *
-     * @param g2d    L'objet Graphics2D pour dessiner.
-     * @param cercle Le cercle à dessiner.
-     */
-    private void fillCircle(Graphics2D g2d, Cercle cercle) {
-        
-        int x = (int) Math.round(cercle.getX() - cercle.getRayon());
-        int y = (int) Math.round(cercle.getY() - cercle.getRayon());
-        int diameter = (int) Math.round(2 * cercle.getRayon());
-        
-        // Affichage de figure rempler
-        g2d.fillOval(x, y, diameter, diameter);
-    }
-
-    /**
-     * Dessine un rectangle rempli sur le Graphics2D.
-     *
-     * @param g2d       L'objet Graphics2D pour dessiner.
-     * @param rectangle Le rectangle à dessiner.
-     */
-    private void fillRectangle(Graphics2D g2d, Rectangle rectangle) {
-        int xInt = (int) Math.round(rectangle.getX());
-        int yInt = (int) Math.round(rectangle.getY());
-        int widthInt = (int) Math.round(rectangle.getLargeur());
-        int heightInt = (int) Math.round(rectangle.getHauteur());
-
-        // Affichage de figure rempler
-        g2d.fillRect(xInt, yInt, widthInt, heightInt);
-    }
-
-    /**
-     * Dessine une ligne remplie sur le Graphics2D.
-     *
-     * @param g2d  L'objet Graphics2D pour dessiner.
-     * @param ligne La ligne à dessiner.
-     */
-    private void fillLine(Graphics2D g2d, Ligne ligne) {
-        int x1 = (int) Math.round(ligne.getXDebut());
-        int y1 = (int) Math.round(ligne.getYDebut());
-        int x2 = (int) Math.round(ligne.getXFin());
-        int y2 = (int) Math.round(ligne.getYFin());
-
-        // Affichage de figure rempler
-        g2d.fill(new Line2D.Double(x1, y1, x2, y2));
-    }
 }

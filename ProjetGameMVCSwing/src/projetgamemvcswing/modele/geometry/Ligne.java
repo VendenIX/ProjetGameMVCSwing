@@ -1,6 +1,7 @@
 package projetgamemvcswing.modele.geometry;
 import projetgamemvcswing.controller.Observer.AbstractModeleEcoutable;
 import java.awt.Color;
+import java.awt.Graphics2D;
 
 public class Ligne extends AbstractModeleEcoutable implements Figure {
     
@@ -147,6 +148,22 @@ public class Ligne extends AbstractModeleEcoutable implements Figure {
     @Override
     public double getSurface(){
         return 0;
+    }
+    
+    @Override
+    public void dessiner(Graphics2D g2d) {
+        g2d.drawLine((int) this.getXDebut(), (int) this.getYDebut(), (int) this.getXFin(), (int) this.getYFin());
+    }
+
+    @Override
+    public void dessinerBordure(Graphics2D g2d) {
+        // Pour les lignes, dessiner et dessinerBordure peuvent être identiques,
+        // ou dessinerBordure pourrait être laissé vide si la ligne n'a pas besoin d'une bordure supplémentaire.
+    }
+
+    @Override
+    public boolean needsBorder() {
+        return false; // Les lignes ne nécessitent généralement pas de bordure supplémentaire.
     }
     
 }

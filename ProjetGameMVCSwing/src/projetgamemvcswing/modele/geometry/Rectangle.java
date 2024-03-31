@@ -1,5 +1,6 @@
 package projetgamemvcswing.modele.geometry;
 import java.awt.Color;
+import java.awt.Graphics2D;
 
 import projetgamemvcswing.controller.Observer.AbstractModeleEcoutable;
 
@@ -164,6 +165,21 @@ public class Rectangle extends AbstractModeleEcoutable implements Figure {
     @Override
     public double getSurface(){
         return this.hauteur*this.largeur;
+    }
+    
+    @Override
+    public void dessiner(Graphics2D g2d) {
+        g2d.fillRect((int) x, (int) y, (int) largeur, (int) hauteur);
+    }
+
+    @Override
+    public void dessinerBordure(Graphics2D g2d) {
+        g2d.drawRect((int) x, (int) y, (int) largeur, (int) hauteur);
+    }
+
+    @Override
+    public boolean needsBorder() {
+        return false; // Les rectangles peuvent être considérés comme ayant déjà une "bordure" via leur dessin de remplissage.
     }
     
 }
