@@ -29,7 +29,7 @@ public class RandomShapeGenerator {
             int y = random.nextInt(hauteurMax);
 
             // Générer une couleur aléatoire
-            Color couleur = new Color(random.nextInt(256), random.nextInt(256), random.nextInt(256));
+            Color couleur = new Color(255,0, 0);
 
             // Choisir aléatoirement entre un rectangle et un cercle
             boolean estRectangle = random.nextBoolean();

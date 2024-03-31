@@ -50,7 +50,7 @@ public class PanelJeu extends JPanel implements EcouteurModele {
         setSize(frame.getSize());
         
         // Generer des formes et les ajouter au container
-        GenerateurFormes.generateFormes(this , 5);
+        GenerateurFormes.generateFormes(this , 4);
         
         // Ajouter un écouteur pour les événements de la souris
         addMouseListener(new MouseAdapter() {
@@ -142,5 +142,16 @@ public class PanelJeu extends JPanel implements EcouteurModele {
         this.container.getFormList().clear();
         repaint();
     }
+    
+    //parcours toutes les formes pour verifier si y a une intersection
+    public boolean intersecteAvecAutreFigure(Figure figure) {
+        for (Figure f : this.getFigures()) {
+            if (f != figure && f.intersecteAvec(figure)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     
 }

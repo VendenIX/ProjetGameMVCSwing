@@ -13,19 +13,30 @@ public class PlayRectangle implements JeuState {
 
     @Override
     public void handleMousePressed(PanelJeu panelJeu, MouseEvent e) {
-        // Recuperation des cordonnés de la souris apres le press
         double x = e.getX();
         double y = e.getY();
-        
-        panelJeu.setLastMouseX(x);
-        panelJeu.setLastMouseY(y);
-        
-        Rectangle nouveauRectangle = new Rectangle(x, y, 0, 0, new Color(0, 0, 0, 0));
 
-        nouveauRectangle.ajoutEcouteur(panelJeu); 
+        // verif si le point de pression est à l'intérieur d'une autre forme
+        boolean dansUneAutreForme = false;
+        for (Figure f : panelJeu.getFigures()) {
+            if (f.contient(x, y)) {
+                dansUneAutreForme = true;
+                break;
+            }
+        }
 
-        panelJeu.setFigureEnCoursDeDessin(nouveauRectangle);
+        // créer le rectangle que si le point de pression n'est pas à l'intérieur d'une autre forme
+        if (!dansUneAutreForme) {
+            Rectangle nouveauRectangle = new Rectangle(x, y, 0, 0, new Color(0, 0, 0, 0));
+            nouveauRectangle.ajoutEcouteur(panelJeu);
+            panelJeu.setFigureEnCoursDeDessin(nouveauRectangle);
+            panelJeu.setLastMouseX(x);
+            panelJeu.setLastMouseY(y);
+        } else {
+            // faire un pop up que on peut pas colisionner ou un effet visuel ou audio ?
+        }
     }
+
 
     @Override
     public void handleMouseReleased(PanelJeu panelJeu, MouseEvent e) {
@@ -56,53 +67,51 @@ public class PlayRectangle implements JeuState {
         double lastMouseX = panelJeu.getLastMouseX();
         double lastMouseY = panelJeu.getLastMouseY();
 
-        // Récupérer la figure (rectangle) en cours de dessin depuis le panneau
-        Figure rectangleEnCoursDeDessin = panelJeu.getFigureEnCoursDeDessin();
-        
-        Rectangle rectangle = (Rectangle) rectangleEnCoursDeDessin;
+        // Créer une copie temporaire de la figure pour tester les ajustements sans modifier l'original
+        Rectangle rectangleTemp = (Rectangle) panelJeu.getFigureEnCoursDeDessin().copie();
 
-        // Calculer la nouvelle largeur et hauteur du rectangle
         double newWidth = Math.abs(mouseX - lastMouseX);
         double newHeight = Math.abs(mouseY - lastMouseY);
         double newX = Math.min(mouseX, lastMouseX);
         double newY = Math.min(mouseY, lastMouseY);
 
-        // Obtenir les dimensions actuelles du JPanel
-        double panelWidth = panelJeu.getWidth(); // Largeur actuelle du JPanel
-        double panelHeight = panelJeu.getHeight(); // Hauteur actuelle du JPanel
+        rectangleTemp.setX(newX);
+        rectangleTemp.setY(newY);
+        rectangleTemp.setLargeur(newWidth);
+        rectangleTemp.setHauteur(newHeight);
 
-        // Assurer que le rectangle reste à l'intérieur des limites du JPanel
-        // Si le rectangle dépasse les limites, ajuster ses dimensions pour qu'il reste à l'intérieur
-
-        // Vérifier si le rectangle dépasse la bordure gauche du JPanel
+        // Limiter le rectangle pour qu'il ne sorte pas du panel
+        int panelWidth = panelJeu.getWidth();
+        int panelHeight = panelJeu.getHeight();
+        if (newX + newWidth > panelWidth) newWidth = panelWidth - newX;
+        if (newY + newHeight > panelHeight) newHeight = panelHeight - newY;
         if (newX < 0) {
-            newWidth += newX; 
-            newX = 0; 
+            newWidth += newX;
+            newX = 0;
         }
-
-        // Vérifier si le rectangle dépasse la bordure supérieure du JPanel
         if (newY < 0) {
             newHeight += newY;
-            newY = 0; 
+            newY = 0;
         }
 
-        // Vérifier si le rectangle dépasse la bordure droite du JPanel
-        if (newX + newWidth > panelWidth) {
-            newWidth = panelWidth - newX - 1;
-        }
+        rectangleTemp.setX(newX);
+        rectangleTemp.setY(newY);
+        rectangleTemp.setLargeur(newWidth);
+        rectangleTemp.setHauteur(newHeight);
 
-        // Vérifier si le rectangle dépasse la bordure inférieure du JPanel
-        if (newY + newHeight > panelHeight) {
-            newHeight = panelHeight - newY - 1;
+        // Vérifier si le rectangle temporaire n'intersecte pas avec d'autres formes
+        if (!panelJeu.intersecteAvecAutreFigure(rectangleTemp)) {
+            // Si pas d'intersection, appliquer les modifications à la figure originale
+            Rectangle rectangle = (Rectangle) panelJeu.getFigureEnCoursDeDessin();
+            rectangle.setX(newX);
+            rectangle.setY(newY);
+            rectangle.setLargeur(newWidth);
+            rectangle.setHauteur(newHeight);
+        } else {
+            // mettre effet visuel ou audio qui dit pas possible de faire ça idk
         }
-
-        // Mettre à jour les dimensions et la position du rectangle
-        rectangle.setX(newX); 
-        rectangle.setY(newY); 
-        rectangle.setLargeur(newWidth); 
-        rectangle.setHauteur(newHeight); 
-        
     }
+
 
 
     @Override

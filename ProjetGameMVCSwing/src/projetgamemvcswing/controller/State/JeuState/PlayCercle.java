@@ -15,16 +15,28 @@ public class PlayCercle implements JeuState {
 
     @Override
     public void handleMousePressed(PanelJeu panelJeu, MouseEvent e) {
-        // Recuperation des cordonnés de la souris apres le press
         double x = e.getX();
         double y = e.getY();
-        
-    
-        
-        Cercle cercle = new Cercle(new Point(x, y), 0, new Color(0, 0, 0, 0));
-        cercle.ajoutEcouteur(panelJeu); // Enregistre PanelDessin comme écouteur
-        panelJeu.setFigureEnCoursDeDessin(cercle);
+
+        // verif si le point de pression est à l'intérieur d'une autre forme
+        boolean dansUneAutreForme = false;
+        for (Figure f : panelJeu.getFigures()) {
+            if (f.contient(x, y)) {
+                dansUneAutreForme = true;
+                break;
+            }
+        }
+
+        // créer le cercle que si le point de pression n'est pas à l'intérieur d'une autre forme
+        if (!dansUneAutreForme) {
+            Cercle cercle = new Cercle(new Point(x, y), 0, new Color(0, 0, 0, 0));
+            cercle.ajoutEcouteur(panelJeu); 
+            panelJeu.setFigureEnCoursDeDessin(cercle);
+        } else {
+            // // faire un pop up que on peut pas colisionner ou un effet visuel ou audio ?
+        }
     }
+
 
     @Override
     public void handleMouseReleased(PanelJeu panelJeu, MouseEvent e) {
@@ -49,33 +61,27 @@ public class PlayCercle implements JeuState {
 
     @Override
     public void handleMouseDragged(PanelJeu panelJeu, MouseEvent e) {
-        // Récupérer le cercle en cours de dessin depuis le panel
-        Figure cercleEnCoursDeDessin = (Cercle) panelJeu.getFigureEnCoursDeDessin();
-
-        // Effectuer un cast pour obtenir un objet de type Cercle
-        Cercle cercle = (Cercle) cercleEnCoursDeDessin;
-
-        // Récupérer les coordonnées de la souris
         double mouseX = e.getX();
         double mouseY = e.getY();
+        Cercle cercleTemp = (Cercle) panelJeu.getFigureEnCoursDeDessin().copie();
+        double radius = cercleTemp.distance(mouseX, mouseY);
 
-        // Calculer la distance entre le centre du cercle et la position de la souris
-        double radius = cercle.distance(mouseX, mouseY);
-
-        // Obtenir les dimensions du JPanel
+        // Limiter le rayon pour rester dans les limites du panel
         int panelWidth = panelJeu.getWidth();
         int panelHeight = panelJeu.getHeight();
-
-        // Calculer le rayon maximum pour que le cercle reste dans les limites du Panel
-        double maxRadius = Math.min(cercle.getX(), panelWidth - cercle.getX());      
-        maxRadius = Math.min(maxRadius, Math.min(cercle.getY(), panelHeight - cercle.getY()));
-
-        // S'assurer que le rayon calculé ne dépasse pas le rayon maximum autorisé
+        double maxRadius = Math.min(cercleTemp.getX(), panelWidth - cercleTemp.getX());      
+        maxRadius = Math.min(maxRadius, Math.min(cercleTemp.getY(), panelHeight - cercleTemp.getY()));
         radius = Math.min(radius, maxRadius);
 
-        // Mettre à jour le rayon du cercle
-        cercle.setRayon(radius);
+        cercleTemp.setRayon(radius);
+
+        // Vérifier s'il y a intersection avec une autre forme
+        if (!panelJeu.intersecteAvecAutreFigure(cercleTemp)) {
+            Cercle cercle = (Cercle) panelJeu.getFigureEnCoursDeDessin();
+            cercle.setRayon(radius);
+        }
     }
+
 
     @Override
     public void drawShape(Graphics g, Figure forme) {
