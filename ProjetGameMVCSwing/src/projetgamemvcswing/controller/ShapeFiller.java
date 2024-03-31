@@ -23,10 +23,10 @@ public class ShapeFiller {
         // Dessiner la figure remplie
         figure.dessiner(g2d);
 
-        // Vérifier si une bordure doit être dessinée
+        // verif si une bordure doit être dessinée
         if (figure.needsBorder()) {
-            g2d.setColor(Color.BLACK); // Définir la couleur de la bordure
-            figure.dessinerBordure(g2d); // Dessiner la bordure
+            g2d.setColor(Color.BLACK); // def la couleur de la bordure
+            figure.dessinerBordure(g2d); // sessiner la bordure
         }
     }
     

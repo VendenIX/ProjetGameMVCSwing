@@ -59,22 +59,4 @@ public class CreateLine implements DessinState {
     }
 
 
-    @Override
-    public void drawShape(Graphics g, Figure forme) {
-
-        Ligne ligne = (Ligne) forme;
-        
-        // calcul Rectangle (perte avec le cast mais oblige a cause de swing
-        int x1Int = (int) Math.round(ligne.getXDebut());
-        int y1Int = (int) Math.round(ligne.getYDebut());
-        int x2Int = (int) Math.round(ligne.getXFin());
-        int y2Int = (int) Math.round(ligne.getYFin());
-        
-        g.drawLine(x1Int, y1Int, x2Int, y2Int);
-    }
-
-    @Override
-    public void fillShape(Graphics2D g2d, Figure forme) {
-        // Non Implémenté 
-    }
 }

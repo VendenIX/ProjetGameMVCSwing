@@ -50,25 +50,6 @@ public class ColorForm implements DessinState {
         // Non Implémenté 
     }
 
-    @Override
-    public void drawShape(Graphics g, Figure forme) {
-        // Non Implémenté 
-    }
-    
-    @Override
-    public void fillShape(Graphics2D g2d, Figure forme) {
-        if (forme instanceof Cercle) {
-            // Remplir un cercle
-            fillCircle(g2d, (Cercle) forme);
-        } else if (forme instanceof Rectangle) {
-            // Remplir un rectangle
-            fillRectangle(g2d, (Rectangle) forme);
-        } else if (forme instanceof Ligne) {
-            // Remplir une ligne (non standard)
-            fillLine(g2d, (Ligne) forme);
-        }
-    }
-
     /**
      * Remplit un cercle avec la couleur spécifiée.
      *

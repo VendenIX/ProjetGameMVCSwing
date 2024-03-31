@@ -30,7 +30,11 @@ public class ShapeDrawer {
         }
     }
     
-        // Methode generique pour dessiner une figure
+    /**
+     * Permet de colorier une figure
+     * @param g
+     * @param figure 
+     */
     public void drawFigure(Graphics g, Figure figure) {
         if (figure != null) {
             figure.dessiner((Graphics2D) g); // Appelle la méthode de dessin de la figure

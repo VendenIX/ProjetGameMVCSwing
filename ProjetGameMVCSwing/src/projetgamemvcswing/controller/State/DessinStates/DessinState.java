@@ -39,21 +39,5 @@ public interface DessinState {
      * @param e     L'événement de la souris.
      */
     void handleMouseDragged(PanelDessin panel, MouseEvent e);
-
-    /**
-     * Dessine la forme spécifiée.
-     * 
-     * @param g     L'objet Graphics pour dessiner.
-     * @param forme La forme à dessiner.
-     */
-    void drawShape(Graphics g, Figure forme);
-    
-    /**
-     * Remplit la forme spécifiée.
-     * 
-     * @param g2d   L'objet Graphics2D pour dessiner.
-     * @param forme La forme à remplir.
-     */
-    void fillShape(Graphics2D g2d, Figure forme);
 }
 

@@ -81,24 +81,4 @@ public class CreateRectangle implements DessinState {
         }
     }
 
-    @Override
-    public void drawShape(Graphics g, Figure forme) {
-        
-        g.setColor(Color.BLACK);
-        
-        Rectangle rectangle = (Rectangle) forme;
-        
-        int xInt = (int) Math.round(rectangle.getX());
-        int yInt = (int) Math.round(rectangle.getY());
-        
-        int LargeurInt = (int) Math.round(rectangle.getLargeur());
-        int HauteurtInt = (int) Math.round(rectangle.getHauteur());
-        
-        //g.drawRect(xInt, yInt, LargeurInt, HauteurtInt);
-    }
-
-    @Override
-    public void fillShape(Graphics2D g2d, Figure forme) {
-        // Non Implémenté 
-    }
 }

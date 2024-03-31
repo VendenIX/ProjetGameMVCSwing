@@ -30,13 +30,4 @@ public class DefaultState implements DessinState {
         System.out.println("État par défaut : glissement de la souris");
     }
 
-    @Override
-    public void drawShape(Graphics g, Figure forme) {
-        System.out.println("État par défaut : dessiner la forme");
-    }
-
-    @Override
-    public void fillShape(Graphics2D g2d, Figure forme) {
-        System.out.println("État par défaut : remplir la forme");
-    }
 }

@@ -50,13 +50,5 @@ public class DeleteForm implements DessinState {
         // Non Implémenté  
     }
 
-    @Override
-    public void drawShape(Graphics g, Figure forme) {
-        // Non Implémenté 
-    }
 
-    @Override
-    public void fillShape(Graphics2D g2d, Figure forme) {
-        // Non Implémenté 
-    }
 }
