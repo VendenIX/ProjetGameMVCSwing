@@ -53,4 +53,6 @@ public interface Figure {
    
    boolean needsBorder();
    
+   void setNeedBorder(Boolean bool);
+   
 }

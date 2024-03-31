@@ -8,12 +8,13 @@ public class Ligne extends AbstractModeleEcoutable implements Figure {
     private Point debut;
     private Point fin;
     private Color couleur;
-    
+    private Boolean needsBorder;
     
     public Ligne(Point debut, Point fin, Color couleur) {
         this.debut = debut;
         this.fin = fin;
         this.couleur = couleur;
+        this.needsBorder = false;
     }
     
     public double getXDebut() { return this.debut.getX(); }
@@ -163,7 +164,12 @@ public class Ligne extends AbstractModeleEcoutable implements Figure {
 
     @Override
     public boolean needsBorder() {
-        return false; // Les lignes ne nécessitent généralement pas de bordure supplémentaire.
+        return this.needsBorder; // Les lignes ne nécessitent généralement pas de bordure supplémentaire.
+    }
+    
+    @Override
+    public void setNeedBorder(Boolean bool) {
+        this.needsBorder = bool;
     }
     
 }

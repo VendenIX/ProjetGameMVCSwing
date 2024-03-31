@@ -39,9 +39,8 @@ public class ColorForm implements DessinState {
     @Override
     public void handleMouseReleased(PanelDessin panelDessin, MouseEvent e,  CommandHandler handler, FormContainer container) {
         Figure forme = panelDessin.getFigureEnCoursDeColoration();
-        if (forme != null) {
-            handler.handle(new ColoriageForme(forme, panelDessin.couleurChoisie));
-        }
+        forme.setNeedBorder(false);
+        handler.handle(new ColoriageForme(forme, panelDessin.couleurChoisie));
         panelDessin.setFigureEnCoursDeColoration(null);
     }
     
@@ -49,58 +48,6 @@ public class ColorForm implements DessinState {
     public void handleMouseDragged(PanelDessin panelDessin, MouseEvent e) {
         // Non Implémenté 
     }
-
-    /**
-     * Remplit un cercle avec la couleur spécifiée.
-     *
-     * @param g     L'objet Graphics2D pour dessiner.
-     * @param cercle Le cercle à remplir.
-     */
-    private void fillCircle(Graphics2D g, Cercle cercle) {
-        double x = cercle.getX();
-        double y = cercle.getY();
-        double rayon = cercle.getRayon();
-        
-        int xInt = (int) Math.round(x - rayon);
-        int yInt = (int) Math.round(y - rayon);
-        int diamètre = (int) Math.round(2 * rayon);
-        
-        g.fillOval(xInt, yInt, diamètre, diamètre);
-    }
-
-    /**
-     * Remplit un rectangle avec la couleur spécifiée.
-     *
-     * @param g          L'objet Graphics2D pour dessiner.
-     * @param rectangle  Le rectangle à remplir.
-     */
-    private void fillRectangle(Graphics2D g, Rectangle rectangle) {
-        double x = rectangle.getX();
-        double y = rectangle.getY();
-        double largeur = rectangle.getLargeur();
-        double hauteur = rectangle.getHauteur();
-        
-        int xInt = (int) Math.round(x);
-        int yInt = (int) Math.round(y);
-        int largeurInt = (int) Math.round(largeur);
-        int hauteurInt = (int) Math.round(hauteur);
-        
-        g.fillRect(xInt, yInt, largeurInt, hauteurInt);
-    }
-
-    /**
-     * Remplit une ligne avec la couleur spécifiée.
-     *
-     * @param g     L'objet Graphics2D pour dessiner.
-     * @param ligne La ligne à remplir.
-     */
-    private void fillLine(Graphics2D g, Ligne ligne) {
-        double x1 = ligne.getXDebut();
-        double y1 = ligne.getYDebut();
-        double x2 = ligne.getXFin();
-        double y2 = ligne.getYFin();
-        
-        g.fill(new Line2D.Double(x1, y1, x2, y2));
-    }
+    
 }
 

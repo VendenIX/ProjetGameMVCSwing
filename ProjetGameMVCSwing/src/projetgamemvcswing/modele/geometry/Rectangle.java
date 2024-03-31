@@ -16,6 +16,7 @@ public class Rectangle extends AbstractModeleEcoutable implements Figure {
     private double x, y; // Coordonnées du coin supérieur gauche
     private double largeur, hauteur; // Dimensions du rectangle
     private Color couleur;
+    private Boolean needsBorder;
     
     /**
      * Constructeur pour initialiser un nouveau rectangle avec ses dimensions et position.
@@ -32,6 +33,7 @@ public class Rectangle extends AbstractModeleEcoutable implements Figure {
         this.largeur = largeur;
         this.hauteur = hauteur;
         this.couleur = couleur;
+        this.needsBorder = true;
     }
     
     @Override
@@ -179,7 +181,12 @@ public class Rectangle extends AbstractModeleEcoutable implements Figure {
 
     @Override
     public boolean needsBorder() {
-        return true; //par defaut on part du principe que oui vu que la color default c'est blanc
+        return this.needsBorder; //par defaut on part du principe que oui vu que la color default c'est blanc
+    }
+    
+    @Override
+    public void setNeedBorder(Boolean bool) {
+        this.needsBorder = bool;
     }
     
 }

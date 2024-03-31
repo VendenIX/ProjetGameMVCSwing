@@ -13,6 +13,7 @@ public class Cercle extends AbstractModeleEcoutable implements Figure {
     private Point centre; // Centre du cercle
     private double rayon; // Rayon du cercle
     private Color couleur; // Couleur du cercle
+    private Boolean needsBorder;
     
     /**
      * Constructeur pour créer un cercle avec des coordonnées spécifiques et un rayon.
@@ -25,6 +26,7 @@ public class Cercle extends AbstractModeleEcoutable implements Figure {
         this.centre = centre;
         this.rayon = rayon;
         this.couleur = couleur;
+        this.needsBorder = true;
     }
     
     /**
@@ -175,6 +177,11 @@ public class Cercle extends AbstractModeleEcoutable implements Figure {
 
     @Override
     public boolean needsBorder() {
-        return true; // Les cercles ont une bordure dessinée explicitement.
+        return this.needsBorder; // Les cercles ont une bordure dessinée explicitement.
+    }
+
+    @Override
+    public void setNeedBorder(Boolean bool) {
+        this.needsBorder = bool;
     }
 }
