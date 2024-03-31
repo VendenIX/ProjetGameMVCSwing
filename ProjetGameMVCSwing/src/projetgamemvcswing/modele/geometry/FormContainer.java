@@ -17,6 +17,18 @@ public class FormContainer extends AbstractModeleEcoutable {
     public ArrayList<Figure> getFormList() {
         return formList;
     }
+    
+    public int getNbForms() {
+        return this.formList.size();
+    }
+    
+    public double getTotalArea() {
+        double totalArea = 0.0;
+        for (Figure figure : formList) {
+            totalArea += figure.getSurface();
+        }
+        return totalArea;
+    }
 
     /**
      * Ajout d'une forme à la liste des formes
@@ -44,7 +56,5 @@ public class FormContainer extends AbstractModeleEcoutable {
         }
         return result;
     }
-
-
     
 }

@@ -19,6 +19,10 @@ public class Ligne extends AbstractModeleEcoutable implements Figure {
     
     public double getYDebut() { return this.debut.getY(); }
     
+    public Point getDebut(){
+        return this.debut;
+    }
+    
     public void setXDebut(double Xdebut) { 
         this.debut.setX(Xdebut);
         fireChange(); // Notifier les écouteurs du changement
@@ -27,10 +31,6 @@ public class Ligne extends AbstractModeleEcoutable implements Figure {
     public void setYDebut(double Ydebut) { 
         this.debut.setY(Ydebut); 
         fireChange(); // Notifier les écouteurs du changement
-    }
-    
-    public Point getDebut() {
-        return this.debut;
     }
     
     public void setDebut(double Xdebut, double Ydebut) {
@@ -49,7 +49,7 @@ public class Ligne extends AbstractModeleEcoutable implements Figure {
     
     public double getXFin() { return this.fin.getX(); }
     
-     public double getYFin() { return this.fin.getY(); }
+    public double getYFin() { return this.fin.getY(); }
      
     public void setXFin(double Xfin) { 
         this.fin.setX(Xfin); 
@@ -139,6 +139,14 @@ public class Ligne extends AbstractModeleEcoutable implements Figure {
     
     
 
+    @Override
+    public String getName(){
+        return "Ligne";
+    }
     
+    @Override
+    public double getSurface(){
+        return 0;
+    }
     
 }

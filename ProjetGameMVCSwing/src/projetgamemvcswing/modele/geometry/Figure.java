@@ -41,4 +41,8 @@ public interface Figure {
     * @return 
     */
    public abstract Figure copie();
+   String getName();
+   
+   double getSurface();
+   
 }
