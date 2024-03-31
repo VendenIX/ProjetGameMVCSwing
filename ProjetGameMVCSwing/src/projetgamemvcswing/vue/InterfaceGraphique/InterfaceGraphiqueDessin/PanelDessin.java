@@ -150,6 +150,7 @@ public class PanelDessin extends JPanel implements EcouteurModele {
         //état temporaire pour dessinner les figures dynamiquement sans les enregistrer en tant que commande
         if (figureEnCoursDeDessin != null) {
             shapeDrawer.drawFigure(g, figureEnCoursDeDessin); // Utilisation de drawFigure pour la forme temporaire
+            shapeFiller.drawFilledFigure(g2d, figureEnCoursDeDessin);
         }
         
         if (figureEnCoursDeTranslation != null && (tempDx != 0 || tempDy != 0)) {

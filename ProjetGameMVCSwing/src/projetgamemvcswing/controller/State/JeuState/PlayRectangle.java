@@ -27,7 +27,8 @@ public class PlayRectangle implements JeuState {
 
         // créer le rectangle que si le point de pression n'est pas à l'intérieur d'une autre forme
         if (!dansUneAutreForme) {
-            Rectangle nouveauRectangle = new Rectangle(x, y, 0, 0, new Color(0, 0, 0, 0));
+            Rectangle nouveauRectangle = new Rectangle(x, y, 0, 0, new Color(30, 144, 255));
+            System.out.println("La couleur est : "+ nouveauRectangle.getCouleur());
             nouveauRectangle.ajoutEcouteur(panelJeu);
             panelJeu.setFigureEnCoursDeDessin(nouveauRectangle);
             panelJeu.setLastMouseX(x);
@@ -53,6 +54,7 @@ public class PlayRectangle implements JeuState {
 
             // Réinitialiser la figure en cours de dessin à null pour le prochain dessin
             panelJeu.setFigureEnCoursDeDessin(null);
+            panelJeu.modelUpdated(this);
         }
 
         

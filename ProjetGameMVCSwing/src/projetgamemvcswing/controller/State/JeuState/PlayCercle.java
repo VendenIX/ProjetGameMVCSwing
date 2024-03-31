@@ -29,7 +29,7 @@ public class PlayCercle implements JeuState {
 
         // créer le cercle que si le point de pression n'est pas à l'intérieur d'une autre forme
         if (!dansUneAutreForme) {
-            Cercle cercle = new Cercle(new Point(x, y), 0, new Color(0, 0, 0, 0));
+            Cercle cercle = new Cercle(new Point(x, y), 0, new Color(30, 144, 255));
             cercle.ajoutEcouteur(panelJeu); 
             panelJeu.setFigureEnCoursDeDessin(cercle);
         } else {
@@ -57,6 +57,7 @@ public class PlayCercle implements JeuState {
         //System.out.println(handler);
         // Réinitialiser la figure en cours de dessin à null
         panelJeu.setFigureEnCoursDeDessin(null);
+        panelJeu.modelUpdated(this);
     }
 
     @Override
