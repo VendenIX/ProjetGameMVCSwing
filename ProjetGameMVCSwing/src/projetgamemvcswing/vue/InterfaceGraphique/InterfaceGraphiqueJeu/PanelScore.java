@@ -2,53 +2,45 @@
 package projetgamemvcswing.vue.InterfaceGraphique.InterfaceGraphiqueJeu;
 
 import java.awt.Color;
+import java.awt.GridLayout;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import projetgamemvcswing.controller.GameScore;
 import projetgamemvcswing.controller.Observer.EcouteurModele;
 
-public class PanelScore extends JTable implements EcouteurModele {
+public class PanelScore extends JPanel implements EcouteurModele {
     
-    private static final long serialVersionUID = 1L;
-    private final GameScore gameScore;
+    private JLabel pourcentageAireLabel;
+    private JLabel aireCouverteLabel;
+    private GameScore gameScore;
 
     public PanelScore(GameScore gameScore) {
         this.gameScore = gameScore;
         this.gameScore.ajoutEcouteur(this);
-        
-        // Création du modèle de tableau avec les colonnes appropriées
-        DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("Aire occupée (%)");
-        model.addColumn("Aire Couverte");
-        
-        // Initialisation avec des valeurs par défaut
-        model.addRow(new Object[]{"0%", "0"});
-        
-        this.setModel(model);
-        this.setRowHeight(20);
-        
-        // Empêcher l'édition des cellules
-        DefaultTableModel tableModel = new DefaultTableModel() {
-            public boolean isCellEditable(int row, int column) {
-                return false; // Rendre toutes les cellules non éditables
-            }
-        };
-        
-        this.setModel(tableModel);
+
+        setLayout(new GridLayout(2, 1)); // Disposition en grille pour les labels
+
+        pourcentageAireLabel = new JLabel("Aire occupée (%): 0%");
+        aireCouverteLabel = new JLabel("Aire couverte: 0");
+
+        add(pourcentageAireLabel);
+        add(aireCouverteLabel);
     }
 
     @Override
     public void modelUpdated(Object source) {
-        if (source instanceof GameScore) {
+        
+        //c'est pour eviter un null pointer exception à l'initialisation
+        if (source instanceof GameScore && pourcentageAireLabel != null && aireCouverteLabel != null) {
             GameScore updatedScore = (GameScore) source;
-            // Supposons des dimensions fixes ou obtenues autrement
-            double airePanel = 1100 * 750; // Remplacer par les dimensions réelles si disponibles
+            double airePanel = getParent().getWidth() * getParent().getHeight();
             double pourcentageAireCouverte = updatedScore.calculerPourcentageAireCouverte(airePanel);
-            //this.getModel().setValueAt(String.format("%.2f%%", pourcentageAireCouverte), 0, 0);
-            //this.getModel().setValueAt(String.format("%.2f", updatedScore.getAireCouverte()), 0, 1);
+            pourcentageAireLabel.setText("Aire occupée (%): " + pourcentageAireCouverte + "%");
+            aireCouverteLabel.setText("Aire couverte: " + updatedScore.getAireCouverte());
         }
     }
-
 
 }
