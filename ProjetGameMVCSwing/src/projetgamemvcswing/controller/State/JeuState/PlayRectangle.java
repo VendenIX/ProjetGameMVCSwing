@@ -44,7 +44,6 @@ public class PlayRectangle implements JeuState {
         
         Figure formeEnCoursDeDessin = panelJeu.getFigureEnCoursDeDessin();
         
-        // S'assurer que la forme n'est pas nulle
         if (formeEnCoursDeDessin != null) {
             // Ajouter la forme actuellement dessinée à la liste des figures du panneau
             panelJeu.getFigures().add(formeEnCoursDeDessin);
@@ -69,7 +68,7 @@ public class PlayRectangle implements JeuState {
         double lastMouseX = panelJeu.getLastMouseX();
         double lastMouseY = panelJeu.getLastMouseY();
 
-        // Créer une copie temporaire de la figure pour tester les ajustements sans modifier l'original
+        // copie temporaire de la figure pour tester les ajustements sans modifier l'original
         Rectangle rectangleTemp = (Rectangle) panelJeu.getFigureEnCoursDeDessin().copie();
 
         double newWidth = Math.abs(mouseX - lastMouseX);
@@ -82,7 +81,7 @@ public class PlayRectangle implements JeuState {
         rectangleTemp.setLargeur(newWidth);
         rectangleTemp.setHauteur(newHeight);
 
-        // Limiter le rectangle pour qu'il ne sorte pas du panel
+        // limiter le rectangle pour qu'il ne sorte pas du panel
         int panelWidth = panelJeu.getWidth();
         int panelHeight = panelJeu.getHeight();
         if (newX + newWidth > panelWidth) newWidth = panelWidth - newX;
