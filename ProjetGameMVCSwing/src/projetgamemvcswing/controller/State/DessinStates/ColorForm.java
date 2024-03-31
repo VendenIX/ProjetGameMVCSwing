@@ -39,8 +39,8 @@ public class ColorForm implements DessinState {
     @Override
     public void handleMouseReleased(PanelDessin panelDessin, MouseEvent e,  CommandHandler handler, FormContainer container) {
         Figure forme = panelDessin.getFigureEnCoursDeColoration();
-        forme.setNeedBorder(false);
-        handler.handle(new ColoriageForme(forme, panelDessin.couleurChoisie));
+        Boolean nouvelleNeedsBorder = forme.needsBorder();
+        handler.handle(new ColoriageForme(forme, panelDessin.couleurChoisie, nouvelleNeedsBorder));
         panelDessin.setFigureEnCoursDeColoration(null);
     }
     
