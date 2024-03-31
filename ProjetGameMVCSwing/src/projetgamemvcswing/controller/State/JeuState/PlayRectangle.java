@@ -114,9 +114,10 @@ public class PlayRectangle implements JeuState {
     }
 
 
-
+    /*
     @Override
     public void drawShape(Graphics g, Figure forme) {
+        /*
        // Dessiner la forme (rectangle) sur le panneau
         //g.setColor(Color.BLACK);
         
@@ -131,5 +132,6 @@ public class PlayRectangle implements JeuState {
         // Dessiner le rectangle avec les coordonnées calculées
         //g.drawRect(xInt, yInt, LargeurInt, HauteurtInt);
     }
+    */
     
 }

@@ -130,7 +130,7 @@ public class PanelJeu extends JPanel implements EcouteurModele {
         
         // Dessiner la figure en cours de dessin
         if (figureEnCoursDeDessin != null) {
-            currentState.drawShape(g, figureEnCoursDeDessin);
+            shapeDrawer.drawFigure(g, figureEnCoursDeDessin);
             shapeFiller.drawFilledFigure(g2d, figureEnCoursDeDessin);
         }
     }

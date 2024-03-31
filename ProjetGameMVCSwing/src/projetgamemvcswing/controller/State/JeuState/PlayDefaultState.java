@@ -23,10 +23,5 @@ public class PlayDefaultState implements JeuState {
     public void handleMouseDragged(PanelJeu panel, MouseEvent e) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
-    @Override
-    public void drawShape(Graphics g, Figure forme) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
     
 }

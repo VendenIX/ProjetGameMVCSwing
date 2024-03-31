@@ -25,51 +25,18 @@ public class FormContainerAdapter extends AbstractTableModel {
     }
     
     @Override
-    public Object getValueAt(int rowIndex, int columnIndex){
-        Figure figure = container.getFormList().get(rowIndex);
-        
-        if (rowIndex == getRowCount() - 1) { // Si c'est la dernière ligne
-            // Afficher le total des formes et leur surface totale
+    public Object getValueAt(int rowIndex, int columnIndex) {
+        if (rowIndex < container.getNbForms()) {
+            DisplayableProperties figure = (DisplayableProperties) container.getFormList().get(rowIndex);
             switch (columnIndex) {
-                case 0:
-                    return "Total";
-                case 1:
-                    return container.getNbForms();
-                case 2:
-                    return container.getTotalArea();
-                default:
-                    return null;
+                case 0: return figure.getName();
+                case 1: return figure.getProperties().get(0); // Assumer que chaque figure a au moins une propriété
+                case 2: return figure.getProperties().size() > 1 ? figure.getProperties().get(1) : "";
+                default: return "";
             }
-        }
-        
-        if (figure instanceof Cercle) {
-            Cercle cercle = (Cercle) figure;
-            switch (columnIndex) {
-                case 0:
-                    return cercle.getName();
-                case 1:
-                    return cercle.getCentre();
-                case 2:
-                    return cercle.getRayon();
-                default:
-                    return null;
-            }
-        } 
-        else if (figure instanceof Rectangle) {
-            Rectangle rectangle = (Rectangle) figure;
-            switch (columnIndex) {
-                case 0:
-                    return rectangle.getName();
-                case 1:
-                    return rectangle.getHauteur();
-                case 2:
-                    return rectangle.getLargeur();
-                default:
-                    return null;
-            }
-        }
-        else {
-            return null;
+        } else {
+            // Gérer la dernière ligne pour le total, si nécessaire
+            return "Total";
         }
     }
     

@@ -83,19 +83,4 @@ public class PlayCercle implements JeuState {
         }
     }
 
-
-    @Override
-    public void drawShape(Graphics g, Figure forme) {
-        //g.setColor(Color.BLACK);
-        Cercle cercle = (Cercle) forme;
-        
-        // Recuperation des coordonnees et Calcule du diamètre
-        int x = (int) Math.round(cercle.getX() - cercle.getRayon());
-        int y = (int) Math.round(cercle.getY() - cercle.getRayon());
-        int diameter = (int) Math.round(2 * cercle.getRayon());
-        
-        // Dessiner un cercle avec les coordonnées et le diamètre calculés
-        //g.drawOval(x, y, diameter, diameter);
-    }
-    
 }

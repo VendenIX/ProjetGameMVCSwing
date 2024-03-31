@@ -1,6 +1,9 @@
 package projetgamemvcswing.modele.geometry;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.Arrays;
+import java.util.List;
+import projetgamemvcswing.adapter.DisplayableProperties;
 
 import projetgamemvcswing.controller.Observer.AbstractModeleEcoutable;
 
@@ -11,7 +14,7 @@ import projetgamemvcswing.controller.Observer.AbstractModeleEcoutable;
  * Elle fournit des fonctionnalités pour manipuler le rectangle, y compris le déplacer 
  * et vérifier les intersections avec d'autres figures géométriques.
  */
-public class Rectangle extends AbstractModeleEcoutable implements Figure {
+public class Rectangle extends AbstractModeleEcoutable implements Figure, DisplayableProperties {
     
     private double x, y; // Coordonnées du coin supérieur gauche
     private double largeur, hauteur; // Dimensions du rectangle
@@ -187,6 +190,11 @@ public class Rectangle extends AbstractModeleEcoutable implements Figure {
     @Override
     public void setNeedBorder(Boolean bool) {
         this.needsBorder = bool;
+    }
+
+    @Override
+    public List<Object> getProperties() {
+        return Arrays.asList(getHauteur(), getLargeur());
     }
     
 }
