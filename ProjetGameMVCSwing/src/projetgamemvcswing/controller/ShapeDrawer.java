@@ -58,7 +58,7 @@ public class ShapeDrawer {
      */
     private void drawCircle(Graphics g, Cercle cercle) {
         // Couleur de cercle
-        g.setColor(Color.BLACK);
+        g.setColor(cercle.getCouleur());
         
         // Recuperation Centre de cercle
         int x = (int) Math.round(cercle.getX() - cercle.getRayon());
@@ -79,7 +79,7 @@ public class ShapeDrawer {
      */
     private void drawRectangle(Graphics g, Rectangle rectangle) {
         // Couleur de rectangle
-        g.setColor(Color.BLACK);
+        g.setColor(rectangle.getCouleur());
 
         // Recuperation Point de Depart de rectangle 
         int xInt = (int) Math.round(rectangle.getX());
