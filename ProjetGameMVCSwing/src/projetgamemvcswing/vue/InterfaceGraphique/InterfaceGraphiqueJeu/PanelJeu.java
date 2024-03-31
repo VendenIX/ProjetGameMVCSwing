@@ -43,6 +43,7 @@ public class PanelJeu extends JPanel implements EcouteurModele {
     private double lastMouseY;
     
     private final GameScore gameScore;
+
        
     public PanelJeu(JFrame frame, GameScore gameScore) {
         
@@ -55,6 +56,7 @@ public class PanelJeu extends JPanel implements EcouteurModele {
         setSize(frame.getSize());
         
         // Generer des formes et les ajouter au container
+
         new RandomShapeGenerator().generateFormes(this, 4);
         
 

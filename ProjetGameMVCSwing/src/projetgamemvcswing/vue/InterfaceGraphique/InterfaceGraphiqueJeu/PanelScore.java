@@ -23,8 +23,8 @@ public class PanelScore extends JPanel implements EcouteurModele {
 
         setLayout(new GridLayout(2, 1)); // Disposition en grille pour les labels
 
-        pourcentageAireLabel = new JLabel("Aire occupée (%): 0%");
-        aireCouverteLabel = new JLabel("Aire couverte: 0");
+        pourcentageAireLabel = new JLabel("Taux d'aire rempli (%): 0%");
+        aireCouverteLabel = new JLabel("Score : 0");
 
         add(pourcentageAireLabel);
         add(aireCouverteLabel);
@@ -38,8 +38,8 @@ public class PanelScore extends JPanel implements EcouteurModele {
             GameScore updatedScore = (GameScore) source;
             double airePanel = getParent().getWidth() * getParent().getHeight();
             double pourcentageAireCouverte = updatedScore.calculerPourcentageAireCouverte(airePanel);
-            pourcentageAireLabel.setText("Aire occupée (%): " + pourcentageAireCouverte + "%");
-            aireCouverteLabel.setText("Aire couverte: " + updatedScore.getAireCouverte());
+            pourcentageAireLabel.setText("Taux d'aire rempli (%): " + pourcentageAireCouverte + "%");
+            aireCouverteLabel.setText("Score : " + updatedScore.getAireCouverte());
         }
     }
 
