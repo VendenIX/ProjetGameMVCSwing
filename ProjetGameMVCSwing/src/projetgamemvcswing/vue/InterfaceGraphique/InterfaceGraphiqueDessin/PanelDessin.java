@@ -4,15 +4,14 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.*;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
 import projetgamemvcswing.controller.Observer.EcouteurModele;
 import projetgamemvcswing.modele.geometry.*;
 import projetgamemvcswing.controller.ShapeDrawer;
 import projetgamemvcswing.controller.ShapeFiller;
-import projetgamemvcswing.controller.State.DefaultState;
-import projetgamemvcswing.controller.State.DessinState;
+import projetgamemvcswing.controller.State.DessinState.DefaultState;
+import projetgamemvcswing.controller.State.DessinState.DessinState;
 import projetgamemvcswing.modele.geometry.FormContainer;
 import projetgamemvcswing.controller.Command.CommandHandler;
 

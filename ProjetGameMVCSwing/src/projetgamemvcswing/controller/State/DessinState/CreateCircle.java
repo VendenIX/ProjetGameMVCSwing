@@ -1,5 +1,5 @@
 
-package projetgamemvcswing.controller.State;
+package projetgamemvcswing.controller.State.DessinState;
 
 import java.awt.Color;
 import java.awt.Graphics;

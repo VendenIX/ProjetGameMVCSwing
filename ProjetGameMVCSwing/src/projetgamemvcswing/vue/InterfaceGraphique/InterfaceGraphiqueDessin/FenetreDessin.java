@@ -14,7 +14,7 @@ import javax.swing.JMenuBar;
 public class FenetreDessin extends JFrame {
 
     // Variables de classe
-    private PanelDessin interfacedessin;
+    private PanelDessin panelDessin;
     private MenuBarDessin menuBarDessin;
     private BarreOutilsDessin barDessin;
 
@@ -25,7 +25,7 @@ public class FenetreDessin extends JFrame {
     public FenetreDessin() {
         // Configuration de JFrame Dessin
         setTitle("Dessin");
-        setSize(1000, 700);
+        setSize(1100, 750);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -39,20 +39,20 @@ public class FenetreDessin extends JFrame {
         getContentPane().setLayout(new BorderLayout());
 
         // Créer une instance de MenuBarDessin
-        menuBarDessin = new MenuBarDessin(this, interfacedessin);
+        menuBarDessin = new MenuBarDessin(this, panelDessin);
 
         // Ajouter le menuBarDessin
         setJMenuBar(new JMenuBar());
         getJMenuBar().add(menuBarDessin);
 
         // Créer une instance de BarreOutilsDessin
-        barDessin = new BarreOutilsDessin(this, interfacedessin);
+        barDessin = new BarreOutilsDessin(this, panelDessin);
 
         // Ajouter la barre d'outils personnalisée
         add(barDessin, BorderLayout.WEST);
 
         // Ajouter l'interface de dessin au centre
-        getContentPane().add(interfacedessin, BorderLayout.CENTER);
+        getContentPane().add(panelDessin, BorderLayout.CENTER);
 
         // Positionner la fenêtre au centre de l'écran
         setLocationRelativeTo(null);
@@ -64,7 +64,7 @@ public class FenetreDessin extends JFrame {
      */
     private void initUIComponents() {
         // Créer une instance de l'interface de dessin
-        interfacedessin = new PanelDessin();
+        panelDessin = new PanelDessin();
     }
 
 }

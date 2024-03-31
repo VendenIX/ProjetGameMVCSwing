@@ -23,7 +23,7 @@ public class MenuBarJeu extends JMenuBar {
                 
         // Créer le menu Jeu
         JMenu menuJeu = new JMenu("Jeu");
-        JMenuItem newgameItem = new JMenuItem("nouvelle Partie");
+        JMenuItem newgameItem = new JMenuItem("Nouvelle Partie");
         JMenuItem exitItem = new JMenuItem("Sortir");
         
         // Ecouter pour l'item exitItem/Sortir

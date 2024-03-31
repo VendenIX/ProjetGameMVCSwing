@@ -5,6 +5,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import javax.swing.border.Border;
+import projetgamemvcswing.controller.State.JeuState.PlayCercle;
+import projetgamemvcswing.controller.State.JeuState.PlayRectangle;
 import projetgamemvcswing.vue.InterfaceGraphique.IconeNonRedimensionnable;
 
 /**
@@ -19,7 +21,7 @@ public class BarreOutilsJeu extends JToolBar {
     private final JButton rectangleButton;
     private final JButton dessinModeButton;
     
-    public BarreOutilsJeu(JFrame frame) {
+    public BarreOutilsJeu(JFrame frame, PanelJeu panelJeu) {
         
         currentFrame = frame;
         
@@ -28,7 +30,17 @@ public class BarreOutilsJeu extends JToolBar {
 
         // Créer des boutons avec des icônes personnalisées
         circleButton = createToolbarButton("images/circle.png", "Dessin Cercle");
+        
+        circleButton.addActionListener((ActionEvent e) -> {
+            panelJeu.setCurrentState(new PlayCercle());
+        });
+        
         rectangleButton = createToolbarButton("images/rectangle.png", "Dessin Rectangle");
+        
+        rectangleButton.addActionListener((ActionEvent e) -> {
+            panelJeu.setCurrentState(new PlayRectangle());
+        });
+        
         dessinModeButton = createToolbarButton("images/pal_change.png", "Mode Dessin");
         
         // Ajouter des boutons avec des icônes personnalisées
