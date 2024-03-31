@@ -64,6 +64,7 @@ public class AbstractModeleEcoutable implements ModeleEcoutable {
       e.modelUpdated(this);
     }
     
+    System.out.println("ICI");
     // Affiche le nom de la classe, le hashCode (substitut de l'adresse mémoire) et le nombre aléatoire
     //System.out.println(this.getClass().getSimpleName() + "@" + Integer.toHexString(System.identityHashCode(this)) + " modifié. Nombre aléatoire : " + formattedNumber);
   }

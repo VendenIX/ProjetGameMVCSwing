@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import projetgamemvcswing.controller.GameScore;
 import projetgamemvcswing.controller.Observer.EcouteurModele;
 import projetgamemvcswing.controller.RandomShapeGenerator;
 import projetgamemvcswing.controller.ShapeDrawer;
@@ -41,16 +42,22 @@ public class PanelJeu extends JPanel implements EcouteurModele {
     private double lastMouseX;
     private double lastMouseY;
     
-    //Generateur de formes alearoire
-    private final RandomShapeGenerator GenerateurFormes = new RandomShapeGenerator(); 
-    
-    public PanelJeu(JFrame frame) {
+    private final GameScore gameScore;
+       
+    public PanelJeu(JFrame frame, GameScore gameScore) {
+        
+        if (gameScore == null) {
+            throw new IllegalArgumentException("gameScore ne peut pas être null");
+        }
+        this.gameScore = gameScore;
         // Set de fond blanc
         setBackground(Color.WHITE);
         setSize(frame.getSize());
         
         // Generer des formes et les ajouter au container
-        GenerateurFormes.generateFormes(this , 4);
+        new RandomShapeGenerator().generateFormes(this, 4);
+        
+
         
         // Ajouter un écouteur pour les événements de la souris
         addMouseListener(new MouseAdapter() {
@@ -63,7 +70,7 @@ public class PanelJeu extends JPanel implements EcouteurModele {
             // Quand il y a une relache de souris
             @Override
             public void mouseReleased(MouseEvent e) {
-                currentState.handleMouseReleased(PanelJeu.this, e);
+                currentState.handleMouseReleased(PanelJeu.this, e, gameScore);
             }
         });
 
@@ -80,8 +87,23 @@ public class PanelJeu extends JPanel implements EcouteurModele {
 
     @Override
     public void modelUpdated(Object source) {
+        double airePanel = this.getWidth() * this.getHeight();
+        double pourcentageAireCouverte = gameScore.calculerPourcentageAireCouverte(airePanel);
+        System.out.println("Pourcentage de l'aire couverte: " + pourcentageAireCouverte + "%");
         repaint();
     }
+
+    
+    private void updateGameScore() {
+        double aireTotalePanel = getWidth() * getHeight();
+        double aireCouverteBleue = container.calculerAireCouverteParCouleur(Color.BLUE); // Remplacez Color.BLUE par la couleur exacte utilisée pour les formes en mode jeu.
+        gameScore.addAireCouverte(aireCouverteBleue);
+        System.out.println("Aire couverte par les formes bleues: " + aireCouverteBleue);
+        System.out.println("Pourcentage de l'aire couverte: " + gameScore.calculerPourcentageAireCouverte(aireTotalePanel) + "%");
+    }
+
+    
+    
 
    // Setter pour définir la figure en cours de dessin
     public void setFigureEnCoursDeDessin(Figure figure) {this.figureEnCoursDeDessin = figure;}

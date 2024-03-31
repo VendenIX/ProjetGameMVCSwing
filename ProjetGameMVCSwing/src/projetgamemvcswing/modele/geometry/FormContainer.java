@@ -1,5 +1,6 @@
 package projetgamemvcswing.modele.geometry;
 
+import java.awt.Color;
 import java.util.ArrayList;
 
 import projetgamemvcswing.controller.Observer.AbstractModeleEcoutable;
@@ -56,5 +57,18 @@ public class FormContainer extends AbstractModeleEcoutable {
         }
         return result;
     }
+    
+    /**
+     * Calcule l'aire totale couverte par les formes d'une certaine couleur.
+     * @param couleur La couleur des formes dont l'aire doit être calculée.
+     * @return L'aire totale couverte par les formes de la couleur spécifiée.
+     */
+    public double calculerAireCouverteParCouleur(Color couleur) {
+        return formList.stream()
+                       .filter(f -> f.getCouleur().equals(couleur))
+                       .mapToDouble(Figure::getSurface)
+                       .sum();
+    }
+
     
 }

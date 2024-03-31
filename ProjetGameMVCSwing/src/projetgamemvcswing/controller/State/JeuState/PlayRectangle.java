@@ -4,7 +4,10 @@ package projetgamemvcswing.controller.State.JeuState;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
+import java.util.Set;
+import projetgamemvcswing.controller.GameScore;
 import projetgamemvcswing.modele.geometry.Figure;
+import projetgamemvcswing.modele.geometry.Point;
 import projetgamemvcswing.modele.geometry.Rectangle;
 import projetgamemvcswing.vue.InterfaceGraphique.InterfaceGraphiqueJeu.PanelJeu;
 
@@ -40,13 +43,20 @@ public class PlayRectangle implements JeuState {
 
 
     @Override
-    public void handleMouseReleased(PanelJeu panelJeu, MouseEvent e) {
+    public void handleMouseReleased(PanelJeu panelJeu, MouseEvent e, GameScore gameScore) {
         
         Figure formeEnCoursDeDessin = panelJeu.getFigureEnCoursDeDessin();
         
         if (formeEnCoursDeDessin != null) {
             // Ajouter la forme actuellement dessinée à la liste des figures du panneau
             panelJeu.getFigures().add(formeEnCoursDeDessin);
+            
+            Rectangle rectangle = (Rectangle) formeEnCoursDeDessin;
+            // Calculate surface area for rectangle
+
+            // Add surface area to scoreJeu
+            gameScore.addAireCouverte(formeEnCoursDeDessin.getSurface());
+
 
             // Utiliser CreationForme avec l'objet Figure et le container
             //handler.handle(new CreationForme(formeEnCoursDeDessin, container));
@@ -58,6 +68,8 @@ public class PlayRectangle implements JeuState {
 
         
         //System.out.println("Taille handler : " + handler.getStackSize());
+
+        
         
     }
 
@@ -113,25 +125,5 @@ public class PlayRectangle implements JeuState {
         }
     }
 
-
-    /*
-    @Override
-    public void drawShape(Graphics g, Figure forme) {
-        /*
-       // Dessiner la forme (rectangle) sur le panneau
-        //g.setColor(Color.BLACK);
-        
-        Rectangle rectangle = (Rectangle) forme;
-        
-        int xInt = (int) Math.round(rectangle.getX());
-        int yInt = (int) Math.round(rectangle.getY());
-        
-        int LargeurInt = (int) Math.round(rectangle.getLargeur());
-        int HauteurtInt = (int) Math.round(rectangle.getHauteur());
-        
-        // Dessiner le rectangle avec les coordonnées calculées
-        //g.drawRect(xInt, yInt, LargeurInt, HauteurtInt);
-    }
-    */
     
 }

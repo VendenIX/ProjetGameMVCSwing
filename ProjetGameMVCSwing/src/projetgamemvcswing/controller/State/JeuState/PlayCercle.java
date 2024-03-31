@@ -4,7 +4,9 @@ package projetgamemvcswing.controller.State.JeuState;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
+import java.util.Set;
 import projetgamemvcswing.controller.Command.CreationForme;
+import projetgamemvcswing.controller.GameScore;
 import projetgamemvcswing.modele.geometry.Cercle;
 import projetgamemvcswing.modele.geometry.Figure;
 import projetgamemvcswing.modele.geometry.Point;
@@ -39,7 +41,7 @@ public class PlayCercle implements JeuState {
 
 
     @Override
-    public void handleMouseReleased(PanelJeu panelJeu, MouseEvent e) {
+    public void handleMouseReleased(PanelJeu panelJeu, MouseEvent e, GameScore gameScore) {
         // Recuperer le cercle en cours de dessin
         Figure formeEnCoursDeDessin = panelJeu.getFigureEnCoursDeDessin();
     
@@ -50,6 +52,11 @@ public class PlayCercle implements JeuState {
             // Utiliser CreationForme avec l'objet Figure et le container
             //handler.handle(new CreationForme(formeEnCoursDeDessin, container));
             
+            Cercle cercle = (Cercle) formeEnCoursDeDessin;
+            // Calculate surface area for rectangle
+
+            gameScore.addAireCouverte(formeEnCoursDeDessin.getSurface());
+                        
             panelJeu.setFigureEnCoursDeDessin(null);
         }
         
