@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
+import projetgamemvcswing.controller.GameScore;
 
 
 /**
@@ -16,6 +17,10 @@ public class FenetreJeu extends JFrame {
     private PanelJeu panelJeu;
     private MenuBarJeu menuBarJeu;
     private BarreOutilsJeu barJeu;
+    private PanelScore panelScore;
+    
+    private final GameScore gameScore = new GameScore();
+    
     
     public FenetreJeu() {
         // Configuration de JFrame Dessin
@@ -27,7 +32,7 @@ public class FenetreJeu extends JFrame {
         setIconImage(new ImageIcon("images/cont.png").getImage());
         
         // Initialiser les composants de l'interface utilisateur
-        initUIComponents(this);
+        initUIComponents(this, gameScore);
 
         // Créer une instance de MenuBarJeu
         menuBarJeu = new MenuBarJeu(this);
@@ -35,6 +40,9 @@ public class FenetreJeu extends JFrame {
         // Ajouter le menuBarJeu
         setJMenuBar(new JMenuBar());
         getJMenuBar().add(menuBarJeu);
+        
+        panelScore = new PanelScore(gameScore);
+        getContentPane().add(panelScore, BorderLayout.SOUTH);
 
         // Créer une instance de BarreOutilsJeu
         barJeu = new BarreOutilsJeu(this, this.panelJeu);
@@ -54,8 +62,9 @@ public class FenetreJeu extends JFrame {
     /**
      * Initialise les composants de l'interface utilisateur.
      */
-    private void initUIComponents(JFrame frame) {
+    private void initUIComponents(JFrame frame, GameScore gameScore) {
         // Créer une instance de l'interface de dessin
-        panelJeu = new PanelJeu(frame);
+        panelJeu = new PanelJeu(frame, gameScore);
     }
+    
 }

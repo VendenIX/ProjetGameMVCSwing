@@ -3,6 +3,7 @@ package projetgamemvcswing.controller.State.JeuState;
 
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
+import projetgamemvcswing.controller.GameScore;
 import projetgamemvcswing.modele.geometry.Figure;
 import projetgamemvcswing.vue.InterfaceGraphique.InterfaceGraphiqueJeu.PanelJeu;
 
@@ -21,8 +22,9 @@ public interface JeuState {
      * 
      * @param panel Le panneau de dessin.
      * @param e     L'événement de la souris.
+     * @param gameScore
      */
-    void handleMouseReleased(PanelJeu panel, MouseEvent e);
+    void handleMouseReleased(PanelJeu panel, MouseEvent e, GameScore gameScore);
     
     /**
      * Gère l'événement de glissement de la souris.

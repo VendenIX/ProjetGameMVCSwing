@@ -9,6 +9,8 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import projetgamemvcswing.controller.GameScore;
+import projetgamemvcswing.controller.Intersection;
 import projetgamemvcswing.controller.Observer.EcouteurModele;
 import projetgamemvcswing.controller.RandomShapeGenerator;
 import projetgamemvcswing.controller.ShapeDrawer;
@@ -42,15 +44,17 @@ public class PanelJeu extends JPanel implements EcouteurModele {
     private double lastMouseY;
     
     //Generateur de formes alearoire
-    private final RandomShapeGenerator GenerateurFormes = new RandomShapeGenerator(); 
-    
-    public PanelJeu(JFrame frame) {
+    private final RandomShapeGenerator GenerateurFormes = new RandomShapeGenerator();
+   
+    public PanelJeu(JFrame frame, GameScore gameScore) {
         // Set de fond blanc
         setBackground(Color.WHITE);
         setSize(frame.getSize());
         
         // Generer des formes et les ajouter au container
         GenerateurFormes.generateFormes(this , 5);
+        
+        gameScore.setScoreMax(Intersection.findNonIntersectingPixels(this).size());
         
         // Ajouter un écouteur pour les événements de la souris
         addMouseListener(new MouseAdapter() {
@@ -63,7 +67,7 @@ public class PanelJeu extends JPanel implements EcouteurModele {
             // Quand il y a une relache de souris
             @Override
             public void mouseReleased(MouseEvent e) {
-                currentState.handleMouseReleased(PanelJeu.this, e);
+                currentState.handleMouseReleased(PanelJeu.this, e, gameScore);
             }
         });
 
@@ -82,6 +86,8 @@ public class PanelJeu extends JPanel implements EcouteurModele {
     public void modelUpdated(Object source) {
         repaint();
     }
+    
+    
 
    // Setter pour définir la figure en cours de dessin
     public void setFigureEnCoursDeDessin(Figure figure) {this.figureEnCoursDeDessin = figure;}
