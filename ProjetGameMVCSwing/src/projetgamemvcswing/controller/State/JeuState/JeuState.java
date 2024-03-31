@@ -1,36 +1,28 @@
 
-package projetgamemvcswing.controller.State;
+package projetgamemvcswing.controller.State.JeuState;
 
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import projetgamemvcswing.modele.geometry.Figure;
-import projetgamemvcswing.vue.InterfaceGraphique.InterfaceGraphiqueDessin.PanelDessin;
-import projetgamemvcswing.controller.Command.CommandHandler;
-import projetgamemvcswing.modele.geometry.FormContainer;
+import projetgamemvcswing.vue.InterfaceGraphique.InterfaceGraphiqueJeu.PanelJeu;
 
-/**
- * L'interface DessinState définit les méthodes nécessaires pour
- * gérer les différents états du dessin dans le panneau de dessin.
- */
-public interface DessinState {
-    
+
+public interface JeuState {
     /**
      * Gère l'événement de pression de la souris.
      * 
      * @param panel Le panneau de dessin.
      * @param e     L'événement de la souris.
      */
-    void handleMousePressed(PanelDessin panel, MouseEvent e);
+    void handleMousePressed(PanelJeu panel, MouseEvent e);
     
     /**
      * Gère l'événement de relâchement de la souris.
      * 
      * @param panel Le panneau de dessin.
      * @param e     L'événement de la souris.
-     * @param handler Handler de commandes à passer en paramètres pour undo/redo
      */
-    void handleMouseReleased(PanelDessin panel, MouseEvent e, CommandHandler handler, FormContainer container);
+    void handleMouseReleased(PanelJeu panel, MouseEvent e);
     
     /**
      * Gère l'événement de glissement de la souris.
@@ -38,7 +30,7 @@ public interface DessinState {
      * @param panel Le panneau de dessin.
      * @param e     L'événement de la souris.
      */
-    void handleMouseDragged(PanelDessin panel, MouseEvent e);
+    void handleMouseDragged(PanelJeu panel, MouseEvent e);
 
     /**
      * Dessine la forme spécifiée.
@@ -54,6 +46,4 @@ public interface DessinState {
      * @param g2d   L'objet Graphics2D pour dessiner.
      * @param forme La forme à remplir.
      */
-    void fillShape(Graphics2D g2d, Figure forme);
 }
-

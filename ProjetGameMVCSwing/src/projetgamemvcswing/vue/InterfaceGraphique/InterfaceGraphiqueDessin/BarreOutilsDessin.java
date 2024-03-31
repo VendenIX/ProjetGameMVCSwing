@@ -1,10 +1,15 @@
 package projetgamemvcswing.vue.InterfaceGraphique.InterfaceGraphiqueDessin;
 
+import projetgamemvcswing.controller.State.DessinStates.MoveForm;
+import projetgamemvcswing.controller.State.DessinStates.DeleteForm;
+import projetgamemvcswing.controller.State.DessinStates.CreateLine;
+import projetgamemvcswing.controller.State.DessinStates.CreateCircle;
+import projetgamemvcswing.controller.State.DessinStates.ColorForm;
+import projetgamemvcswing.controller.State.DessinStates.CreateRectangle;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import javax.swing.border.Border;
-import projetgamemvcswing.controller.State.*;
 import projetgamemvcswing.vue.InterfaceGraphique.InterfaceGraphiqueJeu.FenetreJeu;
 import projetgamemvcswing.vue.InterfaceGraphique.IconeNonRedimensionnable;
 
@@ -33,9 +38,9 @@ public class BarreOutilsDessin extends JToolBar {
      * Constructeur de la classe barreOutilsDessin.
      * 
      * @param frame La JFrame associée à la barre d'outils.
-     * @param interfacedessin L'PanelDessin associée à la barre d'outils.
+     * @param panelDessin L'PanelDessin associée à la barre d'outils.
      */
-    public BarreOutilsDessin(JFrame frame, PanelDessin interfacedessin) {
+    public BarreOutilsDessin(JFrame frame, PanelDessin panelDessin) {
                 
         currentFrame = frame;
         
@@ -49,14 +54,14 @@ public class BarreOutilsDessin extends JToolBar {
         
         // Lorsque le bouton de cercle est cliqué
         circleButton.addActionListener((ActionEvent e) -> {
-            interfacedessin.setCurrentState(new CreateCircle());
+            panelDessin.setCurrentState(new CreateCircle());
         });
         // Initialisation bouton Rectangle
         rectangleButton = createToolbarButton("images/rectangle.png", "Dessin Rectangle");
         
         // Lorsque le bouton de Rectangle est cliqué
         rectangleButton.addActionListener((ActionEvent e) -> {
-            interfacedessin.setCurrentState(new CreateRectangle());
+            panelDessin.setCurrentState(new CreateRectangle());
         });
         
         // Initialisation bouton Ligne
@@ -64,7 +69,7 @@ public class BarreOutilsDessin extends JToolBar {
         
         // Lorsque le bouton de Ligne est cliqué
         lineButton.addActionListener((ActionEvent e) -> {
-            interfacedessin.setCurrentState(new CreateLine());
+            panelDessin.setCurrentState(new CreateLine());
         });
         
         // Initialisation bouton Deplacer
@@ -72,7 +77,7 @@ public class BarreOutilsDessin extends JToolBar {
         
         // Lorsque le bouton de Deplacer est cliqué
         moveButton.addActionListener((ActionEvent e) -> {
-            interfacedessin.setCurrentState(new MoveForm());
+            panelDessin.setCurrentState(new MoveForm());
         });
         
         // Initialisation bouton Undo
@@ -84,15 +89,15 @@ public class BarreOutilsDessin extends JToolBar {
                 // Lorsque le bouton Annuler (Undo) est cliqué
         undoButton.addActionListener((ActionEvent e) -> {
             System.out.println("boutton undo cliqué");
-            interfacedessin.getCommandHandler().undo();
-            interfacedessin.modelUpdated(this);// Rafraîchit l'affichage
+            panelDessin.getCommandHandler().undo();
+            panelDessin.modelUpdated(this);// Rafraîchit l'affichage
         });
 
         // Lorsque le bouton Refaire (Redo) est cliqué
         redoButton.addActionListener((ActionEvent e) -> {
             System.out.println("Boutton redo cliqué");
-            interfacedessin.getCommandHandler().redo();
-            interfacedessin.modelUpdated(this);// Rafraîchit l'affichage
+            panelDessin.getCommandHandler().redo();
+            panelDessin.modelUpdated(this);// Rafraîchit l'affichage
         });
 
         // Initialisation bouton Supprimer
@@ -100,7 +105,7 @@ public class BarreOutilsDessin extends JToolBar {
         
         // Lorsque le bouton de Supprimer est cliqué
         deleteButton.addActionListener((ActionEvent e) -> {
-            interfacedessin.setCurrentState(new DeleteForm());
+            panelDessin.setCurrentState(new DeleteForm());
         });
         
         // Initialisation bouton Coloration
@@ -117,8 +122,8 @@ public class BarreOutilsDessin extends JToolBar {
                 currentFrame.getBackground() // Couleur par défaut
             );
             
-            interfacedessin.setCurrentState(new ColorForm());
-            interfacedessin.setSelectedColor(selectedColor);
+            panelDessin.setCurrentState(new ColorForm());
+            panelDessin.setSelectedColor(selectedColor);
 
         });
         
