@@ -41,7 +41,7 @@ public class PlayRectangle implements JeuState {
 
         // créer le rectangle que si le point de pression n'est pas à l'intérieur d'une autre forme
         if (!dansUneAutreForme) {
-            Rectangle nouveauRectangle = new Rectangle(x, y, 0, 0, new Color(30, 144, 255));
+            Rectangle nouveauRectangle = new Rectangle(x, y, 0, 0, Color.CYAN);
             System.out.println("La couleur est : "+ nouveauRectangle.getCouleur());
             nouveauRectangle.ajoutEcouteur(panelJeu);
             panelJeu.setFigureEnCoursDeDessin(nouveauRectangle);
@@ -60,21 +60,12 @@ public class PlayRectangle implements JeuState {
         
         if (formeEnCoursDeDessin != null) {
             // Ajouter la forme actuellement dessinée à la liste des figures du panneau
-            panelJeu.getFigures().add(formeEnCoursDeDessin);
-            
-            Rectangle rectangle = (Rectangle) formeEnCoursDeDessin;
-            // Calculate surface area for rectangle
+            panelJeu.getContainer().ajoutForm(formeEnCoursDeDessin);
 
-            // Add surface area to scoreJeu
             gameScore.addAireCouverte(formeEnCoursDeDessin.getSurface());
 
-
-            // Utiliser CreationForme avec l'objet Figure et le container
-            //handler.handle(new CreationForme(formeEnCoursDeDessin, container));
-
-            // Réinitialiser la figure en cours de dessin à null pour le prochain dessin
             panelJeu.setFigureEnCoursDeDessin(null);
-            panelJeu.modelUpdated(this);
+            panelJeu.modelUpdated(this); 
         }
 
         

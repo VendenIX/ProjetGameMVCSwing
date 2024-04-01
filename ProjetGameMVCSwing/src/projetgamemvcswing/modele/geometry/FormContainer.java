@@ -37,6 +37,7 @@ public class FormContainer extends AbstractModeleEcoutable {
      */
     public void ajoutForm(Figure f) {
         this.formList.add(f);
+        System.out.println("forme ajoutée " + f);
         fireChange(); 
     }
 

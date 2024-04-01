@@ -4,9 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JMenuBar;
+import javax.swing.*;
 import projetgamemvcswing.controller.GameScore;
 import projetgamemvcswing.controller.RandomShapeGenerator;
 import projetgamemvcswing.controller.State.JeuState.FinGame;
@@ -33,6 +31,7 @@ public class FenetreJeu extends JFrame {
     private List<Figure> formesGenerees;
     private List<Figure> solutionsOrdinateur;
     private PanelFormes panelFormes;
+    private JSplitPane splitPane;
     
     public FenetreJeu() {
         // Configuration de JFrame Dessin
@@ -68,7 +67,7 @@ public class FenetreJeu extends JFrame {
         add(barJeu, BorderLayout.WEST);
         
         // Ajouter l'interface de dessin au centre
-        getContentPane().add(panelJeu, BorderLayout.CENTER);
+        getContentPane().add(splitPane, BorderLayout.CENTER);
         
         getContentPane().add(this.panelFormes, BorderLayout.EAST);
 
@@ -86,6 +85,20 @@ public class FenetreJeu extends JFrame {
         // Créer une instance de l'interface de dessin
         this.panelJeu = new PanelJeu(frame, gameScore, ordinateurScore, this.formesGenerees, formContainer);
         this.panelFormes = new PanelFormes(formContainer, this.panelJeu);
+        
+        // Ajuster la préférence de taille du panelFormes ici si nécessaire
+        int largeurPanelFormes = (int) (getWidth() * 0.15);
+        panelFormes.setPreferredSize(new Dimension(largeurPanelFormes, getHeight()));
+
+        // Initialiser et configurer le JSplitPane
+        splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, panelJeu, panelFormes);
+        splitPane.setOneTouchExpandable(true);
+        splitPane.setDividerLocation(0.85); // Ajuster selon la proportion désirée
+
+        // Assurer que le JSplitPane respecte la taille préférée de panelFormes
+        splitPane.setResizeWeight(1.0);
+        
+        
         
     }
     

@@ -42,7 +42,7 @@ public class PlayCercle implements JeuState {
 
         // créer le cercle que si le point de pression n'est pas à l'intérieur d'une autre forme
         if (!dansUneAutreForme) {
-            Cercle cercle = new Cercle(new Point(x, y), 0, new Color(30, 144, 255));
+            Cercle cercle = new Cercle(new Point(x, y), 0, Color.CYAN);
             cercle.ajoutEcouteur(panelJeu); 
             panelJeu.setFigureEnCoursDeDessin(cercle);
         } else {
@@ -58,17 +58,16 @@ public class PlayCercle implements JeuState {
     
         if (formeEnCoursDeDessin != null) {
             
-            // Ajouter le cercle actuellement dessiné à la liste des figures
-            panelJeu.getFigures().add(formeEnCoursDeDessin);
-            // Utiliser CreationForme avec l'objet Figure et le container
-            //handler.handle(new CreationForme(formeEnCoursDeDessin, container));
-            
-            Cercle cercle = (Cercle) formeEnCoursDeDessin;
-            // Calculate surface area for rectangle
+            panelJeu.getContainer().ajoutForm(formeEnCoursDeDessin);
 
+            // Mise à jour du score de jeu avec la surface du cercle
             gameScore.addAireCouverte(formeEnCoursDeDessin.getSurface());
-                        
+
+            // Réinitialiser la figure en cours de dessin à null
             panelJeu.setFigureEnCoursDeDessin(null);
+
+            // Mettre à jour l'interface utilisateur si nécessaire
+            panelJeu.modelUpdated(this);
         }
         
         //System.out.println("Taille handler : " + handler.getStackSize());

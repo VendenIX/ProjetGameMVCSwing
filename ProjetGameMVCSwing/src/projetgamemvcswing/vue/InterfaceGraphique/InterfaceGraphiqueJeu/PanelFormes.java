@@ -17,5 +17,6 @@ public class PanelFormes extends JPanel {
         
         setLayout(new BorderLayout());
         add(new JScrollPane(tableFormes), BorderLayout.CENTER);
+        formContainer.ajoutEcouteur(adapter);
     }
 }

@@ -1,14 +1,18 @@
 package projetgamemvcswing.adapter;
 
+import java.awt.Color;
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.swing.JPanel;
 import javax.swing.table.AbstractTableModel;
+import projetgamemvcswing.controller.Observer.EcouteurModele;
 import projetgamemvcswing.modele.geometry.*;
 import projetgamemvcswing.vue.InterfaceGraphique.InterfaceGraphiqueJeu.PanelJeu;
 /**
  *
  * @author 21907062@campus
  */
-public class FormContainerAdapter extends AbstractTableModel {
+public class FormContainerAdapter extends AbstractTableModel implements EcouteurModele {
     
     private final FormContainer container;
     private PanelJeu panel;
@@ -30,8 +34,12 @@ public class FormContainerAdapter extends AbstractTableModel {
     
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        if (rowIndex < container.getNbForms()) {
-            DisplayableProperties figure = (DisplayableProperties) container.getFormList().get(rowIndex);
+        List<Figure> formesJoueur = container.getFormList().stream()
+                                         .filter(f -> f.getCouleur().equals(Color.CYAN)) 
+                                         .collect(Collectors.toList());
+        
+        if (rowIndex < formesJoueur.size()) {
+            DisplayableProperties figure = (DisplayableProperties) container.getFormList().get(rowIndex + 4); // +4 car les 4 premieres formes c'est les obstacles
             switch (columnIndex) {
                 case 0: // Nom de la figure
                     return figure.getName();
@@ -56,6 +64,12 @@ public class FormContainerAdapter extends AbstractTableModel {
             default:
                 return "";
         }
+    }
+
+    @Override
+    public void modelUpdated(Object source) {
+        System.out.println("je mets à jour mon tableau");
+        fireTableDataChanged(); //c'est une methode de abstractTableModel donc ca update bien
     }
     
 }

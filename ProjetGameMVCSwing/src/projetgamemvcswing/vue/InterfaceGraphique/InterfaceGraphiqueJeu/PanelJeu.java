@@ -229,6 +229,10 @@ public class PanelJeu extends JPanel implements EcouteurModele {
         this.modelUpdated(this);
     }
 
+    public FormContainer getContainer() {
+        return this.container;
+    }
+
 
     
 }
