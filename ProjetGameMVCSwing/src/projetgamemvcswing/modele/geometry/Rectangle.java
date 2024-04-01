@@ -67,8 +67,10 @@ public class Rectangle extends AbstractModeleEcoutable implements Figure {
         fireChange(); // Notifier les écouteurs du changement
     }
     
+    @Override
     public Color getCouleur() { return couleur; }
     
+    @Override
     public void setCouleur(Color couleur) { 
         this.couleur = couleur; 
         fireChange(); // Notifier les écouteurs du changement

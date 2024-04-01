@@ -49,17 +49,10 @@ public class PlayRectangle implements JeuState {
 
             System.out.println(gameScore.getScoreJeu());
 
-            // Utiliser CreationForme avec l'objet Figure et le container
-            //handler.handle(new CreationForme(formeEnCoursDeDessin, container));
-
             // Réinitialiser la figure en cours de dessin à null pour le prochain dessin
             panelJeu.setFigureEnCoursDeDessin(null);
         }
-
-        
-        //System.out.println("Taille handler : " + handler.getStackSize());
-
-        
+   
         
     }
 

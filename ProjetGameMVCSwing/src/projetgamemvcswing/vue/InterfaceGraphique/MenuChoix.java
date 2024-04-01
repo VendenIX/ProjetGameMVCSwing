@@ -2,201 +2,191 @@ package projetgamemvcswing.vue.InterfaceGraphique;
 
 import projetgamemvcswing.vue.InterfaceGraphique.InterfaceGraphiqueJeu.FenetreJeu;
 import projetgamemvcswing.vue.InterfaceGraphique.InterfaceGraphiqueDessin.FenetreDessin;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Image;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /**
- *
- * @author Islem
+ * Fenêtre affichant le menu de choix entre le mode Dessin et le mode Jeu.
+ * Cette classe représente une fenêtre qui affiche un menu permettant à l'utilisateur de choisir
+ * entre le mode Dessin et le mode Jeu. Chaque mode est accompagné d'une icône et d'un titre.
+ * L'utilisateur peut cliquer sur les boutons pour accéder au mode correspondant.
  */
-
 public class MenuChoix extends JFrame {
-    
-    private Image backgroundImage;
-    
-    public MenuChoix() {
-        // Configuration de le JFrame principal
-        setTitle("Dessin et Jeux de Formes");
-        setSize(600, 450);
-        setLocationRelativeTo(null);
-        setResizable(false);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        // icon application
-        setIconImage(new ImageIcon("images/app_image.png").getImage());
 
-        // Charger l'image du fond
+    private final Image backgroundImage;
+
+    /**
+     * Constructeur de la fenêtre du menu de choix.
+     * Initialise et configure les composants de la fenêtre, y compris le fond d'écran et les boutons de choix.
+     */
+    public MenuChoix() {
+        // Configuration de la fenêtre principale
+        setTitle("Dessin et Jeux de Formes"); // Titre de la fenêtre
+        setSize(600, 450); // Taille de la fenêtre
+        setLocationRelativeTo(null); // Positionnement au centre de l'écran
+        setResizable(false); // Interdiction de redimensionner la fenêtre
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Action à la fermeture de la fenêtre
+        setIconImage(new ImageIcon("images/app_image.png").getImage()); // Icône de l'application
+
+        // Chargement de l'image de fond
         backgroundImage = new ImageIcon("images/colorful_oil.jpg").getImage();
 
-        // Création d'un JPanel
+        // Création d'un JPanel personnalisé avec un fond d'image
         JPanel panelMenuChoix = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 50)) {
             @Override
-            // Changement du fond vers une image
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
             }
         };
-        
-        // import et redimensionnement des icones
+
+        // Importation et redimensionnement des icônes pour les boutons
         Icon dessinIcon = new ImageIcon(new ImageIcon("images/pal.png")
                 .getImage()
                 .getScaledInstance(120, 120, Image.SCALE_SMOOTH));
-        
+
         Icon jeuIcon = new ImageIcon(new ImageIcon("images/cont.png")
                 .getImage()
                 .getScaledInstance(120, 120, Image.SCALE_SMOOTH));
 
-
-        // Création d'une Box/Container verticale pour Label + 2 boutons
+        // Création d'une boîte verticale pour le label et les boutons
         Box mainVerticalBox = Box.createVerticalBox();
-        // Ajout d'une zone rigide pour le centrage vertical.
-        mainVerticalBox.add(Box.createVerticalGlue());
-        
-        // Création d'une Box/Container verticale pour chaque bouton et son label
-        Box buttonDessinVerticalBox = Box.createVerticalBox();
-        buttonDessinVerticalBox.add(Box.createVerticalGlue());
-        
-        Box buttonJeuVerticalBox = Box.createVerticalBox();
-        buttonJeuVerticalBox.add(Box.createVerticalGlue());
-        
-        // Ajout du Label principal
+        mainVerticalBox.add(Box.createVerticalGlue()); // Espace vertical pour le centrage
+
+        // Création et configuration du label principal
         JLabel label = new JLabel("Veuillez Choisir Un Mode");
-        label.setFont(new Font("Lucida Calligraphy", Font.BOLD, 22));
+        label.setFont(new Font("Lucida Calligraphy", Font.BOLD, 22)); // Police du label
+        label.setAlignmentX(Component.CENTER_ALIGNMENT); // Centrage horizontal
+        mainVerticalBox.add(label); // Ajout du label
 
-        // Centrage du label horizontalement
-        label.setAlignmentX(Component.CENTER_ALIGNMENT);
-        mainVerticalBox.add(label);
+        mainVerticalBox.add(Box.createRigidArea(new Dimension(0, 50))); // Espace vertical
 
-        // Ajout d'une zone rigide pour l'espacement vertical
-        mainVerticalBox.add(Box.createRigidArea(new java.awt.Dimension(0, 50)));
-
-        // Création d'une Box pour l'alignement horizontal des boutons
+        // Création d'une boîte horizontale pour les boutons
         Box mainHorizontalBox = Box.createHorizontalBox();
-        
-        // JButton avec zoom effect on hover
+
+        // Création des boutons avec l'effet de zoom au survol
         JButton dessinButton = createZoomButton(dessinIcon);
         JButton jeuButton = createZoomButton(jeuIcon);
-        
-        // Ajout des labels pour les boutons
+
+        // Création et configuration des labels pour les boutons
         JLabel dessinButtonTitre = new JLabel("Mode Dessin");
         dessinButtonTitre.setFont(new Font("Lucida Calligraphy", Font.BOLD, 18));
-        
+
         JLabel jeuButtonTitre = new JLabel(" Mode Jeu");
         jeuButtonTitre.setFont(new Font("Lucida Calligraphy", Font.BOLD, 18));
-        
-        // Ajout ActionListener pour gérer les clics sur les boutons
+
+        // Ajout des écouteurs d'événements pour les boutons
         dessinButton.addActionListener((ActionEvent e) -> onDessinButtonClick());
         jeuButton.addActionListener((ActionEvent e) -> onJeuButtonClick());
 
-        // Ajout des boutons à au conteneur boutons après le conteneur principal
-        buttonDessinVerticalBox.add(dessinButton);
-        buttonDessinVerticalBox.add(Box.createRigidArea(new java.awt.Dimension(0, 20)));        
-        buttonDessinVerticalBox.add(dessinButtonTitre);
-        mainHorizontalBox.add(buttonDessinVerticalBox);
-        
-        mainHorizontalBox.add(Box.createRigidArea(new java.awt.Dimension(120, 0)));
-        
-        buttonJeuVerticalBox.add(jeuButton);
-        buttonJeuVerticalBox.add(Box.createRigidArea(new java.awt.Dimension(0, 20)));
-        buttonJeuVerticalBox.add(jeuButtonTitre);
-        mainHorizontalBox.add(buttonJeuVerticalBox);
+        // Ajout des boutons et de leurs labels à la boîte horizontale
+        mainHorizontalBox.add(createVerticalBoxWithComponents(dessinButton, dessinButtonTitre));
+        mainHorizontalBox.add(Box.createRigidArea(new Dimension(120, 0))); // Espace horizontal
+        mainHorizontalBox.add(createVerticalBoxWithComponents(jeuButton, jeuButtonTitre));
 
-        // Ajout de la boîte horizontale à la boîte verticale
+        // Ajout de la boîte horizontale à la boîte verticale principale
         mainVerticalBox.add(mainHorizontalBox);
 
-        // Ajout d'une zone rigide pour le centrage vertical
-        mainVerticalBox.add(Box.createVerticalGlue());
+        mainVerticalBox.add(Box.createVerticalGlue()); // Espace vertical pour le centrage
 
-        // Ajout de la boîte verticale au panneau
+        // Ajout de la boîte verticale principale au JPanel
         panelMenuChoix.add(mainVerticalBox);
 
-        // Ajout du JPanel principal au JFrame principal
+        // Ajout du JPanel à la JFrame principale
         add(panelMenuChoix);
-        
-        // Affichage du JFrame
+
+        // Affichage de la JFrame principale
         setVisible(true);
     }
-    
+
+    /**
+     * Crée un bouton avec l'effet de zoom au survol.
+     * @param icon Icône du bouton.
+     * @return Bouton avec l'effet de zoom au survol.
+     */
     private JButton createZoomButton(Icon icon) {
-        // Creation d'un button
-        JButton button = new JButton(icon);
-        
-        // Rendre le buttons Invisible
+        JButton button = new JButton(icon); // Création du bouton avec l'icône
+
+        // Configuration pour rendre le bouton invisible et appliquer l'effet de zoom au survol
         button.setText(null);
         button.setBorder(BorderFactory.createEmptyBorder());
         button.setContentAreaFilled(false);
-        
-        // Effet hover en entrer et sortie de la sourie
-        button.addMouseListener(new java.awt.event.MouseAdapter() {
+
+        // Ajout des écouteurs de la souris pour l'effet de zoom
+        button.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                scaleButton(button, 1.1f);
+            public void mouseEntered(MouseEvent evt) {
+                scaleButton(button, 1.1f); // Zoom lorsque la souris survole le bouton
             }
 
             @Override
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                scaleButton(button, 1.0f);
+            public void mouseExited(MouseEvent evt) {
+                scaleButton(button, 1.0f); // Retour à la taille normale lorsque la souris quitte le bouton
             }
         });
 
         return button;
     }
 
+    /**
+     * Applique l'effet de zoom sur un bouton.
+     * @param button Bouton à zoomer.
+     * @param scale Facteur d'échelle pour le zoom.
+     */
     private void scaleButton(JButton button, float scale) {
-        
-    // Obtenir les dimensions originales avant mise à l'échelle
-    Dimension originalSize = button.getPreferredSize();
+        // Obtenir les dimensions originales du bouton
+        Dimension originalSize = button.getPreferredSize();
+        int width = originalSize.width;
+        int height = originalSize.height;
 
-    // Extraire la largeur et la hauteur originales
-    int width = originalSize.width;
-    int height = originalSize.height;
+        // Calcul des dimensions après mise à l'échelle
+        int scaledWidth = (int) (width * scale);
+        int scaledHeight = (int) (height * scale);
 
-    // Calculer les dimensions après mise à l'échelle
-    int scaledWidth = (int) (width * scale);
-    int scaledHeight = (int) (height * scale);
+        // Mise à l'échelle de l'icône du bouton
+        Image scaledImage = ((ImageIcon) button.getIcon()).getImage().getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon = new ImageIcon(scaledImage);
+        button.setIcon(scaledIcon);
 
-    // Obtenir l'icône d'origine du bouton
-    ImageIcon originalIcon = (ImageIcon) button.getIcon();
-
-    // Mettre à l'échelle l'image de l'icône
-    Image scaledImage = originalIcon.getImage().getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_SMOOTH);
-
-    // Créer une nouvelle icône mise à l'échelle
-    ImageIcon scaledIcon = new ImageIcon(scaledImage);
-
-    // Appliquer la nouvelle icône mise à l'échelle au bouton
-    button.setIcon(scaledIcon);
-
-    // Rétablir les dimensions originales pour une utilisation ultérieure
-    button.setPreferredSize(originalSize);
-    button.setSize(originalSize);
-    
+        // Rétablissement des dimensions originales après mise à l'échelle
+        button.setPreferredSize(originalSize);
+        button.setSize(originalSize);
     }
-    
-    // Methode qui ouvre la fenetre Dessin
+
+    /**
+     * Crée une boîte verticale avec un composant.
+     * @param component Composant à ajouter à la boîte verticale.
+     * @param titre Label associé au composant.
+     * @return Boîte verticale contenant le composant et le titre.
+     */
+    private Box createVerticalBoxWithComponents(Component component, JLabel titre) {
+        Box verticalBox = Box.createVerticalBox();
+        verticalBox.add(Box.createVerticalGlue()); // Espace pour le centrage vertical
+        verticalBox.add(component); // Ajout du composant
+        verticalBox.add(Box.createRigidArea(new Dimension(0, 20))); // Espace vertical
+        verticalBox.add(titre); // Ajout du titre
+        return verticalBox;
+    }
+
+    /**
+     * Ouvre la fenêtre du mode Dessin lorsqu'on clique sur le bouton correspondant.
+     */
     private void onDessinButtonClick() {
         FenetreDessin fDessin = new FenetreDessin();
         fDessin.setVisible(true);
-        dispose();
+        dispose(); // Ferme la fenêtre de menu de choix
     }
 
-    // Methode qui ouvre la fenetre Jeu
+    /**
+     * Ouvre la fenêtre du mode Jeu lorsqu'on clique sur le bouton correspondant.
+     */
     private void onJeuButtonClick() {
         FenetreJeu fJeu = new FenetreJeu();
         fJeu.setVisible(true);
-        dispose();
+        dispose(); // Ferme la fenêtre de menu de choix
     }
 }

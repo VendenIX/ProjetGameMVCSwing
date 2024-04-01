@@ -31,18 +31,39 @@ public interface Figure {
     */
    boolean contient(double x, double y);
    
-   Color getCouleur(); // Obtenir la couleur de la figure
-   
-   void setCouleur(Color couleur); // Définir la couleur de la figure
-   
-   //utilisation du pattern Prototype !
    /**
-    * Fait tout simplement une copie.
-    * @return 
+    * Obtient la couleur de la figure.
+    *
+    * @return La couleur de la figure.
     */
-   public abstract Figure copie();
-   String getName();
-   
-   double getSurface();
+    Color getCouleur();
+
+    /**
+     * Définit la couleur de la figure.
+     *
+     * @param couleur La nouvelle couleur de la figure.
+     */
+    void setCouleur(Color couleur);
+
+    /**
+     * Fait une copie de la figure.
+     *
+     * @return Une nouvelle instance de Figure identique à celle-ci.
+     */
+    public abstract Figure copie();
+
+    /**
+     * Obtient le nom de la figure.
+     *
+     * @return Le nom de la figure.
+     */
+    String getName();
+
+    /**
+     * Calcule la surface de la figure.
+     *
+     * @return La surface de la figure.
+     */
+    double getSurface();
    
 }

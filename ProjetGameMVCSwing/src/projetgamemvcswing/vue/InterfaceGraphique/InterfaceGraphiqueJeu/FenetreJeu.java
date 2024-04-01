@@ -18,6 +18,7 @@ public class FenetreJeu extends JFrame {
     private MenuBarJeu menuBarJeu;
     private BarreOutilsJeu barJeu;
     private PanelScore panelScore;
+    private PanelTentative panelTentative;
     
     private final GameScore gameScore = new GameScore();
     
@@ -40,6 +41,9 @@ public class FenetreJeu extends JFrame {
         // Ajouter le menuBarJeu
         setJMenuBar(new JMenuBar());
         getJMenuBar().add(menuBarJeu);
+        
+        panelTentative = new PanelTentative();
+        getContentPane().add(panelTentative, BorderLayout.NORTH);
         
         panelScore = new PanelScore(gameScore);
         getContentPane().add(panelScore, BorderLayout.SOUTH);

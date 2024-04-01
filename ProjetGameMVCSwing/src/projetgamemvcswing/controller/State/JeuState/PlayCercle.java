@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.util.Set;
-import projetgamemvcswing.controller.Command.CreationForme;
 import projetgamemvcswing.controller.GameScore;
 import projetgamemvcswing.controller.Intersection;
 import projetgamemvcswing.modele.geometry.Cercle;
@@ -25,7 +24,7 @@ public class PlayCercle implements JeuState {
     
         
         Cercle cercle = new Cercle(new Point(x, y), 0, new Color(0, 0, 0, 0));
-        cercle.ajoutEcouteur(panelJeu); // Enregistre PanelDessin comme écouteur
+        cercle.ajoutEcouteur(panelJeu);
         panelJeu.setFigureEnCoursDeDessin(cercle);
     }
 
@@ -38,9 +37,7 @@ public class PlayCercle implements JeuState {
             
             // Ajouter le cercle actuellement dessiné à la liste des figures
             panelJeu.getFigures().add(formeEnCoursDeDessin);
-            // Utiliser CreationForme avec l'objet Figure et le container
-            //handler.handle(new CreationForme(formeEnCoursDeDessin, container));
-            
+
             Cercle cercle = (Cercle) formeEnCoursDeDessin;
             // Calculate surface area for rectangle
             double surfaceCercle = cercle.getSurface();
@@ -52,10 +49,7 @@ public class PlayCercle implements JeuState {
             
             panelJeu.setFigureEnCoursDeDessin(null);
         }
-        
-        //System.out.println("Taille handler : " + handler.getStackSize());
-        //System.out.println(handler);
-        // Réinitialiser la figure en cours de dessin à null
+
         panelJeu.setFigureEnCoursDeDessin(null);
     }
 
@@ -95,7 +89,7 @@ public class PlayCercle implements JeuState {
         for (Point point : intersectingPixels) {
             if (cercle.contient(point.getX(), point.getY())) {
                 System.out.println("GameOver ! Intersected Cercle");
-                break; // No need to check further
+                break;
             }
         }
     }

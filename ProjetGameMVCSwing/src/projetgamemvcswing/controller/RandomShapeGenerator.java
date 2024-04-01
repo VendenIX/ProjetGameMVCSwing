@@ -1,18 +1,25 @@
-
 package projetgamemvcswing.controller;
 
 import projetgamemvcswing.vue.InterfaceGraphique.InterfaceGraphiqueJeu.PanelJeu;
+
 import java.awt.Color;
 import java.util.Random;
 import projetgamemvcswing.modele.geometry.Cercle;
 import projetgamemvcswing.modele.geometry.Point;
 import projetgamemvcswing.modele.geometry.Rectangle;
 
-
+/**
+ * Classe utilisée pour générer des formes aléatoires dans un PanelJeu.
+ */
 public class RandomShapeGenerator {
     
-   public void generateFormes(PanelJeu panelJeu, int nombreDeFormes) {
-        
+    /**
+     * Génère un certain nombre de formes aléatoires et les ajoute au PanelJeu spécifié.
+     *
+     * @param panelJeu        Le PanelJeu dans lequel ajouter les formes.
+     * @param nombreDeFormes  Le nombre de formes à générer.
+     */
+    public void generateFormes(PanelJeu panelJeu, int nombreDeFormes) {
         Random random = new Random();
 
         // Obtenir les dimensions du panneau
@@ -63,7 +70,4 @@ public class RandomShapeGenerator {
             }
         }
     }
-    
-   
-        
-    }
+}

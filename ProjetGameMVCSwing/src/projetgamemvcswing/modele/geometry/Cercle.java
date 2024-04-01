@@ -9,7 +9,7 @@ import projetgamemvcswing.controller.Observer.AbstractModeleEcoutable;
  */
 public class Cercle extends AbstractModeleEcoutable implements Figure {
     
-    private Point centre; // Centre du cercle
+    private final Point centre; // Centre du cercle
     private double rayon; // Rayon du cercle
     private Color couleur; // Couleur du cercle
     
@@ -143,22 +143,44 @@ public class Cercle extends AbstractModeleEcoutable implements Figure {
         return distance <= this.rayon;
     }
 
+   /**
+    * Déplace le cercle à la position spécifiée par les coordonnées x et y.
+    *
+    * @param x La coordonnée x de la nouvelle position.
+    * @param y La coordonnée y de la nouvelle position.
+    */
     public void deplacer(double x, double y) {
         this.setX(x);
         this.setY(y);
     }
-    
+
+   /**
+    * Crée une copie du cercle.
+    *
+    * @return Une nouvelle instance de Cercle identique à celle-ci.
+    */
     @Override
     public Figure copie() {
         return new Cercle(this.getCentre(), this.getRayon(), this.getCouleur());
     }
-    
-    public String getName(){
+
+   /**
+    * Obtient le nom du cercle.
+    *
+    * @return Le nom du cercle, "Cercle".
+    */
+    @Override
+    public String getName() {
         return "Cercle";
     }
-    
+
+   /**
+    * Calcule la surface du cercle.
+    *
+    * @return La surface du cercle.
+    */
     @Override
-    public double getSurface(){
+    public double getSurface() {
         return Math.PI * Math.pow(this.rayon, 2);
     }
 }
