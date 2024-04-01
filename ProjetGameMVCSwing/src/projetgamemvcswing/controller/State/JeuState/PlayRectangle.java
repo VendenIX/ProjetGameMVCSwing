@@ -24,6 +24,7 @@ public class PlayRectangle implements JeuState {
             // Afficher un message ou désactiver la création de nouvelles figures
             System.out.println("Nombre maximum de figures ajoutées par l'utilisateur atteint.");
             panelJeu.setCurrentState(new FinGame());
+            panelJeu.passerEnFinGame();
             return; // Sortir de la méthode pour éviter d'ajouter de nouvelles figures
         }
         double x = e.getX();

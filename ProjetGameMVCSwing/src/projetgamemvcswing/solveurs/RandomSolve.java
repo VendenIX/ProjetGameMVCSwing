@@ -11,11 +11,11 @@ public class RandomSolve {
     private List<Figure> figuresObstacles;
     private List<Figure> currentFigures;
     private GameScore gameScore;
-    private int nombreGenerations = 100000;
+    private int nombreGenerations = 1000000;
     private double meilleurScore = 0;
     private List<Figure> meilleureSolution = new ArrayList<>();
     private Random random = new Random();
-
+    private final double metriqueGrossissement = 1.1;
     private int panelWidth;
     private int panelHeight;
 
@@ -83,23 +83,23 @@ public class RandomSolve {
     private void augmenterTailleRectangle(Rectangle rectangle) {
         while (true) {
             Rectangle tempRectangle = new Rectangle(rectangle.getX(), rectangle.getY(),
-                                                    rectangle.getLargeur() * 2, rectangle.getHauteur() * 2,
+                                                    rectangle.getLargeur() * metriqueGrossissement, rectangle.getHauteur() * metriqueGrossissement,
                                                     rectangle.getCouleur());
             if (verifierCollisions(tempRectangle)) {
                 break; // Garder la dernière taille valide sans collision
             }
-            rectangle.setLargeur(rectangle.getLargeur() * 2);
-            rectangle.setHauteur(rectangle.getHauteur() * 2);
+            rectangle.setLargeur(rectangle.getLargeur() * metriqueGrossissement);
+            rectangle.setHauteur(rectangle.getHauteur() * metriqueGrossissement);
         }
     }
 
     private void augmenterTailleCercle(Cercle cercle) {
         while (true) {
-            Cercle tempCercle = new Cercle(cercle.getCentre(), cercle.getRayon() * 2, cercle.getCouleur());
+            Cercle tempCercle = new Cercle(cercle.getCentre(), cercle.getRayon() * metriqueGrossissement, cercle.getCouleur());
             if (verifierCollisions(tempCercle)) {
                 break; // Garder le dernier rayon valide sans collision
             }
-            cercle.setRayon(cercle.getRayon() * 2);
+            cercle.setRayon(cercle.getRayon() * metriqueGrossissement);
         }
     }
 

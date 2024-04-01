@@ -15,6 +15,7 @@ import projetgamemvcswing.controller.Observer.EcouteurModele;
 import projetgamemvcswing.controller.RandomShapeGenerator;
 import projetgamemvcswing.controller.ShapeDrawer;
 import projetgamemvcswing.controller.ShapeFiller;
+import projetgamemvcswing.controller.State.JeuState.FinGame;
 import projetgamemvcswing.controller.State.JeuState.PlayDefaultState;
 import projetgamemvcswing.controller.State.JeuState.JeuState;
 import projetgamemvcswing.modele.geometry.Cercle;
@@ -35,7 +36,8 @@ public class PanelJeu extends JPanel implements EcouteurModele {
     private final ShapeDrawer shapeDrawer = new ShapeDrawer();
     private final ShapeFiller shapeFiller = new ShapeFiller();
     
-    
+    private List<Figure> solutionsOrdinateur = null;
+
    // Variable pour stocker la figure en cours de dessin
     private Figure figureEnCoursDeDessin;
     
@@ -160,19 +162,21 @@ public class PanelJeu extends JPanel implements EcouteurModele {
             shapeFiller.drawFilledFigure(g2d, figureEnCoursDeDessin);
         }
         
-        // Dessiner un cercle noir au milieu de l'écran
-        //int centerX = getWidth() / 2;
-        //int centerY = getHeight() / 2;    
-        //Cercle cercle = new Cercle(new Point(centerX,centerY), 120, Color.YELLOW);
-        //shapeDrawer.drawFigure(g, cercle);
-        //shapeFiller.drawFilledFigure(g2d, cercle);
+        /*
         RandomSolve solver = new RandomSolve(this.formesGenerees,new ArrayList<>(), this.getWidth(), this.getHeight());
         List<Figure> soluce = solver.getSoluce();
         for(Figure f : soluce) {
             shapeDrawer.drawFigure(g, f);
             shapeFiller.drawFilledFigure(g2d, f);
         }
-        
+        */
+        // Dessiner la solution de l'ordinateur si on est en FinGame
+        if (currentState instanceof FinGame && solutionsOrdinateur != null) {
+            for (Figure f : solutionsOrdinateur) {
+                shapeDrawer.drawFigure(g, f);
+                shapeFiller.drawFilledFigure(g2d, f);
+            }
+        }
         
     }
     
@@ -194,6 +198,16 @@ public class PanelJeu extends JPanel implements EcouteurModele {
         }
         return false;
     }
+    
+    public void passerEnFinGame() {
+
+        // Calculer les solutions de l'ordinateur
+        RandomSolve solver = new RandomSolve(this.formesGenerees, new ArrayList<>(), this.getWidth(), this.getHeight());
+        this.solutionsOrdinateur = solver.getSoluce();
+
+        repaint(); // Forcer le dessin des solutions
+    }
+
 
     
 }
