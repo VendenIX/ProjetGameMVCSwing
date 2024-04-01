@@ -166,7 +166,7 @@ public class PanelJeu extends JPanel implements EcouteurModele {
         //Cercle cercle = new Cercle(new Point(centerX,centerY), 120, Color.YELLOW);
         //shapeDrawer.drawFigure(g, cercle);
         //shapeFiller.drawFilledFigure(g2d, cercle);
-        RandomSolve solver = new RandomSolve(this.formesGenerees, this.getWidth(), this.getHeight());
+        RandomSolve solver = new RandomSolve(this.formesGenerees,new ArrayList<>(), this.getWidth(), this.getHeight());
         List<Figure> soluce = solver.getSoluce();
         for(Figure f : soluce) {
             shapeDrawer.drawFigure(g, f);

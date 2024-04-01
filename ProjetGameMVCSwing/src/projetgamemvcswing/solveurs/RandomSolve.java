@@ -9,6 +9,7 @@ import projetgamemvcswing.controller.GameScore;
 
 public class RandomSolve {
     private List<Figure> figuresObstacles;
+    private List<Figure> currentFigures;
     private GameScore gameScore;
     private int nombreGenerations = 100000;
     private double meilleurScore = 0;
@@ -18,8 +19,10 @@ public class RandomSolve {
     private int panelWidth;
     private int panelHeight;
 
-    public RandomSolve(List<Figure> figuresObstacles, int panelWidth, int panelHeight) {
+    public RandomSolve(List<Figure> figuresObstacles, List<Figure> currentFigures, int panelWidth, int panelHeight) {
         this.figuresObstacles = figuresObstacles;
+        this.currentFigures = new ArrayList<>(figuresObstacles); // Initialement égale aux obstacles
+        this.currentFigures.addAll(currentFigures); // Ajouter les figures bleues posées
         this.panelWidth = panelWidth;
         this.panelHeight = panelHeight;
         this.gameScore = new GameScore();
@@ -27,13 +30,18 @@ public class RandomSolve {
 
     public List<Figure> getSoluce() {
         for (int i = 0; i < nombreGenerations; i++) {
+            
+            currentFigures.clear();
+            currentFigures.addAll(figuresObstacles);
             List<Figure> tentativeSolution = new ArrayList<>(); // Conserver les obstacles
             gameScore.setAireCouverte(0); // Réinitialiser pour chaque génération
 
             for (int j = 0; j < 4; j++) { // Limite fixe à 4 formes générées
                 Figure figure = genererFigureAleatoireEtAugmenterTaille();
                 if (figure != null) {
+                    
                     tentativeSolution.add(figure);
+                    currentFigures.add(figure);
                     gameScore.addAireCouverte(figure.getSurface());
                 }
             }
@@ -97,7 +105,7 @@ public class RandomSolve {
 
     private boolean verifierCollisions(Figure figure) {
         // Vérifier la collision avec d'autres figures
-        for (Figure autre : this.figuresObstacles) {
+        for (Figure autre : currentFigures) {
             if (figure != autre && figure.intersecteAvec(autre)) {
                 return true; // Collision détectée
             }
@@ -125,8 +133,8 @@ public class RandomSolve {
 
 
     private boolean estDansObstacle(Point point) {
-        for (Figure obstacle : figuresObstacles) {
-            if (obstacle.intersecteAvec(new Cercle(point, 15, Color.RED))) {
+        for (Figure figure : currentFigures) {
+            if (figure.intersecteAvec(new Cercle(point, 15, Color.RED))) {
                 return true;
             }
         }
