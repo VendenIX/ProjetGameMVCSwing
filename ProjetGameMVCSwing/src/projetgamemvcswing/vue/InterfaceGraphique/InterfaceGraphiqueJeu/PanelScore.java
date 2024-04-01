@@ -2,45 +2,76 @@
 package projetgamemvcswing.vue.InterfaceGraphique.InterfaceGraphiqueJeu;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import javax.swing.JTable;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import projetgamemvcswing.controller.GameScore;
 import projetgamemvcswing.controller.Observer.EcouteurModele;
 
 public class PanelScore extends JPanel implements EcouteurModele {
     
-    private JLabel pourcentageAireLabel;
-    private JLabel aireCouverteLabel;
-    private GameScore gameScore;
+    private JLabel joueurLabel;
+    private JLabel pourcentageAireJoueurLabel;
+    private JLabel aireCouverteJoueurLabel;
+    
+    private JLabel ordinateurLabel;
+    private JLabel pourcentageAireOrdinateurLabel;
+    private JLabel aireCouverteOrdinateurLabel;
+    
+    private GameScore gameScoreJoueur;
+    private GameScore gameScoreOrdinateur;
 
-    public PanelScore(GameScore gameScore) {
-        this.gameScore = gameScore;
-        this.gameScore.ajoutEcouteur(this);
+    public PanelScore(GameScore gameScoreJoueur, GameScore gameScoreOrdinateur) {
+        this.gameScoreJoueur = gameScoreJoueur;
+        this.gameScoreOrdinateur = gameScoreOrdinateur;
+        this.gameScoreJoueur.ajoutEcouteur(this);
+        this.gameScoreOrdinateur.ajoutEcouteur(this);
 
-        setLayout(new GridLayout(2, 1)); // Disposition en grille pour les labels
+        setLayout(new GridLayout(3, 2)); // Disposition en grille pour les labels avec deux colonnes
+        setBorder(new EmptyBorder(10, 10, 10, 10)); // Une marge pour l'esthétique
 
-        pourcentageAireLabel = new JLabel("Taux d'aire rempli (%): 0%");
-        aireCouverteLabel = new JLabel("Score : 0");
+        joueurLabel = new JLabel("Joueur");
+        joueurLabel.setFont(new Font("Serif", Font.BOLD, 16));
 
-        add(pourcentageAireLabel);
-        add(aireCouverteLabel);
+        ordinateurLabel = new JLabel("Ordinateur", JLabel.RIGHT);
+        ordinateurLabel.setFont(new Font("Serif", Font.BOLD, 16));
+
+        pourcentageAireJoueurLabel = new JLabel("Taux d'aire rempli (%): 0%");
+        aireCouverteJoueurLabel = new JLabel("Score : 0");
+
+        pourcentageAireOrdinateurLabel = new JLabel("Taux d'aire rempli (%): 0%", JLabel.RIGHT);
+        aireCouverteOrdinateurLabel = new JLabel("Score : 0", JLabel.RIGHT);
+
+        add(joueurLabel);
+        add(ordinateurLabel);
+        add(pourcentageAireJoueurLabel);
+        add(pourcentageAireOrdinateurLabel);
+        add(aireCouverteJoueurLabel);
+        add(aireCouverteOrdinateurLabel);
     }
 
     @Override
     public void modelUpdated(Object source) {
-        
-        //c'est pour eviter un null pointer exception à l'initialisation
-        if (source instanceof GameScore && pourcentageAireLabel != null && aireCouverteLabel != null) {
-            GameScore updatedScore = (GameScore) source;
+        if (source instanceof GameScore 
+            && pourcentageAireJoueurLabel != null && aireCouverteJoueurLabel != null 
+            && pourcentageAireOrdinateurLabel != null && aireCouverteOrdinateurLabel != null) {
             double airePanel = getParent().getWidth() * getParent().getHeight();
-            double pourcentageAireCouverte = updatedScore.calculerPourcentageAireCouverte(airePanel);
-            pourcentageAireLabel.setText("Taux d'aire rempli (%): " + pourcentageAireCouverte + "%");
-            aireCouverteLabel.setText("Score : " + updatedScore.getAireCouverte());
+            if (source == gameScoreJoueur) {
+                double pourcentageAireCouverte = gameScoreJoueur.calculerPourcentageAireCouverte(airePanel);
+                pourcentageAireJoueurLabel.setText("Taux d'aire rempli (%): " + String.format("%.2f", pourcentageAireCouverte) + "%");
+                aireCouverteJoueurLabel.setText("Score : " + String.format("%.2f", gameScoreJoueur.getAireCouverte()));
+            } else if (source == gameScoreOrdinateur) {
+                double pourcentageAireCouverte = gameScoreOrdinateur.calculerPourcentageAireCouverte(airePanel);
+                pourcentageAireOrdinateurLabel.setText("Taux d'aire rempli (%): " + String.format("%.2f", pourcentageAireCouverte) + "%");
+                aireCouverteOrdinateurLabel.setText("Score : " + String.format("%.2f", gameScoreOrdinateur.getAireCouverte()));
+            }
         }
     }
+
 
 }
