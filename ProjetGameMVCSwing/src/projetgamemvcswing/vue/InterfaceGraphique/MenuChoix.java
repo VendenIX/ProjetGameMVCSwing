@@ -29,6 +29,7 @@ import projetgamemvcswing.strategy.SolverStrategy;
 
 public class MenuChoix extends JFrame {
     
+    private static MenuChoix instance;
     private Image backgroundImage;
     private JComboBox<String> levelSelector;
     
@@ -142,6 +143,17 @@ public class MenuChoix extends JFrame {
         
         // Affichage du JFrame
         setVisible(true);
+    }
+    
+    /**
+     * Méthode statique pour obtenir l'instance SINGLETON
+     * @return 
+     */
+    public static MenuChoix getInstance() {
+        if (instance == null) {
+            instance = new MenuChoix();
+        }
+        return instance;
     }
     
     private JButton createZoomButton(Icon icon) {
