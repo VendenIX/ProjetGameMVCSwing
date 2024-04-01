@@ -29,7 +29,6 @@ public class DeplacementForme implements OperationCommand {
      */
     @Override
     public void operate() {
-        System.out.println("Operate");
         figure.translater(deltaX, deltaY);
     }
 
@@ -38,7 +37,6 @@ public class DeplacementForme implements OperationCommand {
      */
     @Override
     public void compensate() {
-        System.out.println("compensate");
         figure.translater(-deltaX, -deltaY);
     }
 }

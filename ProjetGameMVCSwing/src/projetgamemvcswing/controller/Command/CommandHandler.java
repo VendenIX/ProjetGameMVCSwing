@@ -55,7 +55,6 @@ public class CommandHandler extends AbstractModeleEcoutable implements Serializa
      * Methode undo qui permet d'annuler la dernière action effectuée
      */
     public void undo() {
-        System.out.println("CommandHandler > undo");
         if (!stack.isEmpty()) {
             OperationCommand command = stack.pop();
             command.compensate();

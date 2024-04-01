@@ -126,7 +126,7 @@ public class FenetreJeu extends JFrame {
             panelJeu.setSolutionsOrdinateur(solutions);
             panelJeu.updateOrdinateurScore(ordinateurScore);
             panelJeu.modelUpdated(this);// Redessinez le PanelJeu pour montrer les solutions
-            panelJeu.setCurrentState(new FinGame());
+            //panelJeu.setCurrentState(new FinGame());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -134,18 +134,23 @@ public class FenetreJeu extends JFrame {
 
     
     private void calculerSolutionOrdinateurAvecDelai() {
-        new Thread(() -> {
+    SwingWorker<Void, Void> worker = new SwingWorker<>() {
+        @Override
+        protected Void doInBackground() throws Exception {
             try {
-                Thread.sleep(3000); // Attend 3 secondes
-                System.out.println("Lancement ! ");
-                System.out.println(this.solverStrategy);
+                Thread.sleep(10000); // Attend 10 secondes
                 calculerSolutionOrdinateur(); // Lance le calcul après le délai
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt(); // Gestion de l'interruption du thread
                 e.printStackTrace();
             }
-        }).start();
-    }
+            return null;
+        }
+    };
+    
+    worker.execute();
+}
+
     
     SolverStrategy getSolverStrategy() {
         return this.solverStrategy;

@@ -186,8 +186,9 @@ public class PanelJeu extends JPanel implements EcouteurModele {
         */
         // Dessiner la solution de l'ordinateur si on est en FinGame
         if (currentState instanceof FinGame && solutionsOrdinateur != null) {
-            System.out.println("Dessinnage ! ");
+            System.out.println("Dessinner la solution de l'ordinateur ");
             for (Figure f : solutionsOrdinateur) {
+                System.out.println(f);
                 shapeDrawer.drawFigure(g, f);
                 shapeFiller.drawFilledFigure(g2d, f);
             }

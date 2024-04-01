@@ -41,8 +41,6 @@ public class CreateCircle implements DessinState {
             panelDessin.setFigureEnCoursDeDessin(null);
         }
         
-        System.out.println("Taille handler : " + handler.getStackSize());
-        System.out.println(handler);
     }
 
     @Override

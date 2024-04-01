@@ -68,7 +68,6 @@ public class FormContainerAdapter extends AbstractTableModel implements Ecouteur
 
     @Override
     public void modelUpdated(Object source) {
-        System.out.println("je mets à jour mon tableau");
         fireTableDataChanged(); //c'est une methode de abstractTableModel donc ca update bien
     }
     
