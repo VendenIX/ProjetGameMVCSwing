@@ -190,6 +190,6 @@ public class Cercle extends AbstractModeleEcoutable implements Figure, Displayab
 
     @Override
     public List<Object> getProperties() {
-        return Arrays.asList(getCentre(), getRayon());
+        return Arrays.asList(getCentre(), getRayon(), getSurface());
     }
 }

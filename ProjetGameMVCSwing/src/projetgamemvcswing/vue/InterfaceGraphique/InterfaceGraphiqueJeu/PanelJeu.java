@@ -30,7 +30,7 @@ public class PanelJeu extends JPanel implements EcouteurModele {
     // Variables
 
     // Container de type FormContainer qui stocke toutes les figures
-    private final FormContainer container = new FormContainer();
+    private final FormContainer container;
     
     // Class contenant des methodes d'affichage de formes 
     private final ShapeDrawer shapeDrawer = new ShapeDrawer();
@@ -52,7 +52,7 @@ public class PanelJeu extends JPanel implements EcouteurModele {
     private final GameScore ordinateurScore;
     private List<Figure> formesGenerees;
        
-    public PanelJeu(JFrame frame, GameScore gameScore, GameScore ordinateurScore, List<Figure> formesGenerees) {
+    public PanelJeu(JFrame frame, GameScore gameScore, GameScore ordinateurScore, List<Figure> formesGenerees, FormContainer formContainer) {
         
         if (gameScore == null) {
             throw new IllegalArgumentException("gameScore ne peut pas être null");
@@ -67,7 +67,7 @@ public class PanelJeu extends JPanel implements EcouteurModele {
         
         //met les formes et on les recup dans une liste en meme temps pour le solver
         this.formesGenerees = formesGenerees;
-        
+        this.container = formContainer;
 
         
         // Ajouter un écouteur pour les événements de la souris
@@ -144,6 +144,10 @@ public class PanelJeu extends JPanel implements EcouteurModele {
 
     // Setter pour définir la position Y précédente de la souris
     public void setLastMouseY(double lastMouseY) {this.lastMouseY = lastMouseY;}
+    
+    public double getSuperficie() {
+        return this.getWidth() * this.getHeight();
+    }
 
     /**
     * Redéfinition de la méthode paintComponent pour dessiner et afficher les figures.

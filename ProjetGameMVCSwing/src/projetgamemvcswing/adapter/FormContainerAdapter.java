@@ -1,7 +1,9 @@
 package projetgamemvcswing.adapter;
 
+import javax.swing.JPanel;
 import javax.swing.table.AbstractTableModel;
 import projetgamemvcswing.modele.geometry.*;
+import projetgamemvcswing.vue.InterfaceGraphique.InterfaceGraphiqueJeu.PanelJeu;
 /**
  *
  * @author 21907062@campus
@@ -9,19 +11,21 @@ import projetgamemvcswing.modele.geometry.*;
 public class FormContainerAdapter extends AbstractTableModel {
     
     private final FormContainer container;
+    private PanelJeu panel;
     
-    public FormContainerAdapter(FormContainer container){
+    public FormContainerAdapter(FormContainer container, PanelJeu panel){
         this.container = container;
+        this.panel = panel;
     }
     
     @Override
     public int getRowCount(){
-        return this.container.getNbForms()+1;
+        return this.container.getNbForms();
     }
     
     @Override
     public int getColumnCount(){
-        return 3;
+        return 2;
     }
     
     @Override
@@ -29,14 +33,16 @@ public class FormContainerAdapter extends AbstractTableModel {
         if (rowIndex < container.getNbForms()) {
             DisplayableProperties figure = (DisplayableProperties) container.getFormList().get(rowIndex);
             switch (columnIndex) {
-                case 0: return figure.getName();
-                case 1: return figure.getProperties().get(0); // Assumer que chaque figure a au moins une propriété
-                case 2: return figure.getProperties().size() > 1 ? figure.getProperties().get(1) : "";
-                default: return "";
+                case 0: // Nom de la figure
+                    return figure.getName();
+                case 1: // Aire de la figure
+                    // On suppose que l'aire est toujours le deuxième élément des propriétés, ajustez selon votre implémentation
+                    return (int) ((double) figure.getProperties().get(2) / this.panel.getSuperficie() *  100) + "%";
+                default:
+                    return "";
             }
         } else {
-            // Gérer la dernière ligne pour le total, si nécessaire
-            return "Total";
+            return "";
         }
     }
     
@@ -46,9 +52,7 @@ public class FormContainerAdapter extends AbstractTableModel {
             case 0:
                 return "Nom";
             case 1:
-                return "Centre / Hauteur / Nombre";
-            case 2:
-                return "Rayon / Largeur / Surface";
+                return "Aire";
             default:
                 return "";
         }

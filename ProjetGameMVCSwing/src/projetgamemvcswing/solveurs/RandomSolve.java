@@ -32,38 +32,36 @@ public class RandomSolve {
     }
 
     public List<Figure> getSoluce() {
-        gameScoreTemporaire = new GameScore(); // Réinitialisation du score d'apprentissage temporaire pour chaque appel
-        double meilleurScoreTemporaire = 0; // Meilleur score atteint durant l'apprentissage
+        double meilleurScoreTemporaire = 0;
+        List<Figure> meilleureSolutionTemporaire = new ArrayList<>();
 
         for (int i = 0; i < nombreGenerations; i++) {
             currentFigures.clear();
             currentFigures.addAll(figuresObstacles);
-            List<Figure> tentativeSolution = new ArrayList<>(); // Conserver les obstacles
-            gameScoreTemporaire.setAireCouverte(0); // Réinitialiser le score temporaire pour cette génération
+            gameScoreTemporaire.setAireCouverte(0);
 
-            for (int j = 0; j < 4; j++) { // Limite fixe à 4 formes générées
+            List<Figure> tentativeSolution = new ArrayList<>();
+            for (int j = 0; j < 4; j++) {
                 Figure figure = genererFigureAleatoireEtAugmenterTaille();
                 if (figure != null) {
                     tentativeSolution.add(figure);
                     currentFigures.add(figure);
-                    gameScoreTemporaire.addAireCouverte(figure.getSurface()); // Utiliser le score temporaire
+                    gameScoreTemporaire.addAireCouverte(figure.getSurface());
                 }
             }
 
             if (gameScoreTemporaire.getAireCouverte() > meilleurScoreTemporaire) {
                 meilleurScoreTemporaire = gameScoreTemporaire.getAireCouverte();
-                meilleureSolution = new ArrayList<>(tentativeSolution);
+                meilleureSolutionTemporaire = new ArrayList<>(tentativeSolution);
             }
         }
 
-        // Mettre à jour le score global uniquement si le meilleur score temporaire dépasse le score global actuel
         if (meilleurScoreTemporaire > gameScoreGlobal.getAireCouverte()) {
             gameScoreGlobal.setAireCouverte(meilleurScoreTemporaire);
-            // Assumer que l'on veut aussi mettre à jour les figures avec la meilleure solution trouvée
-            // Cela peut nécessiter des ajustements selon la logique de votre application
+            return meilleureSolutionTemporaire; // Retourne la meilleure solution temporaire trouvée
+        } else {
+            return new ArrayList<>(); // Aucune amélioration trouvée, retourne une liste vide ou la solution précédente
         }
-
-        return meilleureSolution;
     }
 
 

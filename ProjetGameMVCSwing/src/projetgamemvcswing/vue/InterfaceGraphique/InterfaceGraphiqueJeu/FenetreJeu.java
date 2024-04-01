@@ -1,6 +1,7 @@
 package projetgamemvcswing.vue.InterfaceGraphique.InterfaceGraphiqueJeu;
 import javax.swing.SwingWorker;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
@@ -10,6 +11,7 @@ import projetgamemvcswing.controller.GameScore;
 import projetgamemvcswing.controller.RandomShapeGenerator;
 import projetgamemvcswing.controller.State.JeuState.FinGame;
 import projetgamemvcswing.modele.geometry.Figure;
+import projetgamemvcswing.modele.geometry.FormContainer;
 import projetgamemvcswing.solveurs.RandomSolve;
 
 
@@ -25,11 +27,12 @@ public class FenetreJeu extends JFrame {
     private BarreOutilsJeu barJeu;
     private PanelScore panelScore;
     
+    private final FormContainer container = new FormContainer();
     private final GameScore gameScore = new GameScore();
     private final GameScore ordinateurScore = new GameScore();
     private List<Figure> formesGenerees;
     private List<Figure> solutionsOrdinateur;
-    
+    private PanelFormes panelFormes;
     
     public FenetreJeu() {
         // Configuration de JFrame Dessin
@@ -41,7 +44,7 @@ public class FenetreJeu extends JFrame {
         setIconImage(new ImageIcon("images/cont.png").getImage());
         
         // Initialiser les composants de l'interface utilisateur
-        initUIComponents(this, gameScore);
+        initUIComponents(this, gameScore, container);
         
         
         this.formesGenerees = new RandomShapeGenerator().generateFormes( panelJeu, 4);
@@ -54,6 +57,8 @@ public class FenetreJeu extends JFrame {
         
         
         panelScore = new PanelScore(gameScore, ordinateurScore);
+        int largeurPanelFormes = (int) (getWidth() * 0.15);
+        this.panelFormes.setPreferredSize(new Dimension(largeurPanelFormes, getHeight()));
         getContentPane().add(panelScore, BorderLayout.SOUTH);
 
         // Créer une instance de BarreOutilsJeu
@@ -64,6 +69,8 @@ public class FenetreJeu extends JFrame {
         
         // Ajouter l'interface de dessin au centre
         getContentPane().add(panelJeu, BorderLayout.CENTER);
+        
+        getContentPane().add(this.panelFormes, BorderLayout.EAST);
 
         // Positionner la fenêtre au centre de l'écran
         setResizable(false);
@@ -75,9 +82,10 @@ public class FenetreJeu extends JFrame {
     /**
      * Initialise les composants de l'interface utilisateur.
      */
-    private void initUIComponents(JFrame frame, GameScore gameScore) {
+    private void initUIComponents(JFrame frame, GameScore gameScore, FormContainer formContainer) {
         // Créer une instance de l'interface de dessin
-        panelJeu = new PanelJeu(frame, gameScore, ordinateurScore, this.formesGenerees);
+        this.panelJeu = new PanelJeu(frame, gameScore, ordinateurScore, this.formesGenerees, formContainer);
+        this.panelFormes = new PanelFormes(formContainer, this.panelJeu);
         
     }
     

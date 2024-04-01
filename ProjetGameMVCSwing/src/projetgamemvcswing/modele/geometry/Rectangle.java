@@ -194,7 +194,7 @@ public class Rectangle extends AbstractModeleEcoutable implements Figure, Displa
 
     @Override
     public List<Object> getProperties() {
-        return Arrays.asList(getHauteur(), getLargeur());
+        return Arrays.asList(getHauteur(), getLargeur(), getSurface());
     }
     
 }
