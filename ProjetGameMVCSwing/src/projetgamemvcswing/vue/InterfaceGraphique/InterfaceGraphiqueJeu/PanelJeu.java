@@ -91,7 +91,6 @@ public class PanelJeu extends JPanel implements EcouteurModele {
     public void modelUpdated(Object source) {
         double airePanel = this.getWidth() * this.getHeight();
         double pourcentageAireCouverte = gameScore.calculerPourcentageAireCouverte(airePanel);
-        System.out.println("Pourcentage de l'aire couverte: " + pourcentageAireCouverte + "%");
         repaint();
     }
 
@@ -100,8 +99,6 @@ public class PanelJeu extends JPanel implements EcouteurModele {
         double aireTotalePanel = getWidth() * getHeight();
         double aireCouverteBleue = container.calculerAireCouverteParCouleur(Color.BLUE); // Remplacez Color.BLUE par la couleur exacte utilisée pour les formes en mode jeu.
         gameScore.addAireCouverte(aireCouverteBleue);
-        System.out.println("Aire couverte par les formes bleues: " + aireCouverteBleue);
-        System.out.println("Pourcentage de l'aire couverte: " + gameScore.calculerPourcentageAireCouverte(aireTotalePanel) + "%");
     }
 
     

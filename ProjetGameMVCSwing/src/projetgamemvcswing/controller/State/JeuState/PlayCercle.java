@@ -17,6 +17,16 @@ public class PlayCercle implements JeuState {
 
     @Override
     public void handleMousePressed(PanelJeu panelJeu, MouseEvent e) {
+        long nombreFiguresUtilisateur = panelJeu.getFigures().stream()
+            .filter(figure -> !figure.getCouleur().equals(Color.RED)) 
+            .count();
+
+        if (nombreFiguresUtilisateur >= 4) {
+            // Afficher un message ou désactiver la création de nouvelles figures
+            System.out.println("Nombre maximum de figures ajoutées par l'utilisateur atteint.");
+            panelJeu.setCurrentState(new FinGame());
+            return; // Sortir de la méthode pour éviter d'ajouter de nouvelles figures
+        }
         double x = e.getX();
         double y = e.getY();
 
