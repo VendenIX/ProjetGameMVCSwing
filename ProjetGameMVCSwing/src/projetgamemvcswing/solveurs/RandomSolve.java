@@ -10,8 +10,9 @@ import projetgamemvcswing.controller.GameScore;
 public class RandomSolve {
     private List<Figure> figuresObstacles;
     private List<Figure> currentFigures;
-    private GameScore gameScore;
-    private int nombreGenerations = 1000000;
+    private GameScore gameScoreTemporaire; // Score d'apprentissage temporaire
+    private GameScore gameScoreGlobal;
+    private int nombreGenerations = 10000000;
     private double meilleurScore = 0;
     private List<Figure> meilleureSolution = new ArrayList<>();
     private Random random = new Random();
@@ -19,40 +20,53 @@ public class RandomSolve {
     private int panelWidth;
     private int panelHeight;
 
-    public RandomSolve(List<Figure> figuresObstacles, GameScore gameScore, List<Figure> currentFigures, int panelWidth, int panelHeight) {
+    public RandomSolve(List<Figure> figuresObstacles, GameScore gameScoreGlobal, List<Figure> currentFigures, int panelWidth, int panelHeight) {
         this.figuresObstacles = figuresObstacles;
+        this.gameScoreGlobal = gameScoreGlobal;
+        this.gameScoreTemporaire = new GameScore(); 
         this.currentFigures = new ArrayList<>(figuresObstacles); // Initialement égale aux obstacles
         this.currentFigures.addAll(currentFigures); // Ajouter les figures bleues posées
         this.panelWidth = panelWidth;
         this.panelHeight = panelHeight;
-        this.gameScore = gameScore;
+
     }
 
     public List<Figure> getSoluce() {
+        gameScoreTemporaire = new GameScore(); // Réinitialisation du score d'apprentissage temporaire pour chaque appel
+        double meilleurScoreTemporaire = 0; // Meilleur score atteint durant l'apprentissage
+
         for (int i = 0; i < nombreGenerations; i++) {
-            
             currentFigures.clear();
             currentFigures.addAll(figuresObstacles);
             List<Figure> tentativeSolution = new ArrayList<>(); // Conserver les obstacles
-            gameScore.setAireCouverte(0); // Réinitialiser pour chaque génération
+            gameScoreTemporaire.setAireCouverte(0); // Réinitialiser le score temporaire pour cette génération
 
             for (int j = 0; j < 4; j++) { // Limite fixe à 4 formes générées
                 Figure figure = genererFigureAleatoireEtAugmenterTaille();
                 if (figure != null) {
-                    
                     tentativeSolution.add(figure);
                     currentFigures.add(figure);
-                    gameScore.addAireCouverte(figure.getSurface());
+                    gameScoreTemporaire.addAireCouverte(figure.getSurface()); // Utiliser le score temporaire
                 }
             }
 
-            if (gameScore.getAireCouverte() > meilleurScore) {
-                meilleurScore = gameScore.getAireCouverte();
+            if (gameScoreTemporaire.getAireCouverte() > meilleurScoreTemporaire) {
+                meilleurScoreTemporaire = gameScoreTemporaire.getAireCouverte();
                 meilleureSolution = new ArrayList<>(tentativeSolution);
             }
         }
+
+        // Mettre à jour le score global uniquement si le meilleur score temporaire dépasse le score global actuel
+        if (meilleurScoreTemporaire > gameScoreGlobal.getAireCouverte()) {
+            gameScoreGlobal.setAireCouverte(meilleurScoreTemporaire);
+            // Assumer que l'on veut aussi mettre à jour les figures avec la meilleure solution trouvée
+            // Cela peut nécessiter des ajustements selon la logique de votre application
+        }
+
         return meilleureSolution;
     }
+
+
     
     private Figure genererFigureAleatoireEtAugmenterTaille() {
         int maxTentatives = 100;
@@ -142,6 +156,6 @@ public class RandomSolve {
     }
     
     public GameScore getScore() {
-        return this.gameScore;
+        return this.gameScoreGlobal;
     }
 }

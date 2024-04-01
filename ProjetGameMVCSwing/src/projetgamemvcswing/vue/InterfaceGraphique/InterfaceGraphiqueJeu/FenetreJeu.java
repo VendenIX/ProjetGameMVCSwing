@@ -1,5 +1,5 @@
 package projetgamemvcswing.vue.InterfaceGraphique.InterfaceGraphiqueJeu;
-
+import javax.swing.SwingWorker;
 import java.awt.BorderLayout;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import projetgamemvcswing.controller.GameScore;
 import projetgamemvcswing.controller.RandomShapeGenerator;
+import projetgamemvcswing.controller.State.JeuState.FinGame;
 import projetgamemvcswing.modele.geometry.Figure;
 import projetgamemvcswing.solveurs.RandomSolve;
 
@@ -81,13 +82,35 @@ public class FenetreJeu extends JFrame {
     }
     
     private void calculerSolutionOrdinateur() {
+        SwingWorker<List<Figure>, Void> worker = new SwingWorker<List<Figure>, Void>() {
+            
+            private RandomSolve solver; 
+            
+            @Override
+            protected List<Figure> doInBackground() throws Exception {
+                // Votre logique de solveur exécutée en arrière-plan
+                this.solver = new RandomSolve(formesGenerees, ordinateurScore, new ArrayList<>(), panelJeu.getWidth(), panelJeu.getHeight());
+                return solver.getSoluce();
+            }
 
-        RandomSolve solver = new RandomSolve(this.formesGenerees, ordinateurScore, new ArrayList<>(),panelJeu.getWidth(), panelJeu.getHeight());
-        List<Figure> solutions = solver.getSoluce();
-        this.solutionsOrdinateur = solutions;
-        ordinateurScore.setAireCouverte(solver.getScore().getAireCouverte()); // Supposons cette méthode existante dans RandomSolve
-        panelJeu.setSolutionsOrdinateur(solutions);
-        panelJeu.updateOrdinateurScore(ordinateurScore);
+            @Override
+            protected void done() {
+                try {
+                    // Mise à jour de l'interface utilisateur avec le résultat du solveur
+                    List<Figure> solutions = get();
+                    solutionsOrdinateur = solutions; // Stockez les solutions pour dessin ultérieur
+                    ordinateurScore.setAireCouverte(solver.getScore().getAireCouverte()); // Calculez et mettez à jour le score basé sur les solutions
+                    panelJeu.setSolutionsOrdinateur(solutions);
+                    panelJeu.updateOrdinateurScore(ordinateurScore);
+                    panelJeu.modelUpdated(this);// Redessinez le PanelJeu pour montrer les solutions
+                    panelJeu.setCurrentState(new FinGame());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        worker.execute(); // Démarrer le worker
     }
     
     private void calculerSolutionOrdinateurAvecDelai() {
