@@ -14,6 +14,10 @@ public class GameScore extends AbstractModeleEcoutable {
         return aireCouverte;
     }
     
+    public void setAireCouverte(double nouvelleAire) {
+        this.aireCouverte = nouvelleAire;
+    }
+    
     public void addAireCouverte(double aire) {
         this.aireCouverte += aire;
         fireChange();

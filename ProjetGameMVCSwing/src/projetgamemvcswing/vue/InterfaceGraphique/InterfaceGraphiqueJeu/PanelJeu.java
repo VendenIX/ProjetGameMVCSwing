@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -16,8 +17,11 @@ import projetgamemvcswing.controller.ShapeDrawer;
 import projetgamemvcswing.controller.ShapeFiller;
 import projetgamemvcswing.controller.State.JeuState.PlayDefaultState;
 import projetgamemvcswing.controller.State.JeuState.JeuState;
+import projetgamemvcswing.modele.geometry.Cercle;
 import projetgamemvcswing.modele.geometry.Figure;
 import projetgamemvcswing.modele.geometry.FormContainer;
+import projetgamemvcswing.modele.geometry.Point;
+import projetgamemvcswing.solveurs.RandomSolve;
 
 
 public class PanelJeu extends JPanel implements EcouteurModele {
@@ -43,7 +47,7 @@ public class PanelJeu extends JPanel implements EcouteurModele {
     private double lastMouseY;
     
     private final GameScore gameScore;
-
+    private ArrayList<Figure> formesGenerees;
        
     public PanelJeu(JFrame frame, GameScore gameScore) {
         
@@ -56,8 +60,9 @@ public class PanelJeu extends JPanel implements EcouteurModele {
         setSize(frame.getSize());
         
         // Generer des formes et les ajouter au container
-
-        new RandomShapeGenerator().generateFormes(this, 4);
+        
+        //met les formes et on les recup dans une liste en meme temps pour le solver
+        this.formesGenerees = new RandomShapeGenerator().generateFormes(this, 4);
         
 
         
@@ -154,6 +159,21 @@ public class PanelJeu extends JPanel implements EcouteurModele {
             shapeDrawer.drawFigure(g, figureEnCoursDeDessin);
             shapeFiller.drawFilledFigure(g2d, figureEnCoursDeDessin);
         }
+        
+        // Dessiner un cercle noir au milieu de l'écran
+        //int centerX = getWidth() / 2;
+        //int centerY = getHeight() / 2;    
+        //Cercle cercle = new Cercle(new Point(centerX,centerY), 120, Color.YELLOW);
+        //shapeDrawer.drawFigure(g, cercle);
+        //shapeFiller.drawFilledFigure(g2d, cercle);
+        RandomSolve solver = new RandomSolve(this.formesGenerees, this.getWidth(), this.getHeight());
+        List<Figure> soluce = solver.getSoluce();
+        for(Figure f : soluce) {
+            shapeDrawer.drawFigure(g, f);
+            shapeFiller.drawFilledFigure(g2d, f);
+        }
+        
+        
     }
     
     /**

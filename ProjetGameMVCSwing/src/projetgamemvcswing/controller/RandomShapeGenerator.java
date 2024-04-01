@@ -3,17 +3,20 @@ package projetgamemvcswing.controller;
 
 import projetgamemvcswing.vue.InterfaceGraphique.InterfaceGraphiqueJeu.PanelJeu;
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Random;
 import projetgamemvcswing.modele.geometry.Cercle;
+import projetgamemvcswing.modele.geometry.Figure;
 import projetgamemvcswing.modele.geometry.Point;
 import projetgamemvcswing.modele.geometry.Rectangle;
 
 
 public class RandomShapeGenerator {
     
-   public void generateFormes(PanelJeu panelJeu, int nombreDeFormes) {
+   public ArrayList<Figure> generateFormes(PanelJeu panelJeu, int nombreDeFormes) {
         
         Random random = new Random();
+        ArrayList<Figure> formesGenerees = new ArrayList<>();
 
         // Obtenir les dimensions du panneau
         int largeurPanneau = panelJeu.getWidth();
@@ -50,18 +53,19 @@ public class RandomShapeGenerator {
             // Créer un rectangle ou un cercle en fonction du choix aléatoire
             if (estRectangle) {
                 Rectangle rectangle = new Rectangle(x, y, largeur, hauteur, couleur);
-
+                formesGenerees.add(rectangle);
                 // Ajouter le rectangle à la liste des formes du panneau
                 panelJeu.getFigures().add(rectangle);
             } else {
                 // Pour simplifier, créons un cercle
                 int rayon = Math.min(largeur, hauteur) / 2;
                 Cercle cercle = new Cercle(new Point(x, y), rayon, couleur);
-
+                formesGenerees.add(cercle);
                 // Ajouter le cercle à la liste des formes du panneau
                 panelJeu.getFigures().add(cercle);
             }
         }
+        return formesGenerees;
     }
     
    

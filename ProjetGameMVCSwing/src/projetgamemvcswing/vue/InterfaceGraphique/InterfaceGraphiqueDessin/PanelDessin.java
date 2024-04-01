@@ -160,6 +160,7 @@ public class PanelDessin extends JPanel implements EcouteurModele {
             shapeFiller.drawFilledFigure(gTemp, figureEnCoursDeTranslation);
             gTemp.dispose(); // Libérer la ressource graphique temporaire
         }
+        
     }
 
    
