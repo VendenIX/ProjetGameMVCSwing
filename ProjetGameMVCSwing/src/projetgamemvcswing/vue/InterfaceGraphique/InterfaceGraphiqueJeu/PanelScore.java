@@ -13,6 +13,10 @@ import javax.swing.table.DefaultTableModel;
 import projetgamemvcswing.controller.GameScore;
 import projetgamemvcswing.controller.Observer.EcouteurModele;
 
+/**
+ * Classe qui sert a creer un panel qui affiche le score
+ * @author romain
+ */
 public class PanelScore extends JPanel implements EcouteurModele {
     
     private JLabel joueurLabel;
@@ -25,15 +29,20 @@ public class PanelScore extends JPanel implements EcouteurModele {
     
     private GameScore gameScoreJoueur;
     private GameScore gameScoreOrdinateur;
-
+    
+    /**
+     * Créer un panelscore
+     * @param gameScoreJoueur
+     * @param gameScoreOrdinateur 
+     */
     public PanelScore(GameScore gameScoreJoueur, GameScore gameScoreOrdinateur) {
         this.gameScoreJoueur = gameScoreJoueur;
         this.gameScoreOrdinateur = gameScoreOrdinateur;
         this.gameScoreJoueur.ajoutEcouteur(this);
         this.gameScoreOrdinateur.ajoutEcouteur(this);
 
-        setLayout(new GridLayout(3, 2)); // Disposition en grille pour les labels avec deux colonnes
-        setBorder(new EmptyBorder(10, 10, 10, 10)); // Une marge pour l'esthétique
+        setLayout(new GridLayout(3, 2)); // disposition en grille pour les labels avec deux colonnes
+        setBorder(new EmptyBorder(10, 10, 10, 10)); // une marge pour l'esthétique
 
         joueurLabel = new JLabel("Joueur");
         joueurLabel.setFont(new Font("Serif", Font.BOLD, 16));
@@ -54,7 +63,11 @@ public class PanelScore extends JPanel implements EcouteurModele {
         add(aireCouverteJoueurLabel);
         add(aireCouverteOrdinateurLabel);
     }
-
+    
+    /**
+     * Met a jour le model
+     * @param source 
+     */
     @Override
     public void modelUpdated(Object source) {
         if (source instanceof GameScore 

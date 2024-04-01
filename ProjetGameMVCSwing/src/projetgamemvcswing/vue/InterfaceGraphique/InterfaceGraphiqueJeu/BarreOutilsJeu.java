@@ -10,8 +10,8 @@ import projetgamemvcswing.controller.State.JeuState.PlayRectangle;
 import projetgamemvcswing.vue.InterfaceGraphique.IconeNonRedimensionnable;
 
 /**
- *
- * @author Islem
+ * classe qui permet de créer une JToolBar de barre d'outil pour le jeu
+ * @author romain
  */
 public class BarreOutilsJeu extends JToolBar {
     
@@ -21,14 +21,19 @@ public class BarreOutilsJeu extends JToolBar {
     private final JButton rectangleButton;
     private final JButton dessinModeButton;
     
+    /**
+     * Créer une barre d'outil de jeu qui prend en entrée une jframe et une instance de PanelJeu
+     * @param frame
+     * @param panelJeu 
+     */
     public BarreOutilsJeu(JFrame frame, PanelJeu panelJeu) {
         
         currentFrame = frame;
         
-        // Définir l'orientation comme verticale
+        // définir l'orientation comme verticale
         setOrientation(JToolBar.VERTICAL);
 
-        // Créer des boutons avec des icônes personnalisées
+        // créer des boutons avec des icônes personnalisées
         circleButton = createToolbarButton("images/circle.png", "Dessin Cercle");
         
         circleButton.addActionListener((ActionEvent e) -> {
@@ -43,60 +48,65 @@ public class BarreOutilsJeu extends JToolBar {
         
         dessinModeButton = createToolbarButton("images/pal_change.png", "Mode Dessin");
         
-        // Ajouter des boutons avec des icônes personnalisées
+        // ajouter des boutons avec des icônes personnalisées
         add(circleButton);
         add(rectangleButton);
         
         
-        // Ajouter une separation
+        // ajouter une separation
         addSeparator();
         add(Box.createHorizontalStrut(10));
         
-        // ActionListener changement de mode vers Dessin
+        // actionListener changement de mode vers Dessin
         dessinModeButton.addActionListener((ActionEvent e) -> {
             onDessinModeButtonClick();
         });
         
-        // Ajouter un bouton pour changer le mode
+        // ajouter un bouton pour changer le mode
         add(dessinModeButton);
 
-        // Ajuster la taille préférée pour la rendre fine
+        // ajuster la taille préférée pour la rendre fine
         setPreferredSize(new Dimension(40, 400));
         setFloatable(false);
     }
     
-
+    /**
+     * creer une tool bar pour les bouttons
+     * @param iconPath
+     * @param description
+     * @return 
+     */
     private JButton createToolbarButton(String iconPath, String description) {
-        // Créer une ImageIcon à partir du chemin de fichier spécifié
+        // créer une ImageIcon à partir du chemin de fichier spécifié
         ImageIcon originalIcon = new ImageIcon(iconPath);
 
-        // Créer une icône sans mise à l'échelle
+        // créer une icône sans mise à l'échelle
         IconeNonRedimensionnable icon = new IconeNonRedimensionnable(originalIcon);
         
-        // Créer un bouton avec l'icône personnalisée
+        // créer un bouton avec l'icône personnalisée
         JButton button = new JButton(icon);
 
-        // Définir des propriétés supplémentaires selon les besoins
+        // définir des propriétés supplémentaires selon les besoins
         button.setToolTipText(description);
 
-        // Supprimer la bordure par défaut
+        // supprimer la bordure par défaut
         button.setBorderPainted(false);
 
-        // Créer une bordure en biseau pour un effet 3D
+        // créer une bordure en biseau pour un effet 3D
         Border bevelBorder = BorderFactory.createCompoundBorder(
                 BorderFactory.createRaisedBevelBorder(),
                 BorderFactory.createLoweredBevelBorder()
         );
 
-        // Définir la bordure personnalisée pour le bouton
+        // définir la bordure personnalisée pour le bouton
         button.setBorder(bevelBorder);
 
-        // Ajouter tout ActionListener ou autres configurations ici
+        // ajouter tout ActionListener ou autres configurations ici
 
         return button;
     }
     
-    // ActionListener methode qui ouvre le Jframe de mode Jeu
+    // actionListener methode qui ouvre le Jframe de mode Jeu
     private void onDessinModeButtonClick() {
         FenetreDessin fDessin = new FenetreDessin();
         fDessin.setVisible(true);

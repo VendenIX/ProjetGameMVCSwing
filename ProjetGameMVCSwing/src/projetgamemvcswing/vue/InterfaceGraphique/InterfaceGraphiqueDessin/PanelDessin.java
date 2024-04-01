@@ -32,46 +32,46 @@ public class PanelDessin extends JPanel implements EcouteurModele {
     // Variables
 
     private final CommandHandler handler = new CommandHandler();
-    // Container de type FormContainer qui stocke toutes les figures
+    // container de type FormContainer qui stocke toutes les figures
     private final FormContainer container = new FormContainer();
     
-    // Class contenant des methodes d'affichage de formes 
+    // class contenant des methodes d'affichage de formes 
     private final ShapeDrawer shapeDrawer = new ShapeDrawer();
     private final ShapeFiller shapeFiller = new ShapeFiller();
     
 
     
-   // Variable pour stocker la figure en cours de dessin
+   // variable pour stocker la figure en cours de dessin
     private Figure figureEnCoursDeDessin;
 
-    // Variable pour stocker la figure en cours de translation
+    // variable pour stocker la figure en cours de translation
     private Figure figureEnCoursDeTranslation;
 
-    // Variable pour stocker la figure en cours de coloration
+    // variable pour stocker la figure en cours de coloration
     private Figure figureEnCoursDeColoration;
     
-    // Initialisation d'état par defaut
+    // initialisation d'état par defaut
     private DessinState currentState = new DefaultState();
     
-    // Couleur choisie par l'utilisateur
+    // couleur choisie par l'utilisateur
     public Color couleurChoisie;
     
     
-    // Position précédente de la souris 
+    // position précédente de la souris 
     public double lastMouseX;
     public double lastMouseY;
     
     private double tempDx = 0, tempDy = 0; //gere les deplacements temporaires
 
     /**
-     * Constructeur de la classe InterfaceDessin.
+     * constructeur de la classe InterfaceDessin.
      * Il initialise le panneau de dessin avec un fond blanc et ajoute des écouteurs de souris.
      */
     public PanelDessin() {
         // Set de fond blanc
         setBackground(Color.WHITE);
         handler.ajoutEcouteur(this);
-        // Ajouter un écouteur pour les événements de la souris
+        // ajouter un écouteur pour les événements de la souris
         addMouseListener(new MouseAdapter() {
             // Quand il y a un clique de souris
             @Override
@@ -79,14 +79,14 @@ public class PanelDessin extends JPanel implements EcouteurModele {
                 currentState.handleMousePressed(PanelDessin.this, e);
             }
 
-            // Quand il y a une relache de souris
+            // quand il y a une relache de souris
             @Override
             public void mouseReleased(MouseEvent e) {
                 currentState.handleMouseReleased(PanelDessin.this, e, handler, container);
             }
         });
 
-        // Ajouter un écouteur pour les mouvements de la souris
+        // ajouter un écouteur pour les mouvements de la souris
         addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
@@ -96,40 +96,40 @@ public class PanelDessin extends JPanel implements EcouteurModele {
         });
     }
     
-    // Setter pour définir la figure en cours de dessin
+    // setter pour définir la figure en cours de dessin
     public void setFigureEnCoursDeDessin(Figure figure) {this.figureEnCoursDeDessin = figure;}
 
-    // Getter pour obtenir la figure en cours de dessin
+    // getter pour obtenir la figure en cours de dessin
     public Figure getFigureEnCoursDeDessin() {return this.figureEnCoursDeDessin;}
 
-    // Setter pour définir l'état actuel
+    // setter pour définir l'état actuel
     public void setCurrentState(DessinState state) {this.currentState = state;}
 
-    // Getter pour obtenir la liste des figures
+    // getter pour obtenir la liste des figures
     public List<Figure> getFigures() {return this.container.getFormList();}
 
-    // Getter pour obtenir la figure en cours de translation
+    // getter pour obtenir la figure en cours de translation
     public Figure getFigureEnCoursDeTranslation() {return figureEnCoursDeTranslation;}
 
-    // Setter pour définir la figure en cours de translation
+    // setter pour définir la figure en cours de translation
     public void setFigureEnCoursDeTranslation(Figure figure) {this.figureEnCoursDeTranslation = figure;}
 
-    // Setter pour définir la figure en cours de coloration
+    // getter pour définir la figure en cours de coloration
     public void setFigureEnCoursDeColoration(Figure figure) {this.figureEnCoursDeColoration = figure;}
 
-    // Getter pour obtenir la figure en cours de coloration
+    // getter pour obtenir la figure en cours de coloration
     public Figure getFigureEnCoursDeColoration() {return figureEnCoursDeColoration;}
 
-    // Getter pour obtenir la position X précédente de la souris
+    // getter pour obtenir la position X précédente de la souris
     public double getLastMouseX() {return lastMouseX;}
 
-    // Setter pour définir la position X précédente de la souris
+    // setter pour définir la position X précédente de la souris
     public void setLastMouseX(double lastMouseX) {this.lastMouseX = lastMouseX;}
 
-    // Getter pour obtenir la position Y précédente de la souris
+    // getter pour obtenir la position Y précédente de la souris
     public double getLastMouseY() { return lastMouseY;}
 
-    // Setter pour définir la position Y précédente de la souris
+    // setter pour définir la position Y précédente de la souris
     public void setLastMouseY(double lastMouseY) {this.lastMouseY = lastMouseY;}
 
     /**
@@ -155,26 +155,26 @@ public class PanelDessin extends JPanel implements EcouteurModele {
         
         if (figureEnCoursDeTranslation != null && (tempDx != 0 || tempDy != 0)) {
             Graphics2D gTemp = (Graphics2D) g.create();
-            gTemp.translate(tempDx, tempDy); // Applique la translation temporaire
-            shapeDrawer.drawFigure(gTemp, figureEnCoursDeTranslation); // Dessinez la figure temporairement déplacée
+            gTemp.translate(tempDx, tempDy); // applique la translation temporaire
+            shapeDrawer.drawFigure(gTemp, figureEnCoursDeTranslation); // dessine la figure temporairement déplacée
             shapeFiller.drawFilledFigure(gTemp, figureEnCoursDeTranslation);
-            gTemp.dispose(); // Libérer la ressource graphique temporaire
+            gTemp.dispose(); // libérer la ressource graphique temporaire
         }
         
     }
 
    
     /**
-    * Définit la couleur sélectionnée.
+    * définit la couleur sélectionnée.
     * 
-    * @param selectedColor La couleur sélectionnée.
+    * @param selectedColor la couleur sélectionnée.
     */
     public void setSelectedColor(Color selectedColor) {
         this.couleurChoisie = selectedColor;
     }
     
     /**
-     * Met à jour le panel
+     * met à jour le panel
      * @param source 
      */
     @Override
@@ -185,18 +185,27 @@ public class PanelDessin extends JPanel implements EcouteurModele {
     }
     
     /**
-     * Supprime une figure du panel
+     * supprime une figure du panel
      * @param f 
      */
     public void supprimerFigure(Figure f) {
         this.container.suppressionForm(f);
-        this.modelUpdated(this); // Notifie que le modèle a changé, ce qui déclenchera un repaint
+        this.modelUpdated(this); // notifie que le modèle a changé, ce qui déclenchera un repaint
     }
-
+    
+    /**
+     * return le commandhandler
+     * @return 
+     */
     public CommandHandler getCommandHandler() {
         return handler;
     }
     
+    /**
+     * Set les points temporaires pour l'affichage dynamique
+     * @param dx
+     * @param dy 
+     */
     public void setTempTranslation(double dx, double dy) {
         this.tempDx = dx;
         this.tempDy = dy;
@@ -214,7 +223,9 @@ public class PanelDessin extends JPanel implements EcouteurModele {
         this.modelUpdated(this);
     }
     
-    // Ajout de la méthode pour réinitialiser les déplacements temporaires
+    /**
+     * Ajout de la méthode pour réinitialiser les déplacements temporaires
+     */
     public void resetTempTranslation() {
         tempDx = 0;
         tempDy = 0;

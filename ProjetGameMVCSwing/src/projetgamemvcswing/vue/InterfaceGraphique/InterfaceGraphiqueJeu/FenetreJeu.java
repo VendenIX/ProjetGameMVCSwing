@@ -15,8 +15,8 @@ import projetgamemvcswing.strategy.SolverStrategy;
 
 
 /**
- *
- * @author Islem
+ * classe qui permet de créer une JFrame pour le jeu
+ * @author romain
  */
 public class FenetreJeu extends JFrame {
     
@@ -34,13 +34,18 @@ public class FenetreJeu extends JFrame {
     private PanelFormes panelFormes;
     private JSplitPane splitPane;
     private SolverStrategy solverStrategy;
+    private Dimension size;
     
+    /**
+     * Permet de créer une fenetre de jeu qui prend en entrée une strategy de solver
+     * @param solverStrategy 
+     */
     public FenetreJeu(SolverStrategy solverStrategy) {
         
         this.solverStrategy = solverStrategy;
         System.out.println("bien avant");
         System.out.println(this.solverStrategy);
-        // Configuration de JFrame Dessin
+        // configuration de JFrame Dessin
         setTitle("Jeu");
         setSize(1100, 750);
         setLocationRelativeTo(null);
@@ -48,15 +53,15 @@ public class FenetreJeu extends JFrame {
         
         setIconImage(new ImageIcon("images/cont.png").getImage());
         
-        // Initialiser les composants de l'interface utilisateur
+        // initialiser les composants de l'interface utilisateur
         initUIComponents(this, gameScore, container);
         
         
         this.formesGenerees = new RandomShapeGenerator().generateFormes( panelJeu, 4);
-        // Créer une instance de MenuBarJeu
+        // créer une instance de MenuBarJeu
         menuBarJeu = new MenuBarJeu(this);
 
-        // Ajouter le menuBarJeu
+        // ajouter le menuBarJeu
         setJMenuBar(new JMenuBar());
         getJMenuBar().add(menuBarJeu);
         
@@ -66,18 +71,18 @@ public class FenetreJeu extends JFrame {
         this.panelFormes.setPreferredSize(new Dimension(largeurPanelFormes, getHeight()));
         getContentPane().add(panelScore, BorderLayout.SOUTH);
 
-        // Créer une instance de BarreOutilsJeu
+        // créer une instance de BarreOutilsJeu
         barJeu = new BarreOutilsJeu(this, this.panelJeu);
 
-        // Ajouter la barre d'outils personnalisée
+        // ajouter la barre d'outils personnalisée
         add(barJeu, BorderLayout.WEST);
         
-        // Ajouter l'interface de dessin au centre
+        // ajouter l'interface de dessin au centre
         getContentPane().add(splitPane, BorderLayout.CENTER);
         
         getContentPane().add(this.panelFormes, BorderLayout.EAST);
 
-        // Positionner la fenêtre au centre de l'écran
+        // positionner la fenêtre au centre de l'écran
         setResizable(false);
         setLocationRelativeTo(null);
         setVisible(true);
@@ -86,62 +91,71 @@ public class FenetreJeu extends JFrame {
     
     /**
      * Initialise les composants de l'interface utilisateur.
+     * @param frame
+     * @param gameScore
+     * @param formContainer 
      */
     private void initUIComponents(JFrame frame, GameScore gameScore, FormContainer formContainer) {
-        // Créer une instance de l'interface de dessin
-        this.panelJeu = new PanelJeu(frame, gameScore, ordinateurScore, this.formesGenerees, formContainer);
+        // créer une instance de l'interface de dessin
+        this.size = frame.getSize();
+        this.panelJeu = new PanelJeu(frame, gameScore, ordinateurScore, this.formesGenerees, formContainer, size);
         this.panelFormes = new PanelFormes(formContainer, this.panelJeu);
         
-        // Ajuster la préférence de taille du panelFormes ici si nécessaire
+        // ajuster la préférence de taille du panelFormes ici si nécessaire
         int largeurPanelFormes = (int) (getWidth() * 0.15);
         panelFormes.setPreferredSize(new Dimension(largeurPanelFormes, getHeight()));
 
-        // Initialiser et configurer le JSplitPane
+        // initialiser et configurer le JSplitPane
         splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, panelJeu, panelFormes);
         splitPane.setOneTouchExpandable(true);
-        splitPane.setDividerLocation(0.85); // Ajuster selon la proportion désirée
+        splitPane.setDividerLocation(0.85); // ajuster selon la proportion désirée
 
-        // Assurer que le JSplitPane respecte la taille préférée de panelFormes
+        // s'assurer que le JSplitPane respecte la taille préférée de panelFormes
         splitPane.setResizeWeight(1.0);
         
         
         
     }
     
+    /**
+     * Permet de calculer la solution de l'ordinateur
+     */
     private void calculerSolutionOrdinateur() {
 
 
         try {
-            // Votre logique de solveur exécutée en arrière-plan
-            System.out.println("solverstrategy : ");
-            System.out.println(solverStrategy);
-            System.out.println("son solver:");
-            System.out.println(solverStrategy.getSolver());
-            this.solverStrategy.solve(formesGenerees, gameScore, formesGenerees, panelJeu.getWidth(), panelJeu.getHeight());
+            this.solverStrategy.solve(formesGenerees, gameScore, formesGenerees, (int) (this.size.width * 0.85), this.size.height);
             List<Figure> solutions = this.solverStrategy.getSolver().getSoluce();
 
-            // Mise à jour de l'interface utilisateur avec le résultat du solveur
-            solutionsOrdinateur = solutions; // Stockez les solutions pour dessin ultérieur
-            ordinateurScore.setAireCouverte(this.solverStrategy.getSolver().getScore().getAireCouverte()); // Calculez et mettez à jour le score basé sur les solutions
+            // mise à jour de l'interface utilisateur avec le résultat du solveur
+            solutionsOrdinateur = solutions; // stocke les solutions pour dessin ultérieur
+            ordinateurScore.setAireCouverte(this.solverStrategy.getSolver().getScore().getAireCouverte()); // calcule et met à jour le score basé sur les solutions
+            System.out.println("voici les soluces : " + solutions);
             panelJeu.setSolutionsOrdinateur(solutions);
             panelJeu.updateOrdinateurScore(ordinateurScore);
-            panelJeu.modelUpdated(this);// Redessinez le PanelJeu pour montrer les solutions
-            //panelJeu.setCurrentState(new FinGame());
+            panelJeu.modelUpdated(this);// redessine le PanelJeu pour montrer les solutions
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    
+    /**
+     * Permet de calculer la solution dans un délai de 10 secondes pour l'utilisateur
+     */
     private void calculerSolutionOrdinateurAvecDelai() {
     SwingWorker<Void, Void> worker = new SwingWorker<>() {
+        
+        /**
+         * Classe anonyme pour gérer le calcul en parrallèle, un peu technique ahah a voir si c'est efficace
+         */
         @Override
         protected Void doInBackground() throws Exception {
             try {
-                Thread.sleep(10000); // Attend 10 secondes
-                calculerSolutionOrdinateur(); // Lance le calcul après le délai
+                Thread.sleep(10000); // attend 10 secondes IMPORTANT a def plus tard en param classe
+                calculerSolutionOrdinateur(); // lance le calcul après le délai
             } catch (InterruptedException e) {
-                Thread.currentThread().interrupt(); // Gestion de l'interruption du thread
+                Thread.currentThread().interrupt(); // gestion de l'interruption du thread
                 e.printStackTrace();
             }
             return null;
@@ -151,7 +165,10 @@ public class FenetreJeu extends JFrame {
     worker.execute();
 }
 
-    
+    /**
+     * Permet de récuperer le solverstrategy
+     * @return 
+     */
     SolverStrategy getSolverStrategy() {
         return this.solverStrategy;
     }
