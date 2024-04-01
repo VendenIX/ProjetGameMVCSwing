@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package projetgamemvcswing.strategy;
 
 import java.util.ArrayList;
@@ -16,10 +12,9 @@ public class MediumModeSolver implements SolverStrategy {
     
     @Override
     public List<Figure> solve(List<Figure> figuresObstacles, GameScore gameScoreGlobal, List<Figure> currentFigures, int panelWidth, int panelHeight) {
-        // Implémentez votre logique de résolution pour le mode facile ici
+        // Implémentez votre logique de résolution pour le mode moyen ici
         
-        this.solver = new RandomSolve(figuresObstacles, gameScoreGlobal, new ArrayList<>(), panelWidth, panelHeight, 10000000, 1.1);
-       
+        this.solver = new RandomSolve(figuresObstacles, gameScoreGlobal, currentFigures, panelWidth, panelWidth, 1000000, 1.1);
         return solver.getSoluce();
     }
 

@@ -215,12 +215,8 @@ public class PanelJeu extends JPanel implements EcouteurModele {
     }
     
     public void passerEnFinGame() {
-        System.out.println("suis je ?");
-        // Calculer les solutions de l'ordinateur
-        //GameScore scoreSolver = new GameScore();
-        //RandomSolve solver = new RandomSolve(this.formesGenerees, scoreSolver ,new ArrayList<>(), this.getWidth(), this.getHeight());
-        //this.solutionsOrdinateur = solver.getSoluce();
-        repaint(); // Forcer le dessin des solutions
+        System.out.println("affichage solution ordinateur : ");
+        repaint();
     }
 
     void setSolutionsOrdinateur(List<Figure> solutions) {

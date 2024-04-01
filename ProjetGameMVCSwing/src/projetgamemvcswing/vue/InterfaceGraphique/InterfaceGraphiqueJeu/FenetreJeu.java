@@ -38,6 +38,8 @@ public class FenetreJeu extends JFrame {
     public FenetreJeu(SolverStrategy solverStrategy) {
         
         this.solverStrategy = solverStrategy;
+        System.out.println("bien avant");
+        System.out.println(this.solverStrategy);
         // Configuration de JFrame Dessin
         setTitle("Jeu");
         setSize(1100, 750);
@@ -107,43 +109,36 @@ public class FenetreJeu extends JFrame {
     }
     
     private void calculerSolutionOrdinateur() {
-        SwingWorker<List<Figure>, Void> worker = new SwingWorker<List<Figure>, Void>() {
-            
-            private RandomSolve solver; 
-            
-            @Override
-            protected List<Figure> doInBackground() throws Exception {
-                // Votre logique de solveur exécutée en arrière-plan
-                //this.solver = new RandomSolve(formesGenerees, ordinateurScore, new ArrayList<>(), panelJeu.getWidth(), panelJeu.getHeight());
-                this.solver = solverStrategy.getSolver();
-                return solver.getSoluce();
-            }
 
-            @Override
-            protected void done() {
-                try {
-                    // Mise à jour de l'interface utilisateur avec le résultat du solveur
-                    List<Figure> solutions = get();
-                    solutionsOrdinateur = solutions; // Stockez les solutions pour dessin ultérieur
-                    ordinateurScore.setAireCouverte(solver.getScore().getAireCouverte()); // Calculez et mettez à jour le score basé sur les solutions
-                    panelJeu.setSolutionsOrdinateur(solutions);
-                    panelJeu.updateOrdinateurScore(ordinateurScore);
-                    panelJeu.modelUpdated(this);// Redessinez le PanelJeu pour montrer les solutions
-                    panelJeu.setCurrentState(new FinGame());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        };
 
-        worker.execute(); // Démarrer le worker
+        try {
+            // Votre logique de solveur exécutée en arrière-plan
+            System.out.println("solverstrategy : ");
+            System.out.println(solverStrategy);
+            System.out.println("son solver:");
+            System.out.println(solverStrategy.getSolver());
+            this.solverStrategy.solve(formesGenerees, gameScore, formesGenerees, panelJeu.getWidth(), panelJeu.getHeight());
+            List<Figure> solutions = this.solverStrategy.getSolver().getSoluce();
+
+            // Mise à jour de l'interface utilisateur avec le résultat du solveur
+            solutionsOrdinateur = solutions; // Stockez les solutions pour dessin ultérieur
+            ordinateurScore.setAireCouverte(this.solverStrategy.getSolver().getScore().getAireCouverte()); // Calculez et mettez à jour le score basé sur les solutions
+            panelJeu.setSolutionsOrdinateur(solutions);
+            panelJeu.updateOrdinateurScore(ordinateurScore);
+            panelJeu.modelUpdated(this);// Redessinez le PanelJeu pour montrer les solutions
+            panelJeu.setCurrentState(new FinGame());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
     
     private void calculerSolutionOrdinateurAvecDelai() {
         new Thread(() -> {
             try {
                 Thread.sleep(3000); // Attend 3 secondes
                 System.out.println("Lancement ! ");
+                System.out.println(this.solverStrategy);
                 calculerSolutionOrdinateur(); // Lance le calcul après le délai
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt(); // Gestion de l'interruption du thread
