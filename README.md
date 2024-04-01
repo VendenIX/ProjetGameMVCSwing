@@ -29,3 +29,7 @@ Voici les différentes commandes à utiliser pour travailler sur ce projet :
 
 Les contributions au projet sont les bienvenues. Pour contribuer, vous pouvez cloner ce dépôt, créer une branche pour vos modifications et soumettre une pull request une fois que vous avez terminé. Pour toute question ou suggestion, n'hésitez pas à ouvrir une issue.
 
+
+# L'Archive jar ne fonctionne pas totalement, nous n'avons pas réussi à mettre les images dans la compilation
+
+https://github.com/VendenIX/ProjetGameMVCSwing
