@@ -49,14 +49,16 @@ public class PanelJeu extends JPanel implements EcouteurModele {
     private double lastMouseY;
     
     private final GameScore gameScore;
-    private ArrayList<Figure> formesGenerees;
+    private final GameScore ordinateurScore;
+    private List<Figure> formesGenerees;
        
-    public PanelJeu(JFrame frame, GameScore gameScore) {
+    public PanelJeu(JFrame frame, GameScore gameScore, GameScore ordinateurScore, List<Figure> formesGenerees) {
         
         if (gameScore == null) {
             throw new IllegalArgumentException("gameScore ne peut pas être null");
         }
         this.gameScore = gameScore;
+        this.ordinateurScore = ordinateurScore;
         // Set de fond blanc
         setBackground(Color.WHITE);
         setSize(frame.getSize());
@@ -64,7 +66,7 @@ public class PanelJeu extends JPanel implements EcouteurModele {
         // Generer des formes et les ajouter au container
         
         //met les formes et on les recup dans une liste en meme temps pour le solver
-        this.formesGenerees = new RandomShapeGenerator().generateFormes(this, 4);
+        this.formesGenerees = formesGenerees;
         
 
         
@@ -107,6 +109,14 @@ public class PanelJeu extends JPanel implements EcouteurModele {
         double aireCouverteBleue = container.calculerAireCouverteParCouleur(Color.BLUE); // Remplacez Color.BLUE par la couleur exacte utilisée pour les formes en mode jeu.
         gameScore.addAireCouverte(aireCouverteBleue);
     }
+    
+    void updateOrdinateurScore(GameScore gameScore) {
+        double aireTotalePanel = getWidth() * getHeight();
+        double aireCouverteBleue = gameScore.getAireCouverte();
+        ordinateurScore.addAireCouverte(aireCouverteBleue);
+    }
+    
+    
 
     
     
@@ -202,10 +212,16 @@ public class PanelJeu extends JPanel implements EcouteurModele {
     public void passerEnFinGame() {
 
         // Calculer les solutions de l'ordinateur
-        RandomSolve solver = new RandomSolve(this.formesGenerees, new ArrayList<>(), this.getWidth(), this.getHeight());
+        GameScore scoreSolver = new GameScore();
+        RandomSolve solver = new RandomSolve(this.formesGenerees, scoreSolver ,new ArrayList<>(), this.getWidth(), this.getHeight());
         this.solutionsOrdinateur = solver.getSoluce();
 
         repaint(); // Forcer le dessin des solutions
+    }
+
+    void setSolutionsOrdinateur(List<Figure> solutions) {
+        this.solutionsOrdinateur = solutions;
+        this.modelUpdated(this);
     }
 
 

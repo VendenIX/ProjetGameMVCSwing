@@ -19,13 +19,13 @@ public class RandomSolve {
     private int panelWidth;
     private int panelHeight;
 
-    public RandomSolve(List<Figure> figuresObstacles, List<Figure> currentFigures, int panelWidth, int panelHeight) {
+    public RandomSolve(List<Figure> figuresObstacles, GameScore gameScore, List<Figure> currentFigures, int panelWidth, int panelHeight) {
         this.figuresObstacles = figuresObstacles;
         this.currentFigures = new ArrayList<>(figuresObstacles); // Initialement égale aux obstacles
         this.currentFigures.addAll(currentFigures); // Ajouter les figures bleues posées
         this.panelWidth = panelWidth;
         this.panelHeight = panelHeight;
-        this.gameScore = new GameScore();
+        this.gameScore = gameScore;
     }
 
     public List<Figure> getSoluce() {
@@ -139,5 +139,9 @@ public class RandomSolve {
             }
         }
         return false;
+    }
+    
+    public GameScore getScore() {
+        return this.gameScore;
     }
 }

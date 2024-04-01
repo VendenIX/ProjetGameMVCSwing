@@ -44,8 +44,8 @@ public class PanelScore extends JPanel implements EcouteurModele {
         pourcentageAireJoueurLabel = new JLabel("Taux d'aire rempli (%): 0%");
         aireCouverteJoueurLabel = new JLabel("Score : 0");
 
-        pourcentageAireOrdinateurLabel = new JLabel("Taux d'aire rempli (%): 0%", JLabel.RIGHT);
-        aireCouverteOrdinateurLabel = new JLabel("Score : 0", JLabel.RIGHT);
+        pourcentageAireOrdinateurLabel = new JLabel("Taux d'aire rempli (%):--%", JLabel.RIGHT);
+        aireCouverteOrdinateurLabel = new JLabel("Score : --", JLabel.RIGHT);
 
         add(joueurLabel);
         add(ordinateurLabel);
