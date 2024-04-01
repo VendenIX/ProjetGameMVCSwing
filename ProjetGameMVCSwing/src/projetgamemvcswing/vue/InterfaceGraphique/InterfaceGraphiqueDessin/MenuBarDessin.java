@@ -9,6 +9,7 @@ import projetgamemvcswing.controller.State.DessinStates.CreateLine;
 import projetgamemvcswing.controller.State.DessinStates.CreateRectangle;
 import projetgamemvcswing.controller.State.DessinStates.DeleteForm;
 import projetgamemvcswing.controller.State.DessinStates.MoveForm;
+import projetgamemvcswing.strategy.MediumModeSolver;
 import projetgamemvcswing.vue.InterfaceGraphique.FenetreContact;
 import projetgamemvcswing.vue.InterfaceGraphique.FenetreInformation;
 import projetgamemvcswing.vue.InterfaceGraphique.InterfaceGraphiqueJeu.FenetreJeu;
@@ -227,7 +228,7 @@ public class MenuBarDessin extends JMenuBar {
 
     // Méthode qui change le mode de dessin vers jeu
     private void handleJeuAction() {
-        FenetreJeu fJeu = new FenetreJeu();
+        FenetreJeu fJeu = new FenetreJeu(new MediumModeSolver());
         fJeu.setVisible(true);
 
         if (currentFrame != null) {

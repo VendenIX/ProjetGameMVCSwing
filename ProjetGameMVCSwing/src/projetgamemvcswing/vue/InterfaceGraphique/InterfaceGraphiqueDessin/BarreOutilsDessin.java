@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import javax.swing.border.Border;
+import projetgamemvcswing.strategy.MediumModeSolver;
 import projetgamemvcswing.vue.InterfaceGraphique.InterfaceGraphiqueJeu.FenetreJeu;
 import projetgamemvcswing.vue.InterfaceGraphique.IconeNonRedimensionnable;
 
@@ -200,7 +201,7 @@ public class BarreOutilsDessin extends JToolBar {
      * Méthode ActionListener qui ouvre le JFrame de mode Jeu.
      */
     private void onJeuModeButtonClick() {
-        FenetreJeu fJeu = new FenetreJeu();
+        FenetreJeu fJeu = new FenetreJeu(new MediumModeSolver());
         fJeu.setVisible(true);
         
         if (currentFrame != null) {

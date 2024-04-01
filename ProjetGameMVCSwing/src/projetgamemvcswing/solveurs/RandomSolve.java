@@ -12,15 +12,17 @@ public class RandomSolve {
     private List<Figure> currentFigures;
     private GameScore gameScoreTemporaire; // Score d'apprentissage temporaire
     private GameScore gameScoreGlobal;
-    private int nombreGenerations = 10000000;
+    private int nombreGenerations;// = 10000000 = medium , 100000 = ez
     private double meilleurScore = 0;
     private List<Figure> meilleureSolution = new ArrayList<>();
     private Random random = new Random();
-    private final double metriqueGrossissement = 1.1;
+    private final double metriqueGrossissement; // 1.1 = medium 2 = ez
     private int panelWidth;
     private int panelHeight;
 
-    public RandomSolve(List<Figure> figuresObstacles, GameScore gameScoreGlobal, List<Figure> currentFigures, int panelWidth, int panelHeight) {
+    public RandomSolve(List<Figure> figuresObstacles, GameScore gameScoreGlobal, List<Figure> currentFigures, int panelWidth, int panelHeight, int nbIter, double metrique) {
+        this.nombreGenerations = nbIter;
+        this.metriqueGrossissement = metrique;
         this.figuresObstacles = figuresObstacles;
         this.gameScoreGlobal = gameScoreGlobal;
         this.gameScoreTemporaire = new GameScore(); 

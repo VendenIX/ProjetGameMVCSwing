@@ -11,6 +11,7 @@ import projetgamemvcswing.controller.State.JeuState.FinGame;
 import projetgamemvcswing.modele.geometry.Figure;
 import projetgamemvcswing.modele.geometry.FormContainer;
 import projetgamemvcswing.solveurs.RandomSolve;
+import projetgamemvcswing.strategy.SolverStrategy;
 
 
 /**
@@ -32,8 +33,11 @@ public class FenetreJeu extends JFrame {
     private List<Figure> solutionsOrdinateur;
     private PanelFormes panelFormes;
     private JSplitPane splitPane;
+    private SolverStrategy solverStrategy;
     
-    public FenetreJeu() {
+    public FenetreJeu(SolverStrategy solverStrategy) {
+        
+        this.solverStrategy = solverStrategy;
         // Configuration de JFrame Dessin
         setTitle("Jeu");
         setSize(1100, 750);
@@ -110,7 +114,8 @@ public class FenetreJeu extends JFrame {
             @Override
             protected List<Figure> doInBackground() throws Exception {
                 // Votre logique de solveur exécutée en arrière-plan
-                this.solver = new RandomSolve(formesGenerees, ordinateurScore, new ArrayList<>(), panelJeu.getWidth(), panelJeu.getHeight());
+                //this.solver = new RandomSolve(formesGenerees, ordinateurScore, new ArrayList<>(), panelJeu.getWidth(), panelJeu.getHeight());
+                this.solver = solverStrategy.getSolver();
                 return solver.getSoluce();
             }
 
@@ -145,6 +150,10 @@ public class FenetreJeu extends JFrame {
                 e.printStackTrace();
             }
         }).start();
+    }
+    
+    SolverStrategy getSolverStrategy() {
+        return this.solverStrategy;
     }
 
 

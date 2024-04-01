@@ -14,9 +14,13 @@ import javax.swing.Box;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import projetgamemvcswing.strategy.EasyModeSolver;
+import projetgamemvcswing.strategy.MediumModeSolver;
+import projetgamemvcswing.strategy.SolverStrategy;
 
 /**
  *
@@ -26,6 +30,7 @@ import javax.swing.JPanel;
 public class MenuChoix extends JFrame {
     
     private Image backgroundImage;
+    private JComboBox<String> levelSelector;
     
     public MenuChoix() {
         // Configuration de le JFrame principal
@@ -120,6 +125,15 @@ public class MenuChoix extends JFrame {
         // Ajout d'une zone rigide pour le centrage vertical
         mainVerticalBox.add(Box.createVerticalGlue());
 
+        
+        // Ajout du sélecteur de niveau
+        String[] levels = {"Facile", "Moyen"};
+        levelSelector = new JComboBox<>(levels);
+        levelSelector.setFont(new Font("Lucida Calligraphy", Font.PLAIN, 18));
+        levelSelector.setAlignmentX(Component.CENTER_ALIGNMENT);
+        mainVerticalBox.add(levelSelector);
+        
+        
         // Ajout de la boîte verticale au panneau
         panelMenuChoix.add(mainVerticalBox);
 
@@ -195,7 +209,13 @@ public class MenuChoix extends JFrame {
 
     // Methode qui ouvre la fenetre Jeu
     private void onJeuButtonClick() {
-        FenetreJeu fJeu = new FenetreJeu();
+        SolverStrategy strategy;
+        if (levelSelector.getSelectedItem().equals("Facile")) {
+            strategy = new EasyModeSolver();
+        } else {
+            strategy = new MediumModeSolver();
+        }
+        FenetreJeu fJeu = new FenetreJeu(strategy);
         fJeu.setVisible(true);
         dispose();
     }
